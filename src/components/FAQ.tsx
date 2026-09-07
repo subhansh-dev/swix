@@ -103,7 +103,7 @@ export function FAQ() {
               </Reveal>
             </div>
           </div>
-          <ul className="lg:col-span-8 rounded-[28px] border-[3px] border-ink bg-white p-2 shadow-[0_10px_0_rgba(11,11,12,0.9)] sm:p-3">
+          <ul className="lg:col-span-8 self-start rounded-[28px] border-[3px] border-ink bg-white/85 p-2 shadow-[0_10px_0_rgba(11,11,12,0.9)] backdrop-blur-xl backdrop-saturate-150 sm:p-3">
             {faqs.map((f, i) => (
               <Item key={f.q} i={i} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
             ))}

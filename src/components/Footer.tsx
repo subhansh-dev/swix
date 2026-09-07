@@ -1,6 +1,7 @@
 import { Logo } from "./ui/Logo";
 import { Reveal } from "./ui/Reveal";
 import { Deco } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
 
 const cols = [
   {
@@ -37,6 +38,16 @@ export function Footer() {
                   {t}
                 </span>
               ))}
+            </div>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
+                <Orb variant="swift" box={26} size="small" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Built with Swift</span>
+              </span>
+              <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
+                <Orb variant="ios" box={26} size="small" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Designed for iOS</span>
+              </span>
             </div>
           </Reveal>
 

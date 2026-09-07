@@ -6,7 +6,7 @@ type Props = {
   children?: ReactNode;
   className?: string;
   delay?: number;
-  variant?: "up" | "scale" | "line";
+  variant?: "up" | "scale" | "line" | "left" | "right" | "blur" | "flip3d";
   as?: ElementType;
   style?: CSSProperties;
   id?: string;
@@ -14,7 +14,20 @@ type Props = {
 
 export function Reveal({ children, className, delay = 0, variant = "up", as: Tag = "div", style, id }: Props) {
   const ref = useReveal<HTMLDivElement>();
-  const cls = variant === "scale" ? "reveal-scale" : variant === "line" ? "reveal-line" : "reveal";
+  const cls =
+    variant === "scale"
+      ? "reveal-scale"
+      : variant === "line"
+        ? "reveal-line"
+        : variant === "left"
+          ? "reveal-left"
+          : variant === "right"
+            ? "reveal-right"
+            : variant === "blur"
+              ? "reveal-blur"
+              : variant === "flip3d"
+                ? "reveal-flip3d"
+                : "reveal";
   return (
     <Tag
       ref={ref}

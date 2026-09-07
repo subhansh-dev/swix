@@ -4,6 +4,8 @@ import { Reveal } from "./ui/Reveal";
 import { LiquidBlobs } from "./ui/LiquidBlobs";
 import { Magnetic } from "./ui/Magnetic";
 import { Sticker, Squiggle, Deco } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
+import { GlassCube } from "./ui/GlassCube";
 import { useReducedMotion } from "@/hooks/useMedia";
 import { useParallax } from "@/hooks/useParallax";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -160,6 +162,20 @@ function HeroScene() {
           </div>
         </div>
       ))}
+
+      {/* floating glass 3D cube — tumbles in its own Z layer */}
+      <GlassCube className="-right-2 bottom-28 sm:-right-8 sm:bottom-32" />
+
+      {/* swift orb coin — the live engine, on its own Z layer */}
+      <div className="right-4 top-40 sm:-right-6 sm:top-44" style={{ transform: "translateZ(95px)", position: "absolute" }}>
+        <div
+          className="gpu animate-float flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_18px_40px_-18px_rgba(11,11,12,0.65)]"
+          style={{ animationDelay: "-5s" }}
+        >
+          <Orb variant="swift" box={32} size="small" />
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Swift 6</span>
+        </div>
+      </div>
 
       {/* code card overlapping bottom */}
       <div className="relative -mt-16 ml-[14%] w-[86%] sm:absolute sm:-bottom-16 sm:-left-8 sm:mt-0 sm:ml-0 sm:w-[76%]"

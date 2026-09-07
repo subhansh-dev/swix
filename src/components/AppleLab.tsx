@@ -2,6 +2,7 @@ import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
 import { Sticker, Squiggle, Deco } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
 import { cn } from "@/utils/cn";
 
 const curriculum = [
@@ -56,6 +57,7 @@ export function AppleLab() {
                   <div className="flex flex-wrap items-center gap-3">
                     <Sticker rotate={-3} color="bg-swift text-white">Student Success · 2026</Sticker>
                     <Sticker rotate={2} color="bg-lemon text-ink">First-year</Sticker>
+                    <Orb variant="ios" box={40} size="small" className="ml-1" />
                   </div>
                   <h3 className="display mt-6 text-balance text-3xl sm:text-5xl">
                     From no Mac to Apple's <span className="text-gradient">global Top 350</span>.

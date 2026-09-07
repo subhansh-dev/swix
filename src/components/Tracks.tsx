@@ -3,6 +3,7 @@ import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
 import { Magnetic } from "./ui/Magnetic";
 import { Sticker, Deco } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
 import { cn } from "@/utils/cn";
 
 type Track = {
@@ -99,6 +100,13 @@ export function Tracks() {
           }
           body="The club is funded by the university and run by volunteers. You will never be asked to pay — no membership fee, no lab charge, no hidden kit cost. The only thing we ask for is showing up."
         />
+
+        <Reveal delay={160} className="mt-8 flex flex-wrap items-center gap-4">
+          <Orb variant="ios" box={40} size="small" />
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+            runs on iOS · iPadOS · visionOS — one codebase, whole ecosystem
+          </p>
+        </Reveal>
 
         <div className="mt-14 grid gap-5 lg:mt-20 lg:grid-cols-3">
           {tracks.map((t, i) => (

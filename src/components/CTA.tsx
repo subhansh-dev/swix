@@ -3,6 +3,7 @@ import paint from "@/assets/paint.webp";
 import { Reveal } from "./ui/Reveal";
 import { Deco, Sticker, Squiggle } from "./ui/Deco";
 import { Magnetic } from "./ui/Magnetic";
+import { Orb } from "./ui/Orb";
 import { useSpotlight } from "@/hooks/useSpotlight";
 import { cn } from "@/utils/cn";
 
@@ -59,6 +60,7 @@ export function CTA() {
                 <div className="flex flex-wrap items-center gap-3">
                   <Sticker rotate={-3} color="bg-swift text-white">Cohort 07</Sticker>
                   <Sticker rotate={4} color="bg-lemon text-ink">Applications close 28 Feb</Sticker>
+                  <Orb variant="swift" box={48} className="ml-1" />
                 </div>
                 <h2 className="display mt-6 text-balance text-4xl sm:text-6xl lg:text-[4.6rem]">
                   Your first app is one <span className="text-gradient">Thursday</span> away.
@@ -69,7 +71,7 @@ export function CTA() {
                 </p>
 
                 <form onSubmit={submit} className="mt-10 max-w-lg" aria-label="Apply to Swift Coding Club">
-                  <div className="flex flex-col gap-2 rounded-[22px] border-[3px] border-ink bg-white p-2 shadow-[0_6px_0_rgba(11,11,12,0.9)] sm:flex-row">
+                  <div className="flex flex-col gap-2 rounded-[22px] border-[3px] border-ink bg-white/85 p-2 shadow-[0_6px_0_rgba(11,11,12,0.9)] backdrop-blur-xl backdrop-saturate-150 sm:flex-row">
                     <label htmlFor="email" className="sr-only">University email</label>
                     <input
                       id="email"

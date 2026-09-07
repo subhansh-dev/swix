@@ -3,6 +3,7 @@ import showcase from "@/assets/showcase-app.webp";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Deco, Sticker } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
 import { useCanHover } from "@/hooks/useMedia";
 import { cn } from "@/utils/cn";
 
@@ -119,7 +120,19 @@ export function Showcase() {
 
         <div className="mt-16 grid items-center gap-12 lg:mt-24 lg:grid-cols-12">
           <Reveal variant="scale" className="lg:col-span-5">
-            <TiltPhone />
+            <div className="relative">
+              <TiltPhone />
+              {/* ios orb coin, floating over the phone */}
+              <div className="absolute right-0 top-6 z-10 sm:-right-2">
+                <div
+                  className="gpu animate-float flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_18px_40px_-18px_rgba(11,11,12,0.65)]"
+                  style={{ animationDelay: "-6s" }}
+                >
+                  <Orb variant="ios" box={32} size="small" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">iOS 19 ready</span>
+                </div>
+              </div>
+            </div>
           </Reveal>
 
           <div className="lg:col-span-7 lg:pl-8">

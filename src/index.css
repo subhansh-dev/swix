@@ -205,6 +205,53 @@ body {
   transform: scaleX(1);
 }
 
+/* Directional + blur + 3D reveal variants (same observer, different entry) */
+.reveal-left,
+.reveal-right,
+.reveal-blur,
+.reveal-flip3d {
+  opacity: 0;
+  transition:
+    opacity 1s var(--ease-out-expo),
+    transform 1.05s var(--ease-out-expo),
+    filter 1s var(--ease-out-expo);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.reveal-left  { transform: translate3d(-52px, 0, 0); }
+.reveal-right { transform: translate3d(52px, 0, 0); }
+.reveal-blur  { transform: translate3d(0, 34px, 0); filter: blur(14px); }
+.reveal-flip3d {
+  transform: perspective(1100px) rotateX(-14deg) translate3d(0, 52px, 0);
+  transform-origin: 50% 0%;
+}
+.reveal-left.is-in,
+.reveal-right.is-in,
+.reveal-blur.is-in,
+.reveal-flip3d.is-in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+.reveal-blur.is-in { filter: blur(0); }
+
+/* Scroll-scrub driven elements read --scrub (0..1) set from rAF in useScrollScrub */
+.scrub {
+  --scrub: 0;
+}
+
+/* Giant outlined display text for scroll strips */
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(11, 11, 12, 0.22);
+  paint-order: stroke fill;
+}
+.text-stroke-dark {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3);
+  paint-order: stroke fill;
+}
+
 /* ---------- Swiss grid texture ---------- */
 .grid-lines {
   background-image:
@@ -275,6 +322,46 @@ body {
   mask-composite: exclude;
   pointer-events: none;
 }
+}
+
+/* ---------- Floating glass chips (light/dark) ---------- */
+.glass-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 12px 30px -14px rgba(11, 11, 12, 0.28);
+}
+.glass-chip-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  background: rgba(20, 24, 56, 0.42);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18) inset,
+    0 18px 44px -18px rgba(0, 0, 0, 0.65);
+}
+
+/* Frosted panel on light backgrounds — sits over colorful/blobby sections */
+.frost {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.5));
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 24px 60px -28px rgba(11, 11, 12, 0.25);
 }
 
 /* ---------- Confetti dots ---------- */
@@ -398,6 +485,46 @@ body {
 @media (hover: hover) {
   .sheen:hover::before { opacity: 1; }
 }
+/* ---------- 3D glass cube (pure CSS, no WebGL) ---------- */
+.cube {
+  position: relative;
+  transform-style: preserve-3d;
+}
+.cube-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 55%, rgba(240, 81, 56, 0.16));
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.65) inset,
+    0 -12px 26px -14px rgba(240, 81, 56, 0.35) inset;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba(11, 11, 12, 0.8);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+@keyframes cube-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -18px, 0); }
+}
+
+/* ---------- CRT section helpers ---------- */
+@keyframes bsod-progress {
+  0% { width: 2%; }
+  55% { width: 78%; }
+  75% { width: 88%; }
+  90% { width: 96%; }
+  100% { width: 100%; }
+}
+@keyframes crt-glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.9; }
+}
+
 /* Moving light sweep across glass surfaces */
 .sweep::after {
   content: "";
@@ -576,9 +703,14 @@ body {
     scroll-behavior: auto !important;
   }
   .reveal,
-  .reveal-scale {
+  .reveal-scale,
+  .reveal-left,
+  .reveal-right,
+  .reveal-blur,
+  .reveal-flip3d {
     opacity: 1;
     transform: none;
+    filter: none;
   }
   .reveal-line {
     transform: none;

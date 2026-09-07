@@ -23,10 +23,12 @@ const Coverflow = lazy(() => import("./components/Coverflow").then((m) => ({ def
 const Timeline = lazy(() => import("./components/Timeline").then((m) => ({ default: m.Timeline })));
 const Gallery = lazy(() => import("./components/Gallery").then((m) => ({ default: m.Gallery })));
 const Stats = lazy(() => import("./components/Stats").then((m) => ({ default: m.Stats })));
+const GalleryWall = lazy(() => import("./components/GalleryWall").then((m) => ({ default: m.GalleryWall })));
 const Team = lazy(() => import("./components/Team").then((m) => ({ default: m.Team })));
 const Testimonials = lazy(() => import("./components/Testimonials").then((m) => ({ default: m.Testimonials })));
 const Tracks = lazy(() => import("./components/Tracks").then((m) => ({ default: m.Tracks })));
 const FAQ = lazy(() => import("./components/FAQ").then((m) => ({ default: m.FAQ })));
+const Terminal = lazy(() => import("./components/Terminal").then((m) => ({ default: m.Terminal })));
 const CTA = lazy(() => import("./components/CTA").then((m) => ({ default: m.CTA })));
 const Footer = lazy(() => import("./components/Footer").then((m) => ({ default: m.Footer })));
 
@@ -55,10 +57,12 @@ export default function App() {
           <Timeline />
           <Gallery />
           <Stats />
+          <GalleryWall />
           <Team />
           <Testimonials />
           <Tracks />
           <FAQ />
+          <Terminal />
           <CTA />
         </Suspense>
       </main>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Deco, Sticker } from "./ui/Deco";
+import { Orb } from "./ui/Orb";
 import { cn } from "@/utils/cn";
 
 const steps = [
@@ -102,6 +103,10 @@ export function Timeline() {
         <Reveal delay={200} className={cn("mt-16 flex flex-wrap items-center gap-4")}>
           <a href="#join" className="btn btn-accent">Start Week 01</a>
           <Sticker rotate={-3} color="bg-lemon text-ink">No experience needed</Sticker>
+          <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
+            <Orb variant="swift" box={30} size="small" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">14 weeks · one app</span>
+          </span>
         </Reveal>
       </div>
     </section>

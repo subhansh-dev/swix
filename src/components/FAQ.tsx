@@ -11,11 +11,11 @@ const faqs = [
   },
   {
     q: "I've never coded before. Is this for me?",
-    a: "Yes. Cohorts start from Swift fundamentals — variables, optionals, functions — before touching SwiftUI. We pace the first four weeks for absolute beginners, and mentors run extra 'zero-to-Xcode' sessions on Saturdays.",
+    a: "Yes. We start from Swift fundamentals — variables, optionals, functions — before touching SwiftUI. We pace the first four weeks for absolute beginners, and mentors run extra 'zero-to-Xcode' sessions on Saturdays.",
   },
   {
     q: "Which branches or years can join?",
-    a: "Every student of Parul University, from any faculty and any year. Our current cohort includes CSE, IT, BCA, Design, Pharmacy and MBA students.",
+    a: "Every student of Parul University, from any faculty and any year. Our current members include CSE, IT, BCA, Design, Pharmacy and MBA students.",
   },
   {
     q: "How much time does it take each week?",

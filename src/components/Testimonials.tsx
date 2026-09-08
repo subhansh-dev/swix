@@ -16,7 +16,7 @@ const stories = [
   {
     quote: "The code reviews were brutal in the best way. I finally understood why architecture matters.",
     name: "Dev Chaudhary",
-    role: "B.Tech IT '26 · Cohort 05",
+    role: "B.Tech IT '26 · Club member",
     initials: "DC",
     tone: "bg-ink text-white",
   },
@@ -37,7 +37,7 @@ const stories = [
   {
     quote: "It's the only club where the output is a product, not a certificate.",
     name: "Sneha Rathod",
-    role: "M.Sc IT '25 · Cohort Lead",
+    role: "M.Sc IT '25 · Club lead",
     initials: "SR",
     tone: "bg-ink text-white",
   },

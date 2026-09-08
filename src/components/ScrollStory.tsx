@@ -12,16 +12,17 @@ import { useReducedMotion } from "@/hooks/useMedia";
  *    dirty-flag driven) — there is no idle animation loop burning battery
  * The narrative: scattered code fragments assemble into an app-icon mosaic,
  * the club's Swift mark resolves on top, then shipped apps orbit out.
+ * Liquid ribbon waves flow underneath and radar rings sweep during assembly.
  */
 
-const PALETTE = ["#F05138", "#FF7A5C", "#FFD3BC", "#D9CFFF", "#B9ECCD", "#BDE4FF", "#FFEDA3", "#D63F27"];
-const BIRD_PATH = "M46 44c-2.5 3-8 4-14 2-8-3-15-10-19-18 5 5 11 9 16 11-6-6-11-13-13-19 6 7 13 13 20 17 1-6-1-12-4-17 7 5 12 12 13 20 0 2 0 4-1 6 3 2 5 6 2 10z";
+const PALETTE = ["#F05138", "#E84830", "#FF7A5C", "#FFD3BC", "#C2B8A3", "#8A7E6B", "#3B3530", "#D63F27"];
+const BIRD_PATH = "M47.0606,36.6607c-0.0014-0.0018-0.0027-0.0031-0.0042-0.0048c0.0657-0.2236,0.1335-0.4458,0.191-0.675c2.465-9.8209-3.5511-21.4319-13.7316-27.5454c4.4613,6.0479,6.4339,13.3733,4.6813,19.7795c-0.1563,0.5714-0.3442,1.1198-0.5519,1.6528c-0.2254-0.1481-0.5094-0.3162-0.8908-0.5265c0,0-10.1269-6.2527-21.1028-17.3122c-0.288-0.2903,5.8528,8.777,12.8219,16.1399c-3.2834-1.8427-12.4338-8.5004-18.2266-13.8023c0.7117,1.1869,1.5582,2.3298,2.4887,3.4301c4.8375,6.1349,11.1462,13.7044,18.7043,19.5169c-5.3104,3.2498-12.8141,3.5025-20.2852,0.0034c-1.8479-0.866-3.5851-1.9109-5.1932-3.0981c3.1625,5.0585,8.0332,9.4229,13.9613,11.9708c7.0695,3.0381,14.0996,2.8321,19.3356,0.0498l-0.0041,0.006c0.0239-0.0151,0.0543-0.0316,0.0791-0.0469c0.215-0.1156,0.4284-0.2333,0.6371-0.3576c2.5157-1.3058,7.4847-2.6306,10.1518,2.5588C50.7755,49.6699,52.1635,42.9395,47.0606,36.6607z";
 
 const CAPTIONS = [
-  { at: 0.02, t: "Every great app starts as scattered ideas.", tag: "Scene 01 · Fragments" },
-  { at: 0.32, t: "Fourteen weeks turn fragments into structure.", tag: "Scene 02 · Assembly" },
-  { at: 0.58, t: "One semester. One shipped app.", tag: "Scene 03 · Resolve" },
-  { at: 0.82, t: "Welcome to the Swift Coding Club.", tag: "Scene 04 · Orbit" },
+  { n: "01", at: 0.02, t: "Every great app starts as scattered ideas.", sub: "Weeks 1–2 · teams, ideas & Swift fundamentals", tag: "Scene 01 · Fragments" },
+  { n: "02", at: 0.32, t: "Fourteen weeks turn fragments into structure.", sub: "Weeks 3–9 · build, review, repeat", tag: "Scene 02 · Assembly" },
+  { n: "03", at: 0.58, t: "One semester. One shipped app.", sub: "Weeks 10–13 · TestFlight beta & polish", tag: "Scene 03 · Resolve" },
+  { n: "04", at: 0.82, t: "Welcome to the Swift Coding Club.", sub: "Week 14 · Demo Day → App Store", tag: "Scene 04 · Orbit" },
 ];
 
 type Tile = {
@@ -32,10 +33,13 @@ type Tile = {
   delay: number; // 0..1 stagger offset
 };
 
-type Orbiter = { angle: number; glyph: string; color: string; delay: number };
+type OrbiterShape = "droplet" | "diamond" | "ring" | "spark" | "gem" | "pulse";
+const ORBIT_SHAPES: OrbiterShape[] = ["droplet", "diamond", "ring", "spark", "gem", "pulse"];
+type Orbiter = { angle: number; shape: OrbiterShape; color: string; delay: number };
 
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeOutBack = (t: number) => { const c = 1.70158; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -75,30 +79,20 @@ function buildTiles(): Tile[] {
   return tiles;
 }
 
-const ORBIT_GLYPHS = ["\u2665", "\u2601", "\u2605", "\u25B6", "\u2713", "\u266A"];
 function buildOrbiters(): Orbiter[] {
-  return ORBIT_GLYPHS.map((glyph, i) => ({
-    angle: (i / ORBIT_GLYPHS.length) * Math.PI * 2,
-    glyph,
+  return ORBIT_SHAPES.map((shape, i) => ({
+    angle: (i / ORBIT_SHAPES.length) * Math.PI * 2,
+    shape,
     color: PALETTE[i % PALETTE.length],
     delay: i * 0.05,
   }));
-}
-
-function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r);
-  ctx.arcTo(x, y, x + w, y, r);
-  ctx.closePath();
 }
 
 export function ScrollStory() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const captionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dotRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const barRef = useRef<HTMLDivElement>(null);
   const timecodeRef = useRef<HTMLSpanElement>(null);
   const sceneRef = useRef<HTMLSpanElement>(null);
@@ -159,12 +153,119 @@ export function ScrollStory() {
       const glowT = clamp01((p - 0.5) / 0.4);
       if (glowT > 0) {
         const g = ctx.createRadialGradient(0, 0, 10, 0, 0, 420);
-        g.addColorStop(0, `rgba(240,81,56,${0.22 * glowT})`);
+        g.addColorStop(0, `rgba(240,81,56,${0.14 * glowT})`);
         g.addColorStop(1, "rgba(240,81,56,0)");
         ctx.fillStyle = g;
         ctx.beginPath();
         ctx.arc(0, 0, 420, 0, Math.PI * 2);
         ctx.fill();
+      }
+
+      // liquid metal waves — thick curvy lines with molten metal material
+      const metalWaves = [
+        { baseY: -220, amp: 70, freq: 0.004, speed: 6, phase: 0, width: 32, alpha: 0.5 },
+        { baseY: -150, amp: 55, freq: 0.005, speed: -4.5, phase: 1.8, width: 20, alpha: 0.4 },
+        { baseY: 195, amp: 65, freq: 0.0035, speed: 5.5, phase: 3.5, width: 26, alpha: 0.45 },
+      ];
+      const mwAlpha = clamp01((p - 0.03) / 0.1) * (1 - clamp01((p - 0.9) / 0.08));
+      if (mwAlpha > 0) {
+        for (const w of metalWaves) {
+          const pts: { x: number; y: number }[] = [];
+          for (let x = -560; x <= 560; x += 5) {
+            const y = w.baseY
+              + Math.sin(x * w.freq + p * w.speed + w.phase) * w.amp
+              + Math.sin(x * 0.0025 + p * 3 + w.phase) * 24
+              + Math.sin(x * 0.007 + p * 2 + w.phase * 1.5) * 12;
+            pts.push({ x, y });
+          }
+          // thick filled wave body — top half lighter, bottom half darker
+          ctx.save();
+          ctx.globalAlpha = mwAlpha;
+          ctx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            const p1 = pts[i];
+            const normal = i < pts.length - 1
+              ? { x: -(pts[i + 1].y - p1.y), y: pts[i + 1].x - p1.x }
+              : { x: -(p1.y - pts[i - 1].y), y: p1.x - pts[i - 1].x };
+            const len = Math.hypot(normal.x, normal.y) || 1;
+            const nx = (normal.x / len) * w.width * 0.5;
+            const ny = (normal.y / len) * w.width * 0.5;
+            if (i === 0) ctx.moveTo(p1.x + nx, p1.y + ny);
+            else ctx.lineTo(p1.x + nx, p1.y + ny);
+          }
+          for (let i = pts.length - 1; i >= 0; i--) {
+            const p1 = pts[i];
+            const normal = i < pts.length - 1
+              ? { x: -(pts[i + 1].y - p1.y), y: pts[i + 1].x - p1.x }
+              : { x: -(p1.y - pts[i - 1].y), y: p1.x - pts[i - 1].x };
+            const len = Math.hypot(normal.x, normal.y) || 1;
+            const nx = (normal.x / len) * w.width * 0.5;
+            const ny = (normal.y / len) * w.width * 0.5;
+            ctx.lineTo(p1.x - nx, p1.y - ny);
+          }
+          ctx.closePath();
+          // metallic gradient along the wave
+          const mg = ctx.createLinearGradient(0, w.baseY - 80, 0, w.baseY + 80);
+          mg.addColorStop(0, "rgba(255,255,255,0.35)");
+          mg.addColorStop(0.2, "#FFD3BC");
+          mg.addColorStop(0.45, "#F05138");
+          mg.addColorStop(0.7, "#C2B8A3");
+          mg.addColorStop(1, "rgba(11,11,12,0.2)");
+          ctx.fillStyle = mg;
+          ctx.shadowColor = "#F05138";
+          ctx.shadowBlur = 22;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          // specular highlight — bright line along top edge
+          ctx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            const p1 = pts[i];
+            const normal = i < pts.length - 1
+              ? { x: -(pts[i + 1].y - p1.y), y: pts[i + 1].x - p1.x }
+              : { x: -(p1.y - pts[i - 1].y), y: p1.x - pts[i - 1].x };
+            const len = Math.hypot(normal.x, normal.y) || 1;
+            const nx = (normal.x / len) * w.width * 0.48;
+            const ny = (normal.y / len) * w.width * 0.48;
+            if (i === 0) ctx.moveTo(p1.x + nx, p1.y + ny);
+            else ctx.lineTo(p1.x + nx, p1.y + ny);
+          }
+          ctx.strokeStyle = "rgba(255,255,255,0.5)";
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+          // dark edge line along bottom
+          ctx.beginPath();
+          for (let i = 0; i < pts.length; i++) {
+            const p1 = pts[i];
+            const normal = i < pts.length - 1
+              ? { x: -(pts[i + 1].y - p1.y), y: pts[i + 1].x - p1.x }
+              : { x: -(p1.y - pts[i - 1].y), y: p1.x - pts[i - 1].x };
+            const len = Math.hypot(normal.x, normal.y) || 1;
+            const nx = (normal.x / len) * w.width * 0.48;
+            const ny = (normal.y / len) * w.width * 0.48;
+            if (i === 0) ctx.moveTo(p1.x - nx, p1.y - ny);
+            else ctx.lineTo(p1.x - nx, p1.y - ny);
+          }
+          ctx.strokeStyle = "rgba(11,11,12,0.15)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+
+      // radar rings sweep while assembling
+      if (p > 0.12 && p < 0.72) {
+        const window_ = clamp01((p - 0.12) / 0.08) * (1 - clamp01((p - 0.62) / 0.1));
+        for (let k = 0; k < 3; k++) {
+          const rr = (((p * 1.4 + k / 3) % 1) + 1) % 1;
+          const radius = 60 + rr * 340;
+          ctx.globalAlpha = (1 - rr) * 0.18 * window_;
+          ctx.strokeStyle = "#F05138";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(0, 0, radius, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
       }
 
       // clip to rounded "app icon" boundary once tiles are mostly assembled
@@ -183,30 +284,74 @@ export function ScrollStory() {
         ctx.globalAlpha = scatterOpacity;
         ctx.translate(x, y);
         ctx.rotate(rot);
-        roundRectPath(ctx, -size / 2, -size / 2, size, size, 9);
+        // wobbly organic tile shape — edges undulate like liquid metal
+        const hs = size / 2;
+        const wobble = (1 - e) * 8 + 2; // more wobble when scattered, less when assembled
+        ctx.beginPath();
+        ctx.moveTo(-hs + Math.sin(p * 3 + tile.sx * 0.01) * wobble, -hs);
+        ctx.bezierCurveTo(
+          -hs * 0.3, -hs - Math.sin(p * 2.5 + tile.sy * 0.01) * wobble,
+          hs * 0.3, -hs + Math.cos(p * 2.8 + tile.sx * 0.02) * wobble,
+          hs, -hs + Math.sin(p * 3.2 + tile.sy * 0.015) * wobble
+        );
+        ctx.bezierCurveTo(
+          hs + Math.cos(p * 2.7 + tile.sx * 0.01) * wobble, -hs * 0.3,
+          hs - Math.sin(p * 3.1 + tile.sy * 0.02) * wobble, hs * 0.3,
+          hs + Math.cos(p * 2.9 + tile.sx * 0.015) * wobble, hs
+        );
+        ctx.bezierCurveTo(
+          hs * 0.3, hs + Math.sin(p * 2.6 + tile.sy * 0.01) * wobble,
+          -hs * 0.3, hs - Math.cos(p * 3 + tile.sx * 0.02) * wobble,
+          -hs + Math.sin(p * 2.8 + tile.sy * 0.015) * wobble, hs
+        );
+        ctx.bezierCurveTo(
+          -hs - Math.cos(p * 3.2 + tile.sx * 0.01) * wobble, hs * 0.3,
+          -hs + Math.sin(p * 2.9 + tile.sy * 0.02) * wobble, -hs * 0.3,
+          -hs + Math.sin(p * 3 + tile.sx * 0.01) * wobble, -hs
+        );
+        ctx.closePath();
         ctx.fillStyle = tile.color;
         ctx.fill();
         if (e > 0.94) {
-          ctx.globalAlpha = scatterOpacity * 0.35;
-          ctx.strokeStyle = "#ffffff";
-          ctx.lineWidth = 1.4;
+          ctx.globalAlpha = scatterOpacity * 0.25;
+          ctx.strokeStyle = "rgba(11,11,12,0.15)";
+          ctx.lineWidth = 0.8;
           ctx.stroke();
         }
         ctx.restore();
       }
 
-      // brand mark reveal
+      // brand mark reveal — white bird with glow
       const markT = clamp01((p - 0.56) / 0.22);
       if (markT > 0 && birdPath2D) {
-        const e = easeInOutCubic(markT);
+        const e = markT < 1 ? easeInOutCubic(markT) : 1;
+        const pop = easeOutBack(clamp01(markT / 0.55));
+        const breathe = 1 + Math.sin(p * 30) * 0.012;
+        // rotating dashed halo
+        ctx.save();
+        ctx.globalAlpha = e * 0.45;
+        ctx.strokeStyle = "#F05138";
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 13]);
+        ctx.lineDashOffset = -p * 220;
+        ctx.beginPath();
+        ctx.arc(0, 0, 150, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+        // bird — white, glowing, properly centered
         ctx.save();
         ctx.globalAlpha = e;
-        ctx.translate(0, -6);
-        ctx.scale(4.6 * lerp(0.7, 1, e), 4.6 * lerp(0.7, 1, e));
-        ctx.translate(-32, -32);
+        const s = 4.4 * pop * breathe;
+        ctx.translate(0, 0);
+        ctx.scale(s, s);
+        ctx.translate(-28, -30);
         ctx.fillStyle = "#ffffff";
-        ctx.shadowColor = "rgba(240,81,56,0.55)";
-        ctx.shadowBlur = 26;
+        ctx.shadowColor = "rgba(240,81,56,0.6)";
+        ctx.shadowBlur = 30;
+        ctx.fill(birdPath2D);
+        // second pass — sharper inner fill
+        ctx.shadowBlur = 0;
         ctx.fill(birdPath2D);
         ctx.restore();
       }
@@ -217,33 +362,120 @@ export function ScrollStory() {
         const radius = lerp(0, 300, easeOutCubic(orbitT));
         ctx.save();
         ctx.globalAlpha = orbitT;
-        ctx.strokeStyle = "rgba(11,11,12,0.12)";
-        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "rgba(11,11,12,0.08)";
+        ctx.lineWidth = 1;
         ctx.setLineDash([3, 10]);
         ctx.beginPath();
         ctx.arc(0, 0, radius, 0, Math.PI * 2);
         ctx.stroke();
+        // tilted second orbit
+        ctx.save();
+        ctx.rotate(-0.35);
+        ctx.scale(1, 0.55);
+        ctx.strokeStyle = "rgba(240,81,56,0.15)";
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 1.18, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
         ctx.setLineDash([]);
+        // satellites on tilted orbit
+        const tiltA = -0.35;
+        const cosT = Math.cos(tiltA);
+        const sinT = Math.sin(tiltA);
+        for (let k = 0; k < 3; k++) {
+          const a = p * 4 + (k * Math.PI * 2) / 3;
+          const ex = Math.cos(a) * radius * 1.18;
+          const ey = Math.sin(a) * radius * 1.18 * 0.55;
+          ctx.save();
+          ctx.globalAlpha = orbitT * 0.9;
+          ctx.translate(ex * cosT - ey * sinT, ex * sinT + ey * cosT);
+          ctx.fillStyle = PALETTE[(k + 2) % PALETTE.length];
+          ctx.beginPath();
+          ctx.arc(0, 0, 5, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
 
         for (const o of orbiters) {
           const local = clamp01((orbitT - o.delay) / (1 - o.delay || 1));
           const r = radius * easeOutCubic(local);
-          const ox = Math.cos(o.angle) * r;
-          const oy = Math.sin(o.angle) * r * 0.9;
+          const ox = Math.cos(o.angle + p * 1.2) * r;
+          const oy = Math.sin(o.angle + p * 1.2) * r * 0.9;
+          const sz = 16;
           ctx.save();
           ctx.globalAlpha = local;
           ctx.translate(ox, oy);
-          roundRectPath(ctx, -22, -22, 44, 44, 13);
-          ctx.fillStyle = "#ffffff";
-          ctx.fill();
-          ctx.lineWidth = 2;
-          ctx.strokeStyle = o.color;
-          ctx.stroke();
+          // liquid metal orbiter shapes
           ctx.fillStyle = o.color;
-          ctx.font = "600 22px system-ui, -apple-system, sans-serif";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(o.glyph, 0, 1);
+          ctx.strokeStyle = o.color;
+          ctx.lineWidth = 1.5;
+          if (o.shape === "droplet") {
+            // mercury droplet
+            ctx.beginPath();
+            ctx.moveTo(0, -sz);
+            ctx.bezierCurveTo(sz * 0.8, -sz * 0.3, sz * 0.7, sz * 0.5, 0, sz);
+            ctx.bezierCurveTo(-sz * 0.7, sz * 0.5, -sz * 0.8, -sz * 0.3, 0, -sz);
+            ctx.closePath();
+            ctx.fill();
+          } else if (o.shape === "diamond") {
+            // faceted gem
+            ctx.beginPath();
+            ctx.moveTo(0, -sz);
+            ctx.lineTo(sz * 0.6, 0);
+            ctx.lineTo(0, sz);
+            ctx.lineTo(-sz * 0.6, 0);
+            ctx.closePath();
+            ctx.fill();
+          } else if (o.shape === "ring") {
+            // hollow ring
+            ctx.beginPath();
+            ctx.arc(0, 0, sz * 0.7, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(0, 0, sz * 0.35, 0, Math.PI * 2);
+            ctx.stroke();
+          } else if (o.shape === "spark") {
+            // 4-point star
+            ctx.beginPath();
+            for (let k = 0; k < 8; k++) {
+              const a = (k / 8) * Math.PI * 2 - Math.PI / 2;
+              const rad = k % 2 === 0 ? sz : sz * 0.35;
+              const sx2 = Math.cos(a) * rad;
+              const sy2 = Math.sin(a) * rad;
+              if (k === 0) ctx.moveTo(sx2, sy2);
+              else ctx.lineTo(sx2, sy2);
+            }
+            ctx.closePath();
+            ctx.fill();
+          } else if (o.shape === "gem") {
+            // hexagonal gem
+            ctx.beginPath();
+            for (let k = 0; k < 6; k++) {
+              const a = (k / 6) * Math.PI * 2 - Math.PI / 2;
+              const sx2 = Math.cos(a) * sz * 0.75;
+              const sy2 = Math.sin(a) * sz * 0.75;
+              if (k === 0) ctx.moveTo(sx2, sy2);
+              else ctx.lineTo(sx2, sy2);
+            }
+            ctx.closePath();
+            ctx.fill();
+          } else {
+            // pulse — concentric circles
+            ctx.globalAlpha = local * 0.6;
+            ctx.beginPath();
+            ctx.arc(0, 0, sz, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.globalAlpha = local;
+            ctx.beginPath();
+            ctx.arc(0, 0, sz * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          // specular highlight on each shape
+          ctx.globalAlpha = local * 0.4;
+          ctx.fillStyle = "#ffffff";
+          ctx.beginPath();
+          ctx.arc(-sz * 0.2, -sz * 0.25, sz * 0.22, 0, Math.PI * 2);
+          ctx.fill();
           ctx.restore();
         }
         ctx.restore();
@@ -280,6 +512,15 @@ export function ScrollStory() {
           const op = Math.min(fadeIn, fadeOut);
           el.style.opacity = String(op);
           el.style.transform = `translate3d(0, ${(1 - fadeIn) * 16}px, 0)`;
+        });
+        // scrubber dots
+        dotRefs.current.forEach((el, i) => {
+          if (!el) return;
+          const done = p >= CAPTIONS[i].at;
+          const current = activeIdx === i;
+          el.style.background = done ? "#F05138" : "rgba(11,11,12,0.15)";
+          el.style.transform = `scale(${current ? 1.5 : 1})`;
+          el.style.boxShadow = current ? "0 0 0 4px rgba(240,81,56,0.2)" : "none";
         });
       }
     };
@@ -323,6 +564,14 @@ export function ScrollStory() {
       <div className="sticky top-0 flex h-dvh flex-col items-center justify-center overflow-hidden bg-warm">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
+          {/* cinematic vignette */}
+          <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at center, transparent 55%, rgba(11,11,12,0.10) 100%)" }} />
+        </div>
+
+        {/* liquid morph blobs drifting behind canvas */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="gpu animate-morph absolute -left-32 top-[8%] h-[46vmin] w-[46vmin] rounded-full bg-swift/20 blur-3xl" />
+          <div className="gpu animate-morph absolute -right-32 bottom-[6%] h-[52vmin] w-[52vmin] rounded-full bg-swift-soft/30 blur-3xl" style={{ animationDelay: "-9s" }} />
         </div>
 
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden role="presentation" />
@@ -338,7 +587,7 @@ export function ScrollStory() {
         </div>
 
         {/* captions */}
-        <div className="pointer-events-none relative z-10 mx-auto max-w-2xl px-6 text-center">
+        <div className="pointer-events-none relative z-10 mx-auto w-full max-w-3xl px-6 text-center">
           {CAPTIONS.map((c, i) => (
             <div
               key={c.t}
@@ -346,7 +595,11 @@ export function ScrollStory() {
               className="absolute inset-x-0 transition-opacity"
               style={{ opacity: 0 }}
             >
-              <h3 className="display text-balance text-3xl sm:text-5xl">{c.t}</h3>
+              <span aria-hidden className="display pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-mono text-[11rem] font-bold leading-none text-stroke opacity-40 sm:text-[15rem]">
+                {c.n}
+              </span>
+              <p className="relative font-mono text-[11px] uppercase tracking-[0.28em] text-swift-deep">{c.sub}</p>
+              <h3 className="display relative mt-3 text-balance text-3xl sm:text-5xl">{c.t}</h3>
             </div>
           ))}
         </div>
@@ -358,7 +611,16 @@ export function ScrollStory() {
             <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-ink/10">
               <div ref={barRef} className="gpu absolute inset-y-0 left-0 w-full origin-left rounded-full bg-gradient-to-r from-swift to-swift-soft" style={{ transform: "scaleX(0)" }} />
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted">scroll</span>
+            <span className="flex items-center gap-1.5" aria-hidden>
+              {CAPTIONS.map((c, i) => (
+                <span
+                  key={c.n}
+                  ref={(el) => { dotRefs.current[i] = el; }}
+                  className="gpu h-1.5 w-1.5 rounded-full transition-all"
+                  style={{ background: "rgba(11,11,12,0.15)" }}
+                />
+              ))}
+            </span>
           </div>
         </div>
       </div>

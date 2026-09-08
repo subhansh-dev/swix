@@ -118,7 +118,7 @@ export function AppleLab() {
                   <Sticker rotate={6} color="bg-swift text-white">ACT</Sticker>
                 </div>
                 <p className="mt-5 text-[13.5px] leading-relaxed text-ink/75">
-                  Leads the Develop in Swift curriculum on campus. Mentored the cohort behind Parul's
+                  Leads the Develop in Swift curriculum on campus. Mentored the team behind Parul's
                   Swift Student Challenge entries — including Praneel's Top-350 project.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-1.5">

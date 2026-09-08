@@ -13,7 +13,7 @@ const apps = [
     tagline: "Every event at Parul, one tap away.",
     stack: ["SwiftUI", "CloudKit", "WidgetKit"],
     stat: "4.8 ★ · 3.1k downloads",
-    by: "Cohort 05",
+    by: "Club · 2025",
     color: "bg-coral",
   },
   {
@@ -21,7 +21,7 @@ const apps = [
     tagline: "Hostel mess menus, ratings & skip-meal credits.",
     stack: ["SwiftUI", "Swift Data", "Push"],
     stat: "2.4k weekly actives",
-    by: "Cohort 06",
+    by: "Club · 2026",
     color: "bg-mint",
   },
   {
@@ -29,7 +29,7 @@ const apps = [
     tagline: "Attendance & timetable with Live Activities.",
     stack: ["ActivityKit", "Combine", "Charts"],
     stat: "Swift Student Challenge '25",
-    by: "Cohort 04",
+    by: "Club · 2024",
     color: "bg-lavender",
   },
   {
@@ -37,7 +37,7 @@ const apps = [
     tagline: "Shared auto-rickshaw rides across campus gates.",
     stack: ["MapKit", "Core Location", "StoreKit"],
     stat: "Incubated at PU IIC",
-    by: "Cohort 06",
+    by: "Club · 2026",
     color: "bg-lemon",
   },
 ];

@@ -26,14 +26,14 @@ const tracks: Track[] = [
     cta: "Walk in Thursday",
     seats: { taken: 186, total: 200 },
     perks: ["Open labs, every week", "Discord community", "Guest talks & demo nights", "Zero commitment"],
-    tint: "card-mint",
-    accent: "bg-swift",
+    tint: "card-ember",
+    accent: "bg-[#F05138]",
   },
   {
     name: "Builder",
-    line: "The full cohort",
+    line: "The full program",
     desc: "The 14-week program. Assigned mentor, Mac Lab access, and one capstone app on your name by Demo Day.",
-    cta: "Apply for Cohort 07",
+    cta: "Become a Builder",
     seats: { taken: 47, total: 60 },
     featured: true,
     perks: [
@@ -44,13 +44,13 @@ const tracks: Track[] = [
       "Publish under the club's Apple Developer account",
       "Hackathon & Swift Student Challenge squad",
     ],
-    tint: "card-coral",
-    accent: "bg-swift-deep",
+    tint: "card-ember-deep",
+    accent: "bg-[#FF7A5C]",
   },
   {
     name: "Core",
     line: "Run the club",
-    desc: "For members who've shipped once and want to teach. Selected from every cohort by the outgoing Core.",
+    desc: "For members who've shipped once and want to teach. Selected every semester by the outgoing Core.",
     cta: "Express interest",
     seats: { taken: 6, total: 6 },
     perks: [
@@ -60,8 +60,8 @@ const tracks: Track[] = [
       "Incubation referrals (PU IIC)",
       "Core badge, hoodie & alumni network",
     ],
-    tint: "card-lavender",
-    accent: "bg-swift",
+    tint: "card-ember-stone",
+    accent: "bg-[#FFD3BC]",
   },
 ];
 
@@ -77,7 +77,7 @@ function Seats({ taken, total }: { taken: number; total: number }) {
       </div>
       <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-ink/10">
         <div
-          className="gpu h-full rounded-full bg-gradient-to-r from-swift to-swift-soft transition-[width] duration-1000 ease-[var(--ease-out-expo)]"
+          className="gpu h-full rounded-full bg-gradient-to-r from-[#F05138] via-[#FF7A5C] to-[#FFD3BC] transition-[width] duration-1000 ease-[var(--ease-out-expo)]"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -123,7 +123,7 @@ export function Tracks() {
                     <div className="flex items-start justify-between">
                       <div>
                         <h3 className="text-2xl font-bold tracking-tight">{t.name}</h3>
-                        <p className="mt-1 text-[13px] font-medium text-swift-deep">{t.line}</p>
+                        <p className="mt-1 text-[13px] font-medium text-[#E84830]">{t.line}</p>
                       </div>
                       <span className="sticker !shadow-[0_2px_0_rgba(11,11,12,0.8)]" style={{ ["--r" as string]: "6deg", background: "#fff", color: "#0b0b0c" }}>
                         Free
@@ -140,7 +140,7 @@ export function Tracks() {
                     <ul className="mt-7 space-y-3">
                       {t.perks.map((p) => (
                         <li key={p} className="flex items-start gap-3 text-[14px]">
-                          <svg className="mt-0.5 h-4 w-4 shrink-0 text-swift-deep" viewBox="0 0 16 16" fill="none" aria-hidden>
+                          <svg className="mt-0.5 h-4 w-4 shrink-0 text-[#F05138]" viewBox="0 0 16 16" fill="none" aria-hidden>
                             <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                           <span className="text-ink/85">{p}</span>
@@ -174,7 +174,7 @@ export function Tracks() {
             <p className="text-[15px] font-medium">
               Open to every Parul University student — any faculty, any year, any experience level.
             </p>
-            <Sticker rotate={-3} color="bg-swift text-white">No fee · Thu 5pm</Sticker>
+            <Sticker rotate={-3} color="bg-[#FFD3BC] text-ink">No fee · Thu 5pm</Sticker>
           </div>
         </Reveal>
       </div>

@@ -15,13 +15,13 @@ type App = {
 };
 
 const apps: App[] = [
-  { name: "Campus", cat: "Events", by: "Cohort 05", from: "#F05138", to: "#FF8A5B", accent: "#F05138", rows: ["Techfest · Main Audi", "Guest Lecture · B2", "Hack Night · Lab 3"] },
-  { name: "Mess Mate", cat: "Hostel", by: "Cohort 06", from: "#2B7FFF", to: "#7AB8FF", accent: "#2B7FFF", rows: ["Lunch · Poha, Chai", "Skip meal · 2 credits", "Rating · 4.6 ★"] },
-  { name: "Pulse", cat: "Attendance", by: "Cohort 04", from: "#12B76A", to: "#6EE7B7", accent: "#12B76A", rows: ["Today · 5 of 6", "Live Activity on", "Bunk risk · Low"] },
-  { name: "Raahi", cat: "Rides", by: "Cohort 06", from: "#7A5AF8", to: "#C4B5FD", accent: "#7A5AF8", rows: ["Gate 2 → Hostel", "3 seats left", "₹15 per head"] },
-  { name: "StudyLoop", cat: "Focus", by: "Cohort 05", from: "#FF9F0A", to: "#FFD48A", accent: "#FF9F0A", rows: ["Session · 48 min", "Streak · 21 days", "Room · 4 friends"] },
-  { name: "Parul Maps", cat: "Navigation", by: "Cohort 03", from: "#0BA5EC", to: "#7DD3FC", accent: "#0BA5EC", rows: ["Block B · 2 min", "Library · 6 min", "Canteen · open"] },
-  { name: "CodeDeck", cat: "Practice", by: "Cohort 07", from: "#EC4899", to: "#FBCFE8", accent: "#EC4899", rows: ["Daily · Optionals", "Solved · 128", "Rank · 3rd"] },
+  { name: "Campus", cat: "Events", by: "Club · 2025", from: "#F05138", to: "#FF8A5B", accent: "#F05138", rows: ["Techfest · Main Audi", "Guest Lecture · B2", "Hack Night · Lab 3"] },
+  { name: "Mess Mate", cat: "Hostel", by: "Club · 2026", from: "#2B7FFF", to: "#7AB8FF", accent: "#2B7FFF", rows: ["Lunch · Poha, Chai", "Skip meal · 2 credits", "Rating · 4.6 ★"] },
+  { name: "Pulse", cat: "Attendance", by: "Club · 2024", from: "#12B76A", to: "#6EE7B7", accent: "#12B76A", rows: ["Today · 5 of 6", "Live Activity on", "Bunk risk · Low"] },
+  { name: "Raahi", cat: "Rides", by: "Club · 2026", from: "#7A5AF8", to: "#C4B5FD", accent: "#7A5AF8", rows: ["Gate 2 → Hostel", "3 seats left", "₹15 per head"] },
+  { name: "StudyLoop", cat: "Focus", by: "Club · 2025", from: "#FF9F0A", to: "#FFD48A", accent: "#FF9F0A", rows: ["Session · 48 min", "Streak · 21 days", "Room · 4 friends"] },
+  { name: "Parul Maps", cat: "Navigation", by: "Club · 2023", from: "#0BA5EC", to: "#7DD3FC", accent: "#0BA5EC", rows: ["Block B · 2 min", "Library · 6 min", "Canteen · open"] },
+  { name: "CodeDeck", cat: "Practice", by: "Club · 2026", from: "#EC4899", to: "#FBCFE8", accent: "#EC4899", rows: ["Daily · Optionals", "Solved · 128", "Rank · 3rd"] },
 ];
 
 function Screen({ app, live }: { app: App; live: boolean }) {

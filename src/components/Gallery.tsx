@@ -20,7 +20,7 @@ const faces = [
   { t: "Build", d: "Every session ends with running code.", bg: "linear-gradient(140deg,#F05138,#FF8A5B)", text: "text-white" },
   { t: "Review", d: "Seniors read your diffs, line by line.", bg: "linear-gradient(140deg,#D9CFFF,#B8A8FF)", text: "text-ink" },
   { t: "Ship", d: "TestFlight today, App Store next month.", bg: "linear-gradient(140deg,#FFD48A,#FFB86C)", text: "text-ink" },
-  { t: "Teach", d: "Then you run the next cohort's lab.", bg: "linear-gradient(140deg,#B9ECCD,#87D9A8)", text: "text-ink" },
+  { t: "Teach", d: "Then you run the juniors' lab.", bg: "linear-gradient(140deg,#B9ECCD,#87D9A8)", text: "text-ink" },
 ];
 
 function Cube() {
@@ -111,7 +111,7 @@ export function Gallery() {
                 </h3>
                 <p className="relative mt-3 text-pretty text-[15px] leading-relaxed text-ink/70">
                   Build something small. Have it reviewed by someone better than you. Ship it to real
-                  people. Then teach it to the cohort behind you. Repeat for fourteen weeks.
+                  people. Then teach it to the juniors behind you. Repeat for fourteen weeks.
                 </p>
                 <ul className="mt-8 space-y-3">
                   {["Pair programming, not passive listening", "Live code review on the projector", "Demo every lab — no hiding", "Seniors sit with juniors, always"].map((t) => (

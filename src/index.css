@@ -125,6 +125,10 @@
 }
 
 /* ---------- Base ---------- */
+@media (hover: hover) and (pointer: fine) {
+  html, a, button, [data-cursor='hot'] { cursor: none !important; }
+  *, *::before, *::after { cursor: none !important; }
+}
 html {
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -423,6 +427,9 @@ body {
 
 /* ---------- Colorful cards ---------- */
 .card-coral    { background: linear-gradient(140deg, #ffe0cc, #ffc1a0); }
+.card-ember    { background: linear-gradient(140deg, #fff0e6, #ffd3bc); }
+.card-ember-deep { background: linear-gradient(140deg, #ffe6d8, #ffc8a8); }
+.card-ember-stone { background: linear-gradient(140deg, #f5efe8, #cbbca8); }
 .card-peach    { background: linear-gradient(140deg, #fff0de, #ffd8b4); }
 .card-lavender { background: linear-gradient(140deg, #ece3ff, #d1c0ff); }
 .card-mint     { background: linear-gradient(140deg, #defbe9, #b2eec6); }

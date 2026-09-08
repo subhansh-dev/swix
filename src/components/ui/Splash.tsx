@@ -71,12 +71,12 @@ export function Splash() {
       aria-label="Loading Swift Coding Club"
       className={cn(
         "fixed inset-0 z-[100] flex items-center justify-center transition-all duration-700 ease-[var(--ease-out-expo)]",
-        phase === "exit" ? "opacity-0 scale-[1.04]" : "opacity-100 scale-100"
+        phase === "exit" ? "opacity-0 scale-[1.08]" : "opacity-100 scale-100"
       )}
     >
-      {/* paper background with the same warm wash as the site */}
-      <div aria-hidden className="absolute inset-0 bg-paper" />
-      <div aria-hidden className="absolute inset-0 bg-warm" />
+      {/* paper background with ember liquid-metal wash */}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-[#FFF8F2] via-[#FFE4D6]/60 to-[#FFF0E6]/40" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-tr from-[#F05138]/10 via-[#FFD3BC]/20 to-[#C2B8A3]/15" />
       <DecoBg />
 
       {/* giant wordmark + animated mark */}
@@ -89,22 +89,20 @@ export function Splash() {
         {/* The logo, animated */}
         <div className="relative">
           {/* pulsing rings behind the mark */}
-          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-swift/40 animate-ping-ring" />
-          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-swift/30 animate-ping-ring" style={{ animationDelay: "-1s" }} />
-          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border border-swift/20 animate-ping-ring" style={{ animationDelay: "-2s" }} />
+          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#F05138]/30 animate-ping-ring" />
+          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FF7A5C]/20 animate-ping-ring" style={{ animationDelay: "-1s" }} />
+          <span aria-hidden className="gpu absolute left-1/2 top-1/2 h-28 w-28 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#FFD3BC]/25 animate-ping-ring" style={{ animationDelay: "-2s" }} />
 
           {/* the Swift-mark tile, drawn-in via clipPath + scale */}
           <div
-            className="gpu relative flex h-20 w-20 items-center justify-center rounded-3xl bg-swift text-white shadow-[0_24px_50px_-18px_rgba(240,81,56,0.7)] transition-all duration-1000 ease-[var(--ease-spring)]"
+            className="gpu relative flex h-20 w-20 items-center justify-center rounded-3xl bg-[#F05138] text-white shadow-[0_24px_50px_-18px_rgba(240,81,56,0.7)] transition-all duration-1000 ease-[var(--ease-spring)]"
             style={{
               animation: "splash-pop 1.2s var(--ease-out-expo) both",
             }}
           >
             <svg viewBox="0 0 64 64" className="h-12 w-12" aria-hidden>
-              <path
-                d="M46 44c-2.5 3-8 4-14 2-8-3-15-10-19-18 5 5 11 9 16 11-6-6-11-13-13-19 6 7 13 13 20 17 1-6-1-12-4-17 7 5 12 12 13 20 0 2 0 4-1 6 3 2 5 6 2 10z"
-                fill="#fff"
-              />
+              <rect width="64" height="64" rx="14" fill="#F05138" />
+              <path d="M47.0606 36.6607c-.0014-.0018-.0027-.0031-.0042-.0048.0657-.2236.1335-.4458.191-.675C49.7124 26.16 43.6964 14.549 33.5159 8.4355c4.4613 6.0479 6.4339 13.3733 4.6813 19.7795-.1563.5714-.3442 1.1198-.5519 1.6528-.2254-.1481-.5094-.3162-.8908-.5265 0 0-10.1269-6.2527-21.1028-17.3122-.288-.2903 5.8528 8.777 12.8219 16.1399-3.2834-1.8427-12.4338-8.5004-18.2266-13.8023.7117 1.1869 1.5582 2.3298 2.4887 3.4301 4.8375 6.1349 11.1462 13.7044 18.7043 19.5169-5.3104 3.2498-12.8141 3.5025-20.2852.0034-1.8479-.866-3.5851-1.9109-5.1932-3.0981 3.1625 5.0585 8.0332 9.4229 13.9613 11.9708 7.0695 3.0381 14.0996 2.8321 19.3356.0498l-.0041.006c.0239-.0151.0543-.0316.0791-.0469.215-.1156.4284-.2333.6371-.3576 2.5157-1.3058 7.4847-2.6306 10.1518 2.5588C50.7755 49.6699 52.1635 42.9395 47.0606 36.6607z" fill="#fff" />
             </svg>
             {/* spinning ring on the tile */}
             <span aria-hidden className="absolute inset-0 rounded-3xl border-2 border-white/40 animate-spin-slow" style={{ animationDuration: "6s" }} />
@@ -135,7 +133,7 @@ export function Splash() {
           style={{ animation: "splash-rise 0.9s 0.7s var(--ease-out-expo) both" }}
         >
           <div
-            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-swift to-swift-soft transition-[width] duration-200"
+            className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-[#F05138] via-[#FF7A5C] to-[#FFD3BC] transition-[width] duration-200"
             style={{ width: `${progress}%` }}
           />
           <div
@@ -157,7 +155,7 @@ export function Splash() {
           className="mt-8 flex flex-wrap items-center justify-center gap-2"
           style={{ animation: "splash-rise 0.9s 1s var(--ease-out-expo) both" }}
         >
-          {["Apple Authorized", "Swift", "Free", "Cohort 07"].map((t) => (
+          {["Apple Authorized", "Swift", "Free", "Est. 2020"].map((t) => (
             <span
               key={t}
               className="sticker !shadow-[0_3px_0_rgba(11,11,12,0.9)]"
@@ -182,17 +180,26 @@ export function Splash() {
 function DecoBg() {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* 3D glass orb layer — molten metal blobs */}
+      <div className="absolute -left-16 -top-10 h-56 w-56 rounded-full bg-gradient-to-br from-[#FF7A5C]/40 to-[#F05138]/20 blur-3xl" />
+      <div className="absolute -right-24 bottom-16 h-64 w-64 rounded-full bg-gradient-to-tl from-[#FFD3BC]/50 to-[#C2B8A3]/30 blur-3xl" />
+      <div className="absolute left-1/2 top-1/3 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-b from-[#F05138]/30 to-transparent blur-2xl" />
+      {/* small mercury droplets */}
+      <div className="light-point absolute left-[15%] top-[20%] h-4 w-4 rounded-full bg-gradient-to-br from-white/60 to-[#FFD3BC]/80 blur-sm" />
+      <div className="light-point absolute right-[20%] top-[30%] h-3 w-3 rounded-full bg-gradient-to-br from-white/50 to-[#F05138]/60 blur-sm" />
+      <div className="light-point absolute left-[70%] top-[60%] h-5 w-5 rounded-full bg-gradient-to-br from-white/40 to-[#FF7A5C]/70 blur-sm" />
+
       <div
         className="gpu animate-morph absolute -top-32 -left-24 h-[44vmin] w-[44vmin] rounded-[60%]"
         style={{ background: "radial-gradient(closest-side, rgba(255,210,180,0.65), transparent)" }}
       />
       <div
         className="gpu animate-morph-alt absolute -bottom-24 -right-16 h-[48vmin] w-[48vmin] rounded-[60%]"
-        style={{ background: "radial-gradient(closest-side, rgba(217,207,255,0.6), transparent)", animationDelay: "-6s" }}
+        style={{ background: "radial-gradient(closest-side, rgba(240,81,56,0.5), transparent)", animationDelay: "-6s" }}
       />
       <div
         className="gpu animate-morph absolute left-1/2 top-1/2 h-[30vmin] w-[30vmin] -translate-x-1/2 -translate-y-1/2 rounded-[60%]"
-        style={{ background: "radial-gradient(closest-side, rgba(255,237,163,0.45), transparent)", animationDelay: "-12s" }}
+        style={{ background: "radial-gradient(closest-side, rgba(255,211,188,0.45), transparent)", animationDelay: "-12s" }}
       />
       <div className="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
     </div>

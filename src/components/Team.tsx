@@ -43,7 +43,7 @@ export function Team() {
                   className="aspect-[4/5] w-full object-cover"
                 />
                 <figcaption className="absolute bottom-4 left-4 right-4 rounded-2xl border-[2px] border-ink bg-white/92 px-5 py-4 shadow-[0_5px_0_rgba(11,11,12,0.9)] backdrop-blur-xl">
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Core team · Cohort 07</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">Core team · 2025–26</p>
                   <p className="mt-1 text-lg font-bold tracking-tight">Six seniors. One shared Mac charger.</p>
                 </figcaption>
                 <div aria-hidden className="absolute -right-3 -top-3 rotate-6">

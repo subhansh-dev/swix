@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import heroVisual from "@/assets/hero-visual.webp";
 import { Reveal } from "./ui/Reveal";
 import { LiquidBlobs } from "./ui/LiquidBlobs";
@@ -6,10 +6,14 @@ import { Magnetic } from "./ui/Magnetic";
 import { Sticker, Squiggle, Deco } from "./ui/Deco";
 import { Orb } from "./ui/Orb";
 import { GlassCube } from "./ui/GlassCube";
-import { useReducedMotion } from "@/hooks/useMedia";
+import { useReducedMotion, useCanHover } from "@/hooks/useMedia";
 import { useParallax } from "@/hooks/useParallax";
 import { useCountUp } from "@/hooks/useCountUp";
 import { cn } from "@/utils/cn";
+
+/* ------------------------------------------------------------------ */
+/*  Typed code card                                                   */
+/* ------------------------------------------------------------------ */
 
 const codeLines = [
   { t: "import", cls: "code-token-k", rest: " SwiftUI" },
@@ -38,13 +42,14 @@ function CodeCard() {
   }, [reduce]);
 
   return (
-    <div className="liquid-dark grain gpu relative w-full rounded-[20px] p-4 font-mono text-[11.5px] leading-[1.65] text-white/90 sm:text-[12.5px] sm:leading-6">
+    <div className="liquid-dark grain gpu relative w-full rounded-[20px] p-4 font-mono text-[11.5px] leading-[1.65] text-white/90 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7)] sm:text-[12.5px] sm:leading-6">
       <div className="mb-3 flex items-center gap-1.5">
         <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
         <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
         <span className="h-2 w-2 rounded-full bg-[#28c840]" />
         <span className="ml-2.5 text-[10px] text-white/40">ClubApp.swift</span>
-        <span className="ml-auto rounded-md bg-swift/25 px-2 py-0.5 text-[9px] font-medium tracking-wide text-swift-soft">
+        <span className="ml-auto inline-flex items-center gap-1.5 rounded-md bg-emerald-400/15 px-2 py-0.5 text-[9px] font-medium tracking-wide text-emerald-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           Build Succeeded
         </span>
       </div>
@@ -64,18 +69,83 @@ function CodeCard() {
   );
 }
 
-function Stat({ value, label, suffix = "" }: { value: number; label: string; suffix?: string }) {
+/* ------------------------------------------------------------------ */
+/*  Stats                                                             */
+/* ------------------------------------------------------------------ */
+
+function Stat({ value, label, suffix = "", accent }: { value: number; label: string; suffix?: string; accent: string }) {
   const { ref, value: v } = useCountUp(value);
   return (
-    <div className="py-4 pl-4 first:pl-0">
-      <div className="text-2xl font-bold tracking-tight sm:text-3xl">
-        <span ref={ref}>{v}</span>
-        {suffix}
+    <div className="group relative px-5 py-5 first:pl-5">
+      <span aria-hidden className={cn("absolute inset-x-5 top-0 h-[3px] rounded-full", accent)} />
+      <div className="text-[1.7rem] font-bold tracking-tight sm:text-3xl">
+        <span ref={ref} className="tabular-nums">{v}</span>
+        <span className="text-swift">{suffix}</span>
       </div>
       <div className="mt-1 text-[10.5px] font-medium uppercase tracking-[0.14em] text-muted">{label}</div>
     </div>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/*  Floating toast cards                                              */
+/* ------------------------------------------------------------------ */
+
+function Toast({
+  className,
+  delay = "0s",
+  children,
+}: {
+  className?: string;
+  delay?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={cn("absolute z-20", className)} style={{ position: "absolute" }}>
+      <div className="gpu animate-float flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5" style={{ animationDelay: delay }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Cursor spotlight for the hero backdrop                            */
+/* ------------------------------------------------------------------ */
+
+function useSpotlight<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const hover = useCanHover();
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !hover) return;
+    let raf = 0;
+    let x = -400;
+    let y = -400;
+    const paint = () => {
+      raf = 0;
+      el.style.setProperty("--mx", `${x}px`);
+      el.style.setProperty("--my", `${y}px`);
+    };
+    const onMove = (e: PointerEvent) => {
+      const r = el.parentElement?.getBoundingClientRect();
+      if (!r) return;
+      x = e.clientX - r.left;
+      y = e.clientY - r.top;
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [hover]);
+  return ref;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Hero scene (right column)                                         */
+/* ------------------------------------------------------------------ */
 
 const chips = [
   {
@@ -107,8 +177,7 @@ const chips = [
 function HeroScene() {
   return (
     <div className="scene-3d relative mx-auto w-full max-w-[520px]">
-      {/* depth layers — outer div owns positioning + Z, inner div owns the
-          animation so keyframe transforms never overwrite each other */}
+      {/* depth layers */}
       <div
         aria-hidden
         className="absolute left-1/2 top-1/2 h-[118%] w-[118%]"
@@ -127,10 +196,7 @@ function HeroScene() {
       </div>
 
       {/* main glass plate */}
-      <div
-        className="relative overflow-hidden rounded-[30px] p-2.5"
-        style={{ transform: "translateZ(0)" }}
-      >
+      <div className="relative overflow-hidden rounded-[30px] p-2.5" style={{ transform: "translateZ(0)" }}>
         <div className="liquid grain relative overflow-hidden rounded-[24px]">
           <img
             src={heroVisual}
@@ -144,16 +210,20 @@ function HeroScene() {
           <div aria-hidden className="pointer-events-none absolute inset-5 border border-ink/10" />
           <span className="absolute left-6 top-6 font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink/55">fig. 01 — swift</span>
           <span className="absolute bottom-6 right-6 font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink/55">22.30°N 73.36°E</span>
+          {/* live badge on the plate */}
+          <span className="glass-chip absolute left-6 top-12 hidden items-center gap-1.5 px-3 py-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-ink/80 sm:inline-flex">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute h-full w-full rounded-full bg-emerald-500 animate-ping-ring" />
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            </span>
+            Live · Tue lab 6 PM
+          </span>
         </div>
       </div>
 
-      {/* floating liquid chips, each on its own Z layer */}
+      {/* floating liquid chips */}
       {chips.map((c) => (
-        <div
-          key={c.label}
-          className={c.cls}
-          style={{ transform: c.d, position: "absolute" }}
-        >
+        <div key={c.label} className={c.cls} style={{ transform: c.d, position: "absolute" }}>
           <div
             className={cn("gpu animate-float rounded-full px-4 py-2 text-[12.5px] font-semibold backdrop-blur-xl shadow-[0_18px_40px_-18px_rgba(11,11,12,0.45)]", c.fg)}
             style={{ animationDelay: c.delay, background: c.bg }}
@@ -163,23 +233,44 @@ function HeroScene() {
         </div>
       ))}
 
-      {/* floating glass 3D cube — tumbles in its own Z layer */}
+      {/* floating glass 3D cube */}
       <GlassCube className="-right-2 bottom-28 sm:-right-8 sm:bottom-32" />
 
-      {/* swift orb coin — the live engine, on its own Z layer */}
+      {/* swift orb coin */}
       <div className="right-4 top-40 sm:-right-6 sm:top-44" style={{ transform: "translateZ(95px)", position: "absolute" }}>
-        <div
-          className="gpu animate-float flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_18px_40px_-18px_rgba(11,11,12,0.65)]"
-          style={{ animationDelay: "-5s" }}
-        >
+        <div className="gpu animate-float flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_18px_40px_-18px_rgba(11,11,12,0.65)]" style={{ animationDelay: "-5s" }}>
           <Orb variant="swift" box={32} size="small" />
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Swift 6</span>
         </div>
       </div>
 
+      {/* toast: build succeeded */}
+      <Toast className="-left-2 top-2 sm:-left-8 sm:top-4" delay="-2.5s">
+        <div className="glass-dark flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5">
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-emerald-400/20 text-[13px] text-emerald-300">✓</span>
+          <span>
+            <span className="block text-[11.5px] font-semibold leading-tight text-white">TestFlight approved</span>
+            <span className="block font-mono text-[9px] text-white/50">Mess Menu v2.4 · just now</span>
+          </span>
+        </div>
+      </Toast>
+
+      {/* toast: new member */}
+      <Toast className="-right-1 bottom-24 sm:-right-6 sm:bottom-28" delay="-4.5s">
+        <div className="frost flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5">
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-lavender to-sky text-[10px] font-bold text-ink">D</span>
+          <span>
+            <span className="block text-[11.5px] font-semibold leading-tight">Diya joined the club</span>
+            <span className="block font-mono text-[9px] text-muted">2 min ago · Vadodara</span>
+          </span>
+        </div>
+      </Toast>
+
       {/* code card overlapping bottom */}
-      <div className="relative -mt-16 ml-[14%] w-[86%] sm:absolute sm:-bottom-16 sm:-left-8 sm:mt-0 sm:ml-0 sm:w-[76%]"
-        style={{ transform: "translateZ(130px)" }}>
+      <div
+        className="relative -mt-16 ml-[14%] w-[86%] sm:absolute sm:-bottom-16 sm:-left-8 sm:mt-0 sm:ml-0 sm:w-[76%]"
+        style={{ transform: "translateZ(130px)" }}
+      >
         <div className="gpu animate-float" style={{ animationDelay: "-3s" }}>
           <CodeCard />
         </div>
@@ -188,31 +279,84 @@ function HeroScene() {
   );
 }
 
+/* ------------------------------------------------------------------ */
+/*  Marquee + avatars                                                 */
+/* ------------------------------------------------------------------ */
+
+const stack = ["Swift 6", "SwiftUI", "Xcode 16", "TestFlight", "App Store", "SwiftData", "WidgetKit", "Core ML", "ARKit", "visionOS"];
+
+function StackMarquee() {
+  const items = [...stack, ...stack];
+  return (
+    <div className="marquee-mask relative mt-14 overflow-hidden border-y border-ink/10 py-3.5" aria-label="Technologies we teach">
+      <div className="marquee-track gpu animate-marquee flex w-max items-center gap-8 pr-8">
+        {items.map((s, i) => (
+          <span key={i} className="flex items-center gap-8">
+            <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.22em] text-ink/55">{s}</span>
+            <span aria-hidden className="h-1.5 w-1.5 rotate-45 bg-swift/60" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Hero                                                              */
+/* ------------------------------------------------------------------ */
+
 export function Hero() {
   const parallax = useParallax<HTMLDivElement>(34);
+  const spotlight = useSpotlight<HTMLDivElement>();
   return (
     <section id="top" className="relative overflow-hidden pt-32 pb-24 sm:pt-40 lg:pt-44 lg:pb-32">
+      {/* backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 grid-lines [mask-image:radial-gradient(ellipse_at_top,black_25%,transparent_72%)] opacity-50" />
         <LiquidBlobs />
         <Deco variant="warm" />
+        {/* giant watermark */}
+        <div className="absolute -bottom-6 left-1/2 hidden -translate-x-1/2 select-none whitespace-nowrap font-mono text-[9vw] font-bold uppercase leading-none tracking-tight text-stroke opacity-60 lg:block">
+          Swift Coding Club
+        </div>
+        {/* cursor spotlight */}
+        <div
+          ref={spotlight}
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(560px circle at var(--mx, 50%) var(--my, 20%), rgba(240,81,56,0.10), transparent 65%)",
+          }}
+        />
       </div>
 
       <div className="container-x">
         <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-6">
+          {/* ------- Copy ------- */}
           <div className="lg:col-span-6">
-            <Reveal className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/60 bg-white/60 py-1.5 pl-1.5 pr-4 text-[12.5px] font-medium text-ink/80 backdrop-blur-xl">
-              <span className="relative inline-flex h-6 items-center rounded-full bg-swift px-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
-                <span className="absolute -left-1 -top-1 h-2.5 w-2.5 rounded-full bg-swift/60 animate-ping-ring" />
-                New
+            <Reveal className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/60 bg-white/60 py-1.5 pl-1.5 pr-4 text-[12.5px] font-medium text-ink/80 shadow-[0_10px_30px_-18px_rgba(11,11,12,0.4)] backdrop-blur-xl">
+              <span className="relative inline-flex h-6 items-center gap-1.5 rounded-full bg-ink px-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute h-full w-full rounded-full bg-emerald-400 animate-ping-ring" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                </span>
+                Live
               </span>
-              Cohort 07 applications open · Spring 2026
+              Admissions open · Spring 2026
+              <a href="#join" className="link-u font-semibold text-swift" data-cursor="hot">Apply →</a>
             </Reveal>
 
+            <p className="eyebrow mb-4">01 — The student-run iOS studio</p>
             <h1 className="display relative text-balance text-[3.1rem] sm:text-6xl lg:text-[5.2rem] xl:text-[5.8rem]">
               <Reveal as="span" className="block" delay={60}>Learn Swift.</Reveal>
               <Reveal as="span" className="block" delay={140}>
-                Ship real apps.
+                Ship{" "}
+                <span className="relative inline-block whitespace-nowrap">
+                  real apps.
+                  <svg viewBox="0 0 220 14" preserveAspectRatio="none" aria-hidden className="absolute -bottom-1 left-0 h-[0.22em] w-full">
+                    <path d="M3 10 C 60 3, 150 3, 217 8" fill="none" stroke="#F05138" strokeWidth="5" strokeLinecap="round" opacity="0.85" />
+                  </svg>
+                </span>
                 <span className="absolute -right-6 top-2 hidden sm:inline"><Sticker rotate={12} color="bg-lemon text-ink">Free</Sticker></span>
               </Reveal>
               <Reveal as="span" className="block text-gradient" delay={220}>From Parul to the App&nbsp;Store.</Reveal>
@@ -232,8 +376,8 @@ export function Hero() {
 
             <Reveal delay={400} className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Magnetic>
-                <a href="#join" className="btn btn-accent group">
-                  Apply for Cohort 07
+                <a href="#join" className="btn btn-accent sweep group">
+                  Join the club
                   <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 16 16" fill="none" aria-hidden>
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -247,19 +391,21 @@ export function Hero() {
                   See student apps
                 </a>
               </Magnetic>
+              <span className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-muted">Free · 2 hrs / week</span>
             </Reveal>
 
-            <Reveal delay={480} className="mt-12 grid max-w-lg grid-cols-3 divide-x divide-line border-y-[3px] border-ink/80 bg-white/60 backdrop-blur">
-              <Stat value={300} suffix="+" label="Students trained" />
-              <Stat value={38} label="Apps shipped" />
-              <Stat value={12} label="App Store launches" />
+            <Reveal delay={480} className="mt-10 grid max-w-lg grid-cols-3 divide-x divide-line rounded-2xl border border-line bg-white/60 backdrop-blur">
+              <Stat value={300} suffix="+" label="Students trained" accent="bg-swift" />
+              <Stat value={38} label="Apps shipped" accent="bg-lavender" />
+              <Stat value={12} label="App Store launches" accent="bg-mint" />
             </Reveal>
             <Reveal delay={560} className="mt-6 flex items-center gap-3">
               <Squiggle color="#F05138" className="w-32" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Cohort 07 · Spring 2026</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">Swift Coding Club · Est. 2020</span>
             </Reveal>
           </div>
 
+          {/* ------- Scene ------- */}
           <div className="lg:col-span-6">
             <div ref={parallax} style={{ transform: "translate3d(0, var(--py, 0px), 0)" }}>
               <Reveal variant="scale" delay={200}>
@@ -267,6 +413,20 @@ export function Hero() {
               </Reveal>
             </div>
           </div>
+        </div>
+
+        <Reveal delay={120}>
+          <StackMarquee />
+        </Reveal>
+
+        {/* scroll cue */}
+        <div className="mt-10 flex justify-center">
+          <a href="#story" className="group flex flex-col items-center gap-2" data-cursor="hot" aria-label="Scroll to story">
+            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-muted transition-colors group-hover:text-ink">Scroll</span>
+            <span className="relative block h-10 w-[22px] overflow-hidden rounded-full border border-ink/20">
+              <span className="absolute left-1/2 top-1.5 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-swift animate-rise" />
+            </span>
+          </a>
         </div>
       </div>
     </section>

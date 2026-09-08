@@ -58,7 +58,7 @@ export function CTA() {
             <div className="relative grid gap-10 lg:grid-cols-12">
               <div className="lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-3">
-                  <Sticker rotate={-3} color="bg-swift text-white">Cohort 07</Sticker>
+                  <Sticker rotate={-3} color="bg-swift text-white">Spring '26</Sticker>
                   <Sticker rotate={4} color="bg-lemon text-ink">Applications close 28 Feb</Sticker>
                   <Orb variant="swift" box={48} className="ml-1" />
                 </div>

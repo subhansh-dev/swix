@@ -8,14 +8,14 @@
     <meta name="color-scheme" content="light" />
     <meta
       name="description"
-      content="Swift Coding Club at Parul University — the student-run iOS studio inside the Apple Innovation Lab. Learn Swift, ship real apps, join a free cohort every week."
+      content="Swift Coding Club at Parul University — the student-run iOS studio inside the Apple Innovation Lab. Learn Swift, ship real apps, join free weekly sessions."
     />
     <meta property="og:title" content="Swift Coding Club · Parul University" />
     <meta property="og:description" content="Learn Swift. Ship real apps. From Parul to the App Store." />
     <meta property="og:type" content="website" />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F05138'/%3E%3Cpath d='M46 44c-2.5 3-8 4-14 2-8-3-15-10-19-18 5 5 11 9 16 11-6-6-11-13-13-19 6 7 13 13 20 17 1-6-1-12-4-17 7 5 12 12 13 20 0 2 0 4-1 6 3 2 5 6 2 10z' fill='%23fff'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F05138'/%3E%3Cpath d='M47.0606 36.6607c-.0014-.0018-.0027-.0031-.0042-.0048.0657-.2236.1335-.4458.191-.675C49.7124 26.16 43.6964 14.549 33.5159 8.4355c4.4613 6.0479 6.4339 13.3733 4.6813 19.7795-.1563.5714-.3442 1.1198-.5519 1.6528-.2254-.1481-.5094-.3162-.8908-.5265 0 0-10.1269-6.2527-21.1028-17.3122-.288-.2903 5.8528 8.777 12.8219 16.1399-3.2834-1.8427-12.4338-8.5004-18.2266-13.8023.7117 1.1869 1.5582 2.3298 2.4887 3.4301 4.8375 6.1349 11.1462 13.7044 18.7043 19.5169-5.3104 3.2498-12.8141 3.5025-20.2852.0034-1.8479-.866-3.5851-1.9109-5.1932-3.0981 3.1625 5.0585 8.0332 9.4229 13.9613 11.9708 7.0695 3.0381 14.0996 2.8321 19.3356.0498l-.0041.006c.0239-.0151.0543-.0316.0791-.0469.215-.1156.4284-.2333.6371-.3576 2.5157-1.3058 7.4847-2.6306 10.1518 2.5588C50.7755 49.6699 52.1635 42.9395 47.0606 36.6607z' fill='%23fff'/%3E%3C/svg%3E"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,21 +32,23 @@
     <style>
       /* Inline splash — appears instantly, hidden by JS once the React app boots. */
       html, body { margin: 0; padding: 0; }
-      body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif; background: #FFFAF5; color: #0B0B0C; overflow: clip; }
+      body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif; background: #FFF8F2; color: #0B0B0C; overflow-x: clip; }
+      body.app-ready { animation: heroFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) both; }
+      @keyframes heroFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
       #splash-static {
         position: fixed; inset: 0; z-index: 200;
         display: flex; align-items: center; justify-content: center;
         background:
-          radial-gradient(ellipse at 18% -10%, rgba(255,200,160,0.45), transparent 45%),
-          radial-gradient(ellipse at 110% 10%, rgba(217,207,255,0.35), transparent 40%),
-          linear-gradient(180deg, #FFFAF5, #FFE9D4);
+          radial-gradient(ellipse at 15% -5%, rgba(240,81,56,0.35), transparent 50%),
+          radial-gradient(ellipse at 105% 15%, rgba(255,211,188,0.35), transparent 45%),
+          linear-gradient(180deg, #FFF8F2, #FFE4D6);
         transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
       }
       body.app-ready #splash-static { opacity: 0; transform: scale(1.04); pointer-events: none; }
       .s-mark {
         position: relative; width: 80px; height: 80px;
         border-radius: 24px; background: #F05138;
-        box-shadow: 0 24px 50px -18px rgba(240,81,56,0.7);
+        box-shadow: 0 24px 50px -18px rgba(240,81,56,0.7), inset 0 0 0 2px rgba(255,255,255,0.12);
         display: flex; align-items: center; justify-content: center;
         animation: splashPop 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
@@ -166,7 +168,7 @@
           <span class="s-tag" style="background:#F05138;color:#fff;transform:rotate(-3deg)">Apple Authorized</span>
           <span class="s-tag" style="background:#FFD3BC;color:#0B0B0C;transform:rotate(3deg)">Swift</span>
           <span class="s-tag" style="background:#D9CFFF;color:#0B0B0C;transform:rotate(-2deg)">Free</span>
-          <span class="s-tag" style="background:#B9ECCD;color:#0B0B0C;transform:rotate(2deg)">Cohort 07</span>
+          <span class="s-tag" style="background:#B9ECCD;color:#0B0B0C;transform:rotate(2deg)">Est. 2020</span>
         </div>
       </div>
       <div class="s-bottom">Designed &amp; built by students · Vadodara</div>

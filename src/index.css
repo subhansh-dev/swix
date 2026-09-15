@@ -40,6 +40,9 @@
   --animate-splash-shine: splash-shine 1.4s linear infinite;
   --animate-wobble: wobble 8s ease-in-out infinite;
   --animate-scribble: scribble 18s linear infinite;
+  --animate-aero-rise: aero-rise 12s ease-in-out infinite;
+  --animate-acid-flicker: acid-flicker 7s linear infinite;
+  --animate-atomi-orbit: atomi-orbit 18s linear infinite;
 
   @keyframes wobble {
     0%, 100% { transform: rotate(-3deg) translate3d(0,0,0); }
@@ -723,3 +726,342 @@ body {
     transform: none;
   }
 }
+
+/* ============================================================
+   AESTHETIC KITS — Frutiger Aero · Neo Y2K · Acid · Web Core ·
+   Retro Futurism. One kit per section below the fold.
+   ============================================================ */
+
+@layer components {
+
+/* ---------- Frutiger Aero ---------- */
+.aero {
+  background: linear-gradient(180deg, #dff3ff 0%, #f5fcff 42%, #e6f9ef 100%);
+  position: relative;
+}
+.aero-sky {
+  background:
+    radial-gradient(58% 40% at 20% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+    linear-gradient(180deg, #9fd9ff 0%, #c8ecff 46%, #eafaff 100%);
+}
+.aero-panel {
+  position: relative;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(190, 235, 255, 0.5) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -14px 24px -18px rgba(28, 100, 131, 0.35) inset,
+    0 24px 50px -22px rgba(28, 100, 131, 0.45);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+}
+.aero-panel::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 5px;
+  height: 38%;
+  border-radius: 999px;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
+}
+.aero-gloss {
+  position: relative;
+  overflow: hidden;
+}
+.aero-gloss::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 65% at 28% -8%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.12) 45%, transparent 60%);
+}
+.aero-bubble {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.28) 42%, rgba(140, 220, 255, 0.35) 70%, rgba(60, 160, 220, 0.4) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    -6px -8px 14px rgba(255, 255, 255, 0.35) inset,
+    0 10px 24px -10px rgba(30, 130, 190, 0.4);
+}
+.aero-bubble::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 12%;
+  width: 30%;
+  height: 22%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  filter: blur(1px);
+}
+.aero-leaf {
+  position: absolute;
+  border-radius: 0 70% 0 70%;
+  background: linear-gradient(135deg, #8fe0b0, #46b877);
+  box-shadow: 0 12px 26px -14px rgba(35, 130, 80, 0.5);
+  opacity: 0.9;
+}
+@keyframes aero-rise {
+  0% { transform: translate3d(0, 24px, 0); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: translate3d(6px, -130px, 0); opacity: 0; }
+}
+
+@keyframes y2k-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes acid-flicker {
+  0%, 91%, 94%, 98%, 100% { opacity: 1; }
+  92% { opacity: 0.4; }
+  96% { opacity: 0.75; }
+}
+
+@keyframes atomi-orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r, 90px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-r, 90px)) rotate(-360deg); }
+}
+
+/* ---------- Neo Y2K ---------- */
+.y2k-section {
+  background:
+    radial-gradient(70% 55% at 80% 0%, rgba(255, 214, 236, 0.9), transparent 55%),
+    radial-gradient(60% 50% at 8% 12%, rgba(196, 219, 255, 0.95), transparent 55%),
+    linear-gradient(180deg, #eef2ff 0%, #fdeef8 55%, #eafaff 100%);
+}
+.y2k-holo {
+  background:
+    linear-gradient(115deg, #b7f4ff 0%, #cdb5ff 18%, #ffb1e6 38%, #ffe29a 56%, #b9ffd2 74%, #a9c8ff 92%);
+}
+.y2k-holo-text {
+  background: linear-gradient(115deg, #7ad9ff 0%, #9a8cff 22%, #ff7ad1 45%, #ffb35c 66%, #67e0a8 85%, #7ab8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.y2k-chrome-text {
+  background: linear-gradient(180deg, #ffffff 0%, #cfe4ff 38%, #7a94b8 52%, #e9f2ff 58%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.y2k-card {
+  position: relative;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(244, 248, 255, 0.78) 50%, rgba(255, 228, 245, 0.8) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 10px 26px -16px rgba(122, 110, 255, 0.55),
+    0 18px 44px -22px rgba(255, 122, 209, 0.45);
+}
+.y2k-orb {
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 32% 26%, #ffffff 0%, #d9e6ff 30%, #b9a8ff 62%, #7a94b8 100%);
+  box-shadow:
+    0 1px 1px rgba(255, 255, 255, 0.95) inset,
+    0 -10px 18px -8px rgba(60, 70, 130, 0.45) inset,
+    0 14px 30px -12px rgba(120, 110, 255, 0.55);
+}
+.y2k-grid {
+  background-image:
+    linear-gradient(to right, rgba(130, 120, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(130, 120, 255, 0.16) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.y2k-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(238, 240, 255, 0.85));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 6px 16px -8px rgba(122, 110, 255, 0.6);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.y2k-star {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background: linear-gradient(180deg, #fff, #b9d9ff 55%, #8fa8ff);
+  box-shadow: 0 4px 14px -6px rgba(120, 110, 255, 0.6);
+}
+
+/* ---------- Acid ---------- */
+.acid-section {
+  background: #0c0c0d;
+  color: #f2f2f0;
+}
+.acid-section .acid-muted { color: rgba(242, 242, 240, 0.62); }
+.acid-grid {
+  background-image:
+    linear-gradient(to right, rgba(226, 255, 46, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 255, 46, 0.09) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.acid-checker {
+  background-image:
+    repeating-conic-gradient(rgba(226, 255, 46, 0.16) 0% 25%, transparent 0% 50%);
+  background-size: 56px 56px;
+}
+.acid-card {
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid rgba(226, 255, 46, 0.35);
+  background: rgba(18, 18, 20, 0.92);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 34px -14px rgba(226, 255, 46, 0.5);
+}
+.acid-lime { color: #e2ff2e; }
+.acid-violet { color: #8b7bff; }
+.acid-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 1px solid rgba(226, 255, 46, 0.5);
+  background: rgba(226, 255, 46, 0.08);
+  color: #e2ff2e;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.6rem;
+}
+.acid-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(242, 242, 240, 0.25);
+  background: rgba(242, 242, 240, 0.06);
+  color: rgba(242, 242, 240, 0.75);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+}
+
+/* ---------- Web Core ---------- */
+.win98 {
+  background: #c6c6c6;
+  box-shadow:
+    2px 2px 0 #fff inset,
+    -2px -2px 0 #868a8e inset,
+    1px 1px 0 #dfdfdf inset,
+ -1px -1px 0 #0a0a0a inset;
+}
+.win98-out {
+  box-shadow:
+    -2px -2px 0 #fff inset,
+    2px 2px 0 #868a8e inset,
+    -1px -1px 0 #dfdfdf inset,
+    1px 1px 0 #0a0a0a inset;
+}
+.win98-title {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #fff;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+}
+.win98-btn {
+  background: #c6c6c6;
+  box-shadow:
+    -2px -2px 0 #fff inset,
+    2px 2px 0 #868a8e inset,
+    -1px -1px 0 #dfdfdf inset,
+    1px 1px 0 #0a0a0a inset;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  color: #0a0a0a;
+}
+.win98-btn:active { box-shadow: 2px 2px 0 #fff inset, -2px -2px 0 #868a8e inset; }
+.webcore-section {
+  background: #060607;
+  color: #e6e6e2;
+}
+.webcore-stars {
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.7), transparent 55%),
+    radial-gradient(1px 1px at 42% 8%, rgba(255,255,255,0.5), transparent 55%),
+    radial-gradient(1px 1px at 68% 34%, rgba(255,255,255,0.6), transparent 55%),
+    radial-gradient(1px 1px at 86% 14%, rgba(255,255,255,0.45), transparent 55%),
+    radial-gradient(1px 1px at 30% 76%, rgba(255,255,255,0.4), transparent 55%),
+    radial-gradient(1px 1px at 76% 68%, rgba(255,255,255,0.5), transparent 55%),
+    radial-gradient(1.5px 1.5px at 55% 88%, rgba(120,220,255,0.5), transparent 55%);
+}
+.webcore-tile {
+  background: #0c0c0e;
+  border: 1px solid #2a2a2e;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.8), 0 0 26px -12px rgba(0, 255, 170, 0.25);
+}
+.webcore-tile:hover { border-color: #00ffaa; box-shadow: 0 0 0 1px rgba(0,0,0,0.8), 0 0 30px -8px rgba(0, 255, 170, 0.45); }
+
+/* ---------- Retro Futurism (Atompunk) ---------- */
+.atomi-section {
+  background:
+    radial-gradient(70% 60% at 50% 110%, rgba(255, 138, 76, 0.35), transparent 60%),
+    linear-gradient(180deg, #faf3e7 0%, #fbe8cf 55%, #f8d9b8 100%);
+}
+.atomi-ring {
+  position: absolute;
+  border-radius: 999px;
+  border: 1.5px dashed rgba(11, 11, 12, 0.3);
+}
+.atomi-star {
+  position: absolute;
+  pointer-events: none;
+  color: rgba(11, 11, 12, 0.55);
+}
+@keyframes atomi-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+.atomi-btn {
+  background: #0b0b0c;
+  color: #ffe8d2;
+  box-shadow: 0 6px 0 #b4552d;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.atomi-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #b4552d; }
+.atomi-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #b4552d; }
+
+/* Marquee glow (Y2K ticker) */
+.y2k-marquee {
+  background: linear-gradient(90deg, rgba(90, 80, 220, 0.92), rgba(255, 122, 209, 0.92));
+  color: #fff;
+}
+
+/* Footer starfield */
+.footer-stars {
+  background-color: #060607;
+  background-image:
+    radial-gradient(1px 1px at 18% 30%, rgba(255,255,255,0.65), transparent 55%),
+    radial-gradient(1px 1px at 52% 12%, rgba(255,255,255,0.5), transparent 55%),
+    radial-gradient(1px 1px at 76% 44%, rgba(255,255,255,0.55), transparent 55%),
+    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,0.4), transparent 55%),
+    radial-gradient(1px 1px at 88% 78%, rgba(255,255,255,0.5), transparent 55%),
+    radial-gradient(1px 1px at 8% 84%, rgba(255,255,255,0.45), transparent 55%);
+}
+
+} /* @layer components */

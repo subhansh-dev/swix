@@ -1,8 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
-import { Deco, Sticker } from "./ui/Deco";
-import { Orb } from "./ui/Orb";
 import { cn } from "@/utils/cn";
 
 const steps = [
@@ -16,6 +14,7 @@ const steps = [
   { w: "Week 14", t: "Demo Day", d: "Present to students, faculty and visiting engineers. Winners get incubation referrals and interview fast-tracks.", tag: "Launch" },
 ];
 
+/** Timeline — Acid: wireframe rail, acid lime glow, checkerboard, flicker. */
 export function Timeline() {
   const wrap = useRef<HTMLDivElement>(null);
   const bar = useRef<HTMLDivElement>(null);
@@ -53,45 +52,84 @@ export function Timeline() {
   }, []);
 
   return (
-    <section id="journey" className="cv-auto relative overflow-hidden bg-warm py-24 text-ink sm:py-32">
-      <Deco variant="sunset" />
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 grid-lines opacity-50 [mask-image:radial-gradient(ellipse_at_center,black_15%,transparent_65%)]" />
-      </div>
+    <section id="journey" className="acid-section cv-auto relative overflow-hidden py-24 sm:py-32">
+      {/* acid backdrops */}
+      <div aria-hidden className="acid-grid pointer-events-none absolute inset-0 opacity-70 [mask-image:radial-gradient(ellipse_at_50%_0%,black,transparent_70%)]" />
+      <div aria-hidden className="acid-checker pointer-events-none absolute inset-x-0 top-0 h-24 opacity-60" />
+      <div aria-hidden className="acid-checker pointer-events-none absolute inset-x-0 bottom-0 h-24 rotate-180 opacity-60" />
+      <div
+        aria-hidden
+        className="gpu animate-acid-flicker pointer-events-none absolute -left-24 bottom-1/4 h-80 w-80 rounded-full border border-[#8b7bff]/30"
+        style={{ boxShadow: "0 0 90px -30px rgba(139,123,255,0.5) inset" }}
+      />
 
       <div className="container-x relative">
         <SectionHeader
           index="06"
           eyebrow="The 14-week sprint"
+          dark
           title={
-            <>
-              From <span className="text-gradient">print("Hello")</span> to a live App Store link.
-            </>
+            <span className="text-[#f2f2f0]">
+              From <span className="acid-lime">print(&quot;Hello&quot;)</span> to a live App Store link.
+            </span>
           }
-          body="One semester. Eight milestones. Every Thursday, 5pm, Block B — and a product in your hands by Demo Day."
+          body={
+            <span className="text-white/60">
+              One semester. Eight milestones. Every Thursday, 5pm, Block B — and a product in your hands by Demo Day.
+            </span>
+          }
         />
 
         <div ref={wrap} className="relative mt-16 lg:mt-24">
           {/* rail */}
-          <div aria-hidden className="absolute left-[7px] top-2 bottom-2 w-px bg-ink/15 sm:left-[11px]">
-            <div ref={bar} className="gpu h-full w-px origin-top bg-gradient-to-b from-swift via-swift-soft to-ink/20" style={{ transform: "scaleY(0)" }} />
+          <div aria-hidden className="absolute bottom-2 left-[7px] top-2 w-px bg-white/15 sm:left-[11px]">
+            <div
+              ref={bar}
+              className="gpu h-full w-px origin-top"
+              style={{
+                transform: "scaleY(0)",
+                background: "linear-gradient(to bottom,#e2ff2e,#8b7bff 60%,rgba(255,255,255,0.1))",
+                boxShadow: "0 0 12px rgba(226,255,46,0.7)",
+              }}
+            />
           </div>
 
           <ol className="space-y-10 sm:space-y-12">
             {steps.map((s, i) => (
               <Reveal as="li" key={s.w} delay={i * 70} className="group relative pl-10 sm:pl-14">
                 <span className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center sm:h-6 sm:w-6">
-                  <span className="absolute h-full w-full rounded-full bg-swift/25 animate-ping-ring" style={{ animationDelay: `${i * 0.35}s` }} />
-                  <span className="relative h-2 w-2 rounded-full bg-swift shadow-[0_0_18px_5px_rgba(240,81,56,0.5)] transition-transform duration-500 group-hover:scale-150 sm:h-2.5 sm:w-2.5" />
+                  <span
+                    className="absolute h-full w-full animate-ping-ring rounded-full"
+                    style={{ background: "rgba(226,255,46,0.2)", animationDelay: `${i * 0.35}s` }}
+                  />
+                  <span
+                    className="relative h-2 w-2 rounded-full transition-transform duration-500 group-hover:scale-150 sm:h-2.5 sm:w-2.5"
+                    style={{
+                      background: i % 2 ? "#8b7bff" : "#e2ff2e",
+                      boxShadow: `0 0 14px 3px ${i % 2 ? "rgba(139,123,255,0.55)" : "rgba(226,255,46,0.55)"}`,
+                    }}
+                  />
                 </span>
 
                 <div className="grid gap-3 sm:grid-cols-[120px_1fr_160px] sm:items-baseline sm:gap-8">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-swift">{s.w}</span>
+                  <span
+                    className="font-mono text-[11px] uppercase tracking-[0.2em]"
+                    style={{ color: i % 2 ? "#8b7bff" : "#e2ff2e" }}
+                  >
+                    {s.w}
+                  </span>
                   <div>
-                    <h3 className="text-balance text-xl font-bold tracking-tight sm:text-[1.6rem]">{s.t}</h3>
-                    <p className="mt-2 max-w-xl text-pretty text-[15px] leading-relaxed text-muted">{s.d}</p>
+                    <h3 className="text-balance text-xl font-bold tracking-tight text-[#f2f2f0] sm:text-[1.6rem]">{s.t}</h3>
+                    <p className="mt-2 max-w-xl text-pretty text-[15px] leading-relaxed text-white/60">{s.d}</p>
                   </div>
-                  <span className={cn("sticker inline-flex w-fit !shadow-[0_3px_0_rgba(11,11,12,0.8)]", i % 3 === 0 ? "bg-peach text-ink" : i % 3 === 1 ? "bg-lavender text-ink" : "bg-mint text-ink")} style={{ ["--r" as string]: `${(i % 2 ? 3 : -3)}deg` }}>
+                  <span
+                    className={cn(
+                      "inline-flex w-fit items-center rounded-full border px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em]",
+                      i % 3 === 0 && "border-[#e2ff2e]/60 bg-[#e2ff2e]/10 text-[#e2ff2e]",
+                      i % 3 === 1 && "border-[#8b7bff]/60 bg-[#8b7bff]/10 text-[#b7aaff]",
+                      i % 3 === 2 && "border-white/25 bg-white/5 text-white/70"
+                    )}
+                  >
                     {s.tag}
                   </span>
                 </div>
@@ -100,13 +138,16 @@ export function Timeline() {
           </ol>
         </div>
 
-        <Reveal delay={200} className={cn("mt-16 flex flex-wrap items-center gap-4")}>
-          <a href="#join" className="btn btn-accent">Start Week 01</a>
-          <Sticker rotate={-3} color="bg-lemon text-ink">No experience needed</Sticker>
-          <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
-            <Orb variant="swift" box={30} size="small" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">14 weeks · one app</span>
-          </span>
+        <Reveal delay={200} className="mt-16 flex flex-wrap items-center gap-4">
+          <a
+            href="#join"
+            className="inline-flex items-center rounded-md border border-[#e2ff2e] bg-[#e2ff2e] px-6 py-3.5 text-sm font-bold tracking-tight text-[#0c0c0d] transition-transform duration-300 hover:-translate-y-0.5"
+            style={{ boxShadow: "0 0 30px -8px rgba(226,255,46,0.7)" }}
+          >
+            Start Week 01
+          </a>
+          <span className="acid-tag">No experience needed</span>
+          <span className="acid-chip">14 weeks · one app</span>
         </Reveal>
       </div>
     </section>

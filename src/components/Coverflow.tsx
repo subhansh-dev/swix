@@ -26,9 +26,15 @@ const apps: App[] = [
 
 function Screen({ app, live }: { app: App; live: boolean }) {
   return (
-    <div className="gpu relative aspect-[9/19] w-[210px] overflow-hidden rounded-[30px] border border-white/70 bg-white shadow-[0_40px_80px_-30px_rgba(11,11,12,0.55)] sm:w-[236px]">
+    <div className="gpu relative aspect-[9/19] w-[210px] overflow-hidden rounded-[30px] border border-white/80 bg-white shadow-[0_40px_80px_-30px_rgba(28,100,131,0.55)] sm:w-[236px]">
+      {/* glossy top sheen, the frutiger hallmark */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-30 h-1/3"
+        style={{ background: "linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0) 100%)", borderRadius: "30px 30px 40% 40%" }}
+      />
       {/* notch */}
-      <div className="absolute left-1/2 top-2 z-20 h-5 w-20 -translate-x-1/2 rounded-full bg-ink" />
+      <div className="absolute left-1/2 top-2 z-20 h-5 w-20 -translate-x-1/2 rounded-full bg-[#0d3a52]" />
       {/* status bar */}
       <div className="relative z-10 flex items-center justify-between px-5 pt-3 text-[9px] font-semibold text-white">
         <span>9:41</span>
@@ -38,13 +44,25 @@ function Screen({ app, live }: { app: App; live: boolean }) {
         </span>
       </div>
       {/* header */}
-      <div className="relative px-4 pt-2" style={{ background: `linear-gradient(160deg, ${app.from}, ${app.to})` }}>
+      <div
+        className="relative px-4 pt-2"
+        style={{
+          background: `linear-gradient(180deg, ${app.from}, ${app.to})`,
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.6)",
+        }}
+      >
         <div className="pb-4 pt-2 text-white">
-          <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-white/70">{app.cat}</p>
-          <p className="mt-0.5 text-[17px] font-bold tracking-tight">{app.name}</p>
+          <p className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-white/75">{app.cat}</p>
+          <p className="mt-0.5 text-[17px] font-bold tracking-tight drop-shadow-[0_1px_1px_rgba(0,40,60,0.3)]">{app.name}</p>
           <div className="mt-2 flex gap-1.5">
             {["Live", "Beta", "iOS 18"].map((t) => (
-              <span key={t} className="rounded-full bg-white/25 px-2 py-0.5 text-[8px] font-semibold backdrop-blur-sm">{t}</span>
+              <span
+                key={t}
+                className="rounded-full border border-white/50 bg-white/30 px-2 py-0.5 text-[8px] font-semibold text-white backdrop-blur-sm"
+                style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.7)" }}
+              >
+                {t}
+              </span>
             ))}
           </div>
         </div>
@@ -53,23 +71,40 @@ function Screen({ app, live }: { app: App; live: boolean }) {
       {/* content */}
       <div className="bg-white px-3 pt-2">
         {app.rows.map((r, i) => (
-          <div key={r} className="mb-1.5 flex items-center gap-2 rounded-xl border border-line bg-paper-2/70 px-2.5 py-2">
-            <span className="h-6 w-6 shrink-0 rounded-lg" style={{ background: `linear-gradient(140deg, ${app.from}, ${app.to})`, opacity: 1 - i * 0.18 }} />
-            <span className="truncate text-[10px] font-medium text-ink/80">{r}</span>
+          <div
+            key={r}
+            className="mb-1.5 flex items-center gap-2 rounded-xl border border-[#cfe9f7] bg-[#f4fbff] px-2.5 py-2"
+            style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9)" }}
+          >
+            <span
+              className="h-6 w-6 shrink-0 rounded-lg"
+              style={{
+                background: `radial-gradient(circle at 32% 28%, rgba(255,255,255,0.9), ${app.to} 70%), linear-gradient(140deg, ${app.from}, ${app.to})`,
+                opacity: 1 - i * 0.18,
+              }}
+            />
+            <span className="truncate text-[10px] font-medium text-[#0d3a52]/80">{r}</span>
           </div>
         ))}
-        <div className="mt-2 h-14 rounded-xl" style={{ background: `linear-gradient(120deg, ${app.from}22, ${app.to}22)` }} />
+        <div
+          className="mt-2 h-14 rounded-xl"
+          style={{ background: `linear-gradient(120deg, ${app.from}22, ${app.to}44)`, boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)" }}
+        />
       </div>
       {/* tab bar */}
-      <div className="absolute inset-x-0 bottom-0 flex items-center justify-around border-t border-line bg-white/90 px-4 py-2.5 backdrop-blur">
+      <div className="absolute inset-x-0 bottom-0 flex items-center justify-around border-t border-[#cfe9f7] bg-white/90 px-4 py-2.5 backdrop-blur">
         {[0, 1, 2, 3].map((i) => (
-          <span key={i} className={cn("h-4 w-4 rounded-md", i === 1 ? "" : "opacity-25")} style={{ background: i === 1 ? app.accent : "#0B0B0C" }} />
+          <span
+            key={i}
+            className={cn("h-4 w-4 rounded-md", i !== 1 && "opacity-25")}
+            style={{ background: i === 1 ? app.accent : "#0d3a52", boxShadow: i === 1 ? "0 0 10px rgba(255,255,255,0.6) inset" : undefined }}
+          />
         ))}
       </div>
       {/* glass specular */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(255,255,255,0.55),transparent_38%)] mix-blend-overlay" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(255,255,255,0.6),transparent_38%)] mix-blend-overlay" />
       {live && (
-        <span className="absolute bottom-16 left-1/2 -translate-x-1/2 rounded-full bg-ink/85 px-3 py-1 font-mono text-[8.5px] uppercase tracking-[0.18em] text-white backdrop-blur">
+        <span className="aero-panel absolute bottom-16 left-1/2 -translate-x-1/2 !rounded-full px-3 py-1 font-mono text-[8.5px] uppercase tracking-[0.18em] text-[#1d5a7a]">
           {app.by}
         </span>
       )}
@@ -88,8 +123,39 @@ export function Coverflow() {
   }, [reduce, active]);
 
   return (
-    <section id="apps" className="cv-auto relative overflow-hidden border-y border-line bg-paper-2/50 py-24 sm:py-32">
-      <div aria-hidden className="pointer-events-none absolute inset-0 grid-lines [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+    <section
+      id="apps"
+      className="aero aero-sky cv-auto relative overflow-hidden py-24 sm:py-32"
+    >
+      {/* aero backdrop: clouds, bubbles, light rays */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <span className="absolute -top-10 left-[10%] h-36 w-[28rem] rounded-full bg-white/70 blur-3xl" />
+        <span className="absolute top-1/3 right-0 h-44 w-[24rem] rounded-full bg-white/50 blur-3xl" />
+        <span className="absolute bottom-0 left-0 h-40 w-[30rem] rounded-full bg-[#8fe0b0]/35 blur-3xl" />
+        {/* rising bubbles */}
+        {[
+          { left: "8%", size: 22, d: "0s" },
+          { left: "20%", size: 12, d: "2.4s" },
+          { left: "40%", size: 16, d: "4.4s" },
+          { left: "60%", size: 10, d: "1.2s" },
+          { left: "76%", size: 24, d: "3.2s" },
+          { left: "92%", size: 14, d: "5.4s" },
+        ].map((b, i) => (
+          <span
+            key={i}
+            className="aero-bubble gpu animate-aero-rise"
+            style={{ left: b.left, bottom: "-30px", width: b.size, height: b.size, animationDelay: b.d, animationDuration: "14s" }}
+          />
+        ))}
+        {/* soft light rays */}
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            background:
+              "conic-gradient(from 200deg at 50% -10%, transparent 0deg, rgba(255,255,255,0.55) 8deg, transparent 16deg, transparent 30deg, rgba(255,255,255,0.4) 38deg, transparent 46deg)",
+          }}
+        />
+      </div>
 
       <div className="container-x relative">
         <SectionHeader
@@ -97,11 +163,15 @@ export function Coverflow() {
           index="05"
           eyebrow="Shipped by students"
           title={
-            <>
-              Seven apps. Seven <span className="text-muted">semesters of Thursdays.</span>
-            </>
+            <span className="text-[#0d3a52]">
+              Seven apps. Seven <span className="text-[#1d7a4c]">semesters of Thursdays.</span>
+            </span>
           }
-          body="Swipe, tap or use the arrow keys. Every screen here was designed and built inside the club."
+          body={
+            <span className="text-[#2c6c8f]">
+              Swipe, tap or use the arrow keys. Every screen here was designed and built inside the club.
+            </span>
+          }
         />
       </div>
 
@@ -150,7 +220,7 @@ export function Coverflow() {
               type="button"
               aria-label={label}
               onClick={() => setActive((a) => (a + dir + apps.length) % apps.length)}
-              className="liquid grain group flex h-12 w-12 items-center justify-center rounded-full text-ink transition-transform duration-300 hover:scale-110 active:scale-95"
+              className="aero-panel aero-gloss group flex h-12 w-12 items-center justify-center !rounded-full text-[#1d5a7a] transition-transform duration-300 hover:scale-110 active:scale-95"
             >
               <svg className={cn("h-4 w-4", dir === -1 && "rotate-180")} viewBox="0 0 16 16" fill="none" aria-hidden>
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -170,15 +240,16 @@ export function Coverflow() {
               onClick={() => setActive(i)}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-500 ease-[var(--ease-out-expo)]",
-                i === active ? "w-8 bg-swift" : "w-1.5 bg-ink/20 hover:bg-ink/40"
+                i === active ? "w-8" : "w-1.5 bg-[#2c6c8f]/25 hover:bg-[#2c6c8f]/45"
               )}
+              style={i === active ? { background: "linear-gradient(90deg,#3aa5d9,#46b877)", boxShadow: "0 0 10px rgba(70,184,119,0.6)" } : undefined}
             />
           ))}
         </div>
       </div>
 
       <Reveal delay={200} className="container-x relative mt-10 text-center">
-        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#2c6c8f]">
           {apps[active].name} · {apps[active].cat} · {apps[active].by}
         </p>
       </Reveal>

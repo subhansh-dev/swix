@@ -11,8 +11,8 @@ type Feature = {
   icon: React.ReactNode;
   span?: string;
   tag: string;
-  tint: string;
-  accent: string;
+  glow: string;
+  hover: string;
 };
 
 const stroke = { stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, fill: "none" };
@@ -29,8 +29,8 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-7",
-    tint: "card-coral",
-    accent: "bg-swift",
+    glow: "rgba(226,255,46,0.5)",
+    hover: "rgba(226,255,46,0.85)",
   },
   {
     n: "02",
@@ -44,8 +44,8 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-5",
-    tint: "card-lavender",
-    accent: "bg-swift-deep",
+    glow: "rgba(139,123,255,0.5)",
+    hover: "rgba(139,123,255,0.85)",
   },
   {
     n: "03",
@@ -59,8 +59,8 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-5",
-    tint: "card-mint",
-    accent: "bg-swift",
+    glow: "rgba(255,61,242,0.4)",
+    hover: "rgba(255,61,242,0.8)",
   },
   {
     n: "04",
@@ -73,8 +73,8 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-7",
-    tint: "card-lemon",
-    accent: "bg-swift-deep",
+    glow: "rgba(0,255,170,0.4)",
+    hover: "rgba(0,255,170,0.8)",
   },
 ];
 
@@ -85,21 +85,26 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
       <Tilt max={7} lift={20} className="h-full">
         <div
           onPointerMove={onPointerMove}
-          className={cn("sheen spotlight card-lift grain group relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border-[3px] border-ink p-7 shadow-[0_10px_0_rgba(11,11,12,0.9)] sm:p-9", f.tint)}
+          className="acid-card acid-grid card-lift group relative flex h-full flex-col justify-between overflow-hidden p-7 transition-shadow duration-500 sm:p-9"
+          style={{ boxShadow: `0 0 0 1px rgba(0,0,0,0.6), 0 0 34px -14px ${f.glow}` }}
+          onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 0 1px rgba(0,0,0,0.6), 0 0 52px -10px ${f.hover}`; }}
+          onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 0 1px rgba(0,0,0,0.6), 0 0 34px -14px ${f.glow}`; }}
         >
-          {/* colorful corner shape */}
-          <div aria-hidden className={cn("pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full opacity-60 blur-3xl", f.accent)} />
+          {/* wireframe corner brackets */}
+          <span aria-hidden className="pointer-events-none absolute right-3 top-3 font-mono text-lg text-[#e2ff2e]/40">+</span>
+          <span aria-hidden className="pointer-events-none absolute bottom-3 left-3 font-mono text-lg text-[#e2ff2e]/40">+</span>
+
           <div className="relative flex items-start justify-between">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border-[2px] border-ink bg-white text-ink">
+            <div className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#e2ff2e]/60 bg-[#e2ff2e]/10 text-[#e2ff2e] shadow-[0_0_20px_-6px_rgba(226,255,46,0.6)]">
               {f.icon}
             </div>
-            <span className="font-mono text-[11px] tracking-[0.2em] text-ink/60">{f.n}</span>
+            <span className="font-mono text-[11px] tracking-[0.2em] text-[#e2ff2e]/50">{f.n}</span>
           </div>
-        <div className="mt-14">
-          <span className="eyebrow !text-swift">{f.tag}</span>
-          <h3 className="mt-3 text-2xl font-bold tracking-tight sm:text-[1.7rem]">{f.title}</h3>
-          <p className="mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-muted">{f.body}</p>
-        </div>
+          <div className="mt-14">
+            <span className="acid-chip">{f.tag}</span>
+            <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#f2f2f0] sm:text-[1.7rem]">{f.title}</h3>
+            <p className="mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-white/60">{f.body}</p>
+          </div>
         </div>
       </Tilt>
     </Reveal>
@@ -108,17 +113,33 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 
 export function Features() {
   return (
-    <section id="program" className="cv-auto py-24 sm:py-32">
-      <div className="container-x">
+    <section id="program" className="acid-section cv-auto relative overflow-hidden py-24 sm:py-32">
+      {/* acid backdrops: warped checker + wireframe grid */}
+      <div aria-hidden className="acid-checker pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_80%_0%,black,transparent_60%)]" />
+      <div aria-hidden className="acid-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_10%_100%,black,transparent_65%)]" />
+      {/* flickering wireframe orb */}
+      <div
+        aria-hidden
+        className="gpu animate-acid-flicker pointer-events-none absolute -right-20 top-24 h-72 w-72 rounded-full border border-[#e2ff2e]/25"
+        style={{ boxShadow: "0 0 80px -30px rgba(226,255,46,0.4) inset" }}
+      />
+
+      <div className="container-x relative">
         <SectionHeader
           index="01"
           eyebrow="The program"
+          dark
           title={
-            <>
-              Built like a studio, <span className="text-muted">not a lecture hall.</span>
-            </>
+            <span className="text-[#f2f2f0]">
+              Built like a studio, <span className="acid-lime">not a lecture hall.</span>
+            </span>
           }
-          body="Everything is structured around a single question: can you ship? Four pillars, one semester, and a portfolio that speaks before you do."
+          body={
+            <span className="text-white/60">
+              Everything is structured around a single question: can you ship? Four pillars, one semester, and a
+              portfolio that speaks before you do.
+            </span>
+          }
         />
         <div className="mt-14 grid gap-4 lg:mt-20 lg:grid-cols-12">
           {features.map((f, i) => (

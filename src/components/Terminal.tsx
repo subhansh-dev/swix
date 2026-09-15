@@ -1,11 +1,7 @@
 import { CrtBackground } from "@/shaders/crt/CrtBackground";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
-import { Tilt } from "./ui/Tilt";
-import { Magnetic } from "./ui/Magnetic";
 import { ScrollStrip } from "./ui/ScrollStrip";
-import { useSpotlight } from "@/hooks/useSpotlight";
-import { cn } from "@/utils/cn";
 
 const chips = [
   { k: "panic level", v: "0" },
@@ -16,12 +12,10 @@ const chips = [
 
 /**
  * The Debug Lab — a full-bleed CRT "blue screen" moment. The animated
- * BSOD canvas is the section background; frosted glass panels float on top
- * in 3D, retelling the crash as a club in-joke: errors are quests.
+ * BSOD canvas is the section background; the floating panels are restyled
+ * as Web Core windows retelling the crash as a club in-joke.
  */
 export function Terminal() {
-  const { onPointerMove } = useSpotlight<HTMLDivElement>();
-
   return (
     <section id="terminal" className="cv-auto relative overflow-hidden bg-[#050a24] py-20 sm:py-28">
       {/* CRT blue screen canvas — self-throttling, pauses offscreen */}
@@ -37,9 +31,9 @@ export function Terminal() {
             "radial-gradient(120% 90% at 50% 0%, rgba(5,10,36,0.25), rgba(5,10,36,0.72) 78%), linear-gradient(180deg, rgba(5,10,36,0.55), transparent 22%, transparent 72%, rgba(5,10,36,0.6))",
         }}
       />
-      {/* edge fades into the paper sections around it */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-paper to-transparent" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-paper to-transparent" />
+      {/* edge fades into the neighbors */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#0c0c0d] to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#060607] to-transparent" />
 
       <div className="container-x relative">
         <ScrollStrip items={["CTRL", "ALT", "DELIGHT"]} dark travel={20} className="mb-6 opacity-90" />
@@ -51,44 +45,60 @@ export function Terminal() {
           dark
           title={
             <span className="text-white">
-              Errors are just <span className="text-gradient">quests</span> in disguise.
+              Errors are just <span className="text-[#00ffaa]">quests</span> in disguise.
             </span>
           }
-          body="A blue screen isn't the end of the world — it's the start of the best story you'll tell on Demo Day. In the Debug Lab we collect crashes like trophies, read stack traces like detective novels, and turn “it works on my machine” into “it ships from ours.”"
+          body={
+            <span className="text-white/60">
+              A blue screen isn't the end of the world — it's the start of the best story you'll tell on Demo Day. In
+              the Debug Lab we collect crashes like trophies, read stack traces like detective novels, and turn “it
+              works on my machine” into “it ships from ours.”
+            </span>
+          }
         />
 
         <div className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-12">
-          {/* BSOD parody panel — frosted glass in 3D */}
+          {/* BSOD parody panel — a web-core window */}
           <Reveal variant="flip3d" className="lg:col-span-7">
-            <Tilt max={5} lift={30}>
-              <div
-                onPointerMove={onPointerMove}
-                className={cn(
-                  "spotlight liquid-dark sweep grain relative overflow-hidden rounded-[26px] p-7 sm:p-10"
-                )}
-              >
-                <p className="text-6xl font-bold leading-none text-white sm:text-7xl">:(</p>
+            <div className="webcore-tile overflow-hidden !rounded-sm">
+              {/* titlebar */}
+              <div className="win98-title flex items-center justify-between px-2 py-1">
+                <span className="font-mono">SWIFT_STUDENT.exe — Learning Curve Error</span>
+                <span className="flex gap-1" aria-hidden>
+                  <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">_</span>
+                  <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">□</span>
+                  <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">×</span>
+                </span>
+              </div>
+
+              <div className="bg-[#0c0c0e]/90 p-7 backdrop-blur-md sm:p-10">
+                <p className="text-6xl font-bold leading-none text-[#00ffaa] sm:text-7xl">:(</p>
                 <p className="mt-5 text-xl font-bold tracking-tight text-white sm:text-2xl">
                   SWIFT_STUDENT.exe ran into a learning curve
                 </p>
-                <p className="mt-1.5 text-[14.5px] text-white/60">
-                  This is not a crash. It&apos;s Tuesday.
-                </p>
+                <p className="mt-1.5 font-mono text-[14px] text-white/55">This is not a crash. It&apos;s Tuesday.</p>
 
                 <div className="mt-8">
                   <div className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.16em] text-white/50">
                     <span>collecting courage</span>
-                    <span>99%</span>
+                    <span className="text-[#00ffaa]">99%</span>
                   </div>
-                  <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+                  <div
+                    className="mt-2 h-3 overflow-hidden rounded-none border border-[#2a2a2e] bg-[#060607]"
+                    style={{ boxShadow: "inset 0 1px 2px rgba(0,0,0,0.8)" }}
+                  >
                     <div
-                      className="gpu h-full rounded-full bg-gradient-to-r from-swift via-swift-soft to-[#ffd3bc]"
-                      style={{ animation: "bsod-progress 6s var(--ease-out-expo) infinite" }}
+                      className="h-full"
+                      style={{
+                        background: "repeating-linear-gradient(90deg,#00ffaa 0 8px,#0c0c0e 8px 10px)",
+                        boxShadow: "0 0 10px rgba(0,255,170,0.5)",
+                        animation: "bsod-progress 6s var(--ease-out-expo) infinite",
+                      }}
                     />
                   </div>
                 </div>
 
-                <dl className="mt-8 space-y-3 border-t border-white/10 pt-6 text-[14px]">
+                <dl className="mt-8 space-y-3 border-t border-[#2a2a2e] pt-6 text-[14px]">
                   <div className="flex flex-wrap justify-between gap-2">
                     <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/45">what you gained</dt>
                     <dd className="font-semibold text-white">debugging superpowers + 40 new words for “oops”</dd>
@@ -99,63 +109,67 @@ export function Terminal() {
                   </div>
                   <div className="flex flex-wrap justify-between gap-2">
                     <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/45">stop code</dt>
-                    <dd className="font-mono font-semibold text-swift-soft">0x000_SHIP_ANYWAY</dd>
+                    <dd className="font-mono font-semibold text-[#00ffaa]">0x000_SHIP_ANYWAY</dd>
                   </div>
                 </dl>
 
                 <p className="mt-7 font-mono text-[12px] text-white/50">
-                  press <span className="rounded-md border border-white/20 bg-white/10 px-2 py-0.5 text-white">Join the club</span> to continue _
-                  <span className="ml-1 inline-block h-3.5 w-[7px] translate-y-0.5 bg-swift animate-blink" />
+                  press <span className="win98-btn mx-1 inline-block">Join the club</span> to continue _
+                  <span className="ml-1 inline-block h-3.5 w-[7px] translate-y-0.5 animate-blink bg-[#00ffaa]" />
                 </p>
               </div>
-            </Tilt>
+
+              {/* status bar */}
+              <div className="win98-out flex items-center justify-between bg-[#c6c6c6] px-3 py-1 font-mono text-[9.5px] text-[#0a0a0a]">
+                <span>1 error found — it&apos;s a friend now</span>
+                <span>NUM</span>
+              </div>
+            </div>
           </Reveal>
 
-          {/* floating glass readouts */}
+          {/* readout chips as mini web-core dialogs */}
           <div className="grid content-start gap-4 lg:col-span-5">
             {chips.map((c, i) => (
               <Reveal key={c.k} variant={i % 2 ? "right" : "left"} delay={i * 110}>
-                <div className={cn("glass-chip-dark card-lift w-full justify-between gap-6 rounded-2xl px-5 py-4 sm:rounded-full")}>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/55">{c.k}</span>
-                  <span className="font-mono text-lg font-bold text-white">{c.v}</span>
+                <div className="webcore-tile flex items-center justify-between gap-6 !rounded-sm px-5 py-3.5 transition-colors duration-300">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">{c.k}</span>
+                  <span className="font-mono text-lg font-bold text-[#00ffaa]" style={{ textShadow: "0 0 10px rgba(0,255,170,0.5)" }}>
+                    {c.v}
+                  </span>
                 </div>
               </Reveal>
             ))}
 
             <Reveal variant="right" delay={480}>
-              <div className="liquid-dark relative overflow-hidden rounded-2xl p-6">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-swift/30 blur-2xl"
-                  style={{ animation: "crt-glow-pulse 4.5s ease-in-out infinite" }}
-                />
-                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">lab rule nº 404</p>
+              <div className="webcore-tile relative overflow-hidden !rounded-sm p-6">
+                <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#00ffaa]/70">lab rule nº 404</p>
                 <p className="mt-2 text-lg font-bold tracking-tight text-white">
                   “If it compiles on the first try, you didn&apos;t dream big enough.”
                 </p>
-                <p className="mt-3 text-[13px] text-white/60">
-                  — every mentor here, at least once a week
-                </p>
+                <p className="mt-3 font-mono text-[13px] text-white/55">— every mentor here, at least once a week</p>
               </div>
             </Reveal>
           </div>
         </div>
 
         <Reveal delay={160} className="mt-12 flex flex-wrap items-center gap-4">
-          <Magnetic>
-            <a href="#join" className="btn btn-accent !px-7 !py-4">
-              Learn to debug with us
-              <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden>
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </a>
-          </Magnetic>
-          <a href="#program" className="btn btn-ghost-dark !px-7 !py-4">
+          <a
+            href="#join"
+            className="inline-flex items-center gap-2 rounded-sm border border-[#00ffaa] bg-[#00ffaa]/15 px-6 py-3.5 text-sm font-bold text-[#00ffaa] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#00ffaa]/25"
+            style={{ boxShadow: "0 0 24px -8px rgba(0,255,170,0.6)" }}
+          >
+            Learn to debug with us
+            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" aria-hidden>
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+          <a
+            href="#program"
+            className="win98-btn inline-flex items-center !px-5 !py-2.5 !text-[12px]"
+          >
             See the tracks
           </a>
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">
-            no crash left behind · est. 2021
-          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">no crash left behind · est. 2021</span>
         </Reveal>
       </div>
     </section>

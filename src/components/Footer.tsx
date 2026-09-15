@@ -1,6 +1,5 @@
 import { Logo } from "./ui/Logo";
 import { Reveal } from "./ui/Reveal";
-import { Deco } from "./ui/Deco";
 import { Orb } from "./ui/Orb";
 
 const cols = [
@@ -21,43 +20,61 @@ const cols = [
   },
 ];
 
+/** Footer — Web Core: a starfield desktop with a start-menu of links. */
 export function Footer() {
   return (
-    <footer className="cv-auto relative overflow-hidden border-t-[3px] border-ink/15 bg-paper-2">
-      <Deco variant="warm" />
+    <footer className="webcore-section cv-auto relative overflow-hidden">
+      {/* starfield */}
+      <div aria-hidden className="footer-stars absolute inset-0 opacity-80" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(70% 55% at 50% 0%, rgba(0,255,170,0.05), transparent 60%)" }}
+      />
+
       <div className="container-x relative py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-6">
             <Logo />
-            <p className="mt-6 max-w-sm text-pretty text-sm leading-relaxed text-muted">
+            <p className="mt-6 max-w-sm text-pretty text-sm leading-relaxed text-white/55">
               A student-run iOS studio at Parul University, Vadodara. We teach Swift by shipping — one app per semester, every semester since 2020.
             </p>
             <div className="mt-8 flex flex-wrap gap-2">
               {["SwiftUI", "UIKit", "Swift Data", "CloudKit", "Vision Pro", "Server-side Swift"].map((t) => (
-                <span key={t} className="rounded-full border border-line bg-white px-3 py-1 font-mono text-[11px] text-muted">
+                <span key={t} className="webcore-tile rounded-none px-3 py-1 font-mono text-[11px] text-white/60">
                   {t}
                 </span>
               ))}
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
+              <span className="webcore-tile inline-flex items-center gap-2.5 rounded-none py-1.5 pl-1.5 pr-4">
                 <Orb variant="swift" box={26} size="small" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Built with Swift</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/70">Built with Swift</span>
               </span>
-              <span className="inline-flex items-center gap-2.5 rounded-full bg-ink py-1.5 pl-1.5 pr-4 shadow-[0_4px_0_rgba(11,11,12,0.9)]">
+              <span className="webcore-tile inline-flex items-center gap-2.5 rounded-none py-1.5 pl-1.5 pr-4">
                 <Orb variant="ios" box={26} size="small" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Designed for iOS</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/70">Designed for iOS</span>
               </span>
             </div>
           </Reveal>
 
           {cols.map((c, ci) => (
             <Reveal key={c.h} delay={80 + ci * 60} className="lg:col-span-2">
-              <h3 className="eyebrow">{c.h}</h3>
+              {/* column header like a start-menu group */}
+              <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[#00ffaa]/80">
+                <span aria-hidden className="text-white/30">▸</span>
+                {c.h}
+              </p>
               <ul className="mt-5 space-y-3">
                 {c.items.map((it, i) => (
                   <li key={it}>
-                    <a href={c.hrefs[i]} className="link-u text-sm font-medium text-ink/75 hover:text-ink">
+                    <a
+                      href={c.hrefs[i]}
+                      className="group inline-flex items-center gap-2 text-sm font-medium text-white/65 transition-colors hover:text-[#00ffaa]"
+                    >
+                      <span aria-hidden className="font-mono text-[9px] text-[#00ffaa]/0 transition-colors group-hover:text-[#00ffaa]">
+                        ▸
+                      </span>
                       {it}
                     </a>
                   </li>
@@ -67,19 +84,22 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-line pt-8 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+        {/* taskbar */}
+        <div className="mt-16 flex flex-col gap-4 border-t border-[#2a2a2e] pt-6 font-mono text-[11px] text-white/45 sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Swift Coding Club, Parul University. Student-run; not affiliated with Apple Inc.</p>
-          <p className="font-mono uppercase tracking-[0.16em]">
-            Swift, SwiftUI & Xcode are trademarks of Apple Inc.
-          </p>
+          <p className="uppercase tracking-[0.16em]">Swift, SwiftUI &amp; Xcode are trademarks of Apple Inc.</p>
         </div>
       </div>
 
-      {/* Oversized wordmark — swiss typographic signature */}
-      <div aria-hidden className="relative overflow-hidden border-t-[3px] border-ink/15 bg-peach-2">
-        <p className="container-x display select-none whitespace-nowrap py-4 text-[16vw] leading-none text-gradient sm:text-[13vw]">
+      {/* Oversized wordmark — chrome on the void */}
+      <div aria-hidden className="relative overflow-hidden border-t border-[#2a2a2e] bg-[#08080a]">
+        <p className="y2k-chrome-text container-x display select-none whitespace-nowrap py-4 text-center text-[16vw] leading-none opacity-90 sm:text-[13vw]">
           Swift @ Parul
         </p>
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
+          style={{ background: "linear-gradient(180deg, transparent, rgba(0,255,170,0.06))" }}
+        />
       </div>
     </footer>
   );

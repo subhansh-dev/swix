@@ -1,14 +1,27 @@
 import { useState } from "react";
-import paint from "@/assets/paint.webp";
 import { Reveal } from "./ui/Reveal";
-import { Deco, Sticker, Squiggle } from "./ui/Deco";
 import { Magnetic } from "./ui/Magnetic";
 import { Orb } from "./ui/Orb";
-import { useSpotlight } from "@/hooks/useSpotlight";
 import { cn } from "@/utils/cn";
 
+const milestones = [
+  { w: "Week 01", t: "Swift basics in a Playground" },
+  { w: "Week 04", t: "Your first SwiftUI screen" },
+  { w: "Week 09", t: "TestFlight beta to friends" },
+  { w: "Week 14", t: "Demo Day + App Review" },
+];
+
+const starfield = [
+  { left: "8%", top: "14%", s: "✦", size: "text-xl", d: "0s" },
+  { left: "20%", top: "70%", s: "✧", size: "text-base", d: "1.2s" },
+  { left: "38%", top: "10%", s: "·", size: "text-2xl", d: "2s" },
+  { left: "60%", top: "18%", s: "✦", size: "text-base", d: "0.8s" },
+  { left: "78%", top: "64%", s: "✧", size: "text-xl", d: "1.6s" },
+  { left: "92%", top: "24%", s: "✦", size: "text-lg", d: "2.4s" },
+];
+
+/** CTA — Retro Futurism: the launchpad. Atomic-age panel, orbits, starbursts. */
 export function CTA() {
-  const { onPointerMove } = useSpotlight<HTMLDivElement>();
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "done">("idle");
 
@@ -23,55 +36,56 @@ export function CTA() {
       <div className="container-x">
         <Reveal variant="scale">
           <div
-            onPointerMove={onPointerMove}
-            className="sheen relative overflow-hidden rounded-[36px] border-[3px] border-ink bg-sunset px-6 py-16 text-ink shadow-[0_20px_0_rgba(11,11,12,0.9)] sm:px-12 sm:py-24 lg:px-20"
+            className="atomi-section relative overflow-hidden rounded-[36px] px-6 py-16 sm:px-12 sm:py-24 lg:px-20"
+            style={{
+              border: "2px solid rgba(180,85,45,0.4)",
+              boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 34px 80px -34px rgba(122,60,20,0.5)",
+            }}
           >
-            {/* colorful shapes */}
-            <Deco variant="sunset" />
-            <img
-              src={paint}
-              alt=""
-              aria-hidden
-              width={700}
-              height={700}
-              loading="lazy"
-              decoding="async"
-              className="gpu pointer-events-none absolute -right-10 -top-10 h-80 w-80 object-contain opacity-60 mix-blend-multiply"
-            />
-
-            {/* rising particles */}
-            <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-              {[
-                { left: "12%", delay: "0s", d: "7s", c: "bg-swift" },
-                { left: "28%", delay: "1.4s", d: "9s", c: "bg-lemon" },
-                { left: "64%", delay: "2.6s", d: "8s", c: "bg-rose" },
-                { left: "81%", delay: "0.8s", d: "10s", c: "bg-swift-deep" },
-              ].map((p) => (
-                <span
-                  key={p.left}
-                  className={cn("gpu animate-rise absolute bottom-0 h-2 w-2 rounded-full", p.c)}
-                  style={{ left: p.left, animationDelay: p.delay, animationDuration: p.d }}
-                />
+            {/* starfield + orbits inside the panel */}
+            <div aria-hidden className="pointer-events-none absolute inset-0">
+              {starfield.map((s, i) => (
+                <span key={i} className={cn("atomi-star gpu animate-pulse-soft absolute font-mono", s.size)} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
+                  {s.s}
+                </span>
               ))}
+              <span className="atomi-ring gpu animate-spin-slow right-[4%] top-[8%] h-48 w-48" style={{ animationDuration: "52s" }} />
+              <span className="atomi-ring gpu animate-spin-slow bottom-[6%] left-[3%] h-64 w-64" style={{ animationDuration: "66s", animationDirection: "reverse" }} />
+              {/* orbiting comet bead */}
+              <span className="absolute right-[10%] top-[16%] h-3 w-3" style={{ animation: "atomi-orbit 16s linear infinite", ["--orbit-r" as string]: "110px" }}>
+                <span
+                  className="block h-3 w-3 rounded-full"
+                  style={{ background: "radial-gradient(circle at 32% 28%, #fff, #b4552d 65%)", boxShadow: "0 0 14px rgba(180,85,45,0.9)" }}
+                />
+              </span>
             </div>
 
             <div className="relative grid gap-10 lg:grid-cols-12">
               <div className="lg:col-span-8">
                 <div className="flex flex-wrap items-center gap-3">
-                  <Sticker rotate={-3} color="bg-swift text-white">Spring '26</Sticker>
-                  <Sticker rotate={4} color="bg-lemon text-ink">Applications close 28 Feb</Sticker>
+                  <span className="atomi-btn rounded-full px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]">Spring '26</span>
+                  <span className="rounded-full border border-[#b4552d]/40 bg-white/70 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[#6b4a34]">
+                    Applications close 28 Feb
+                  </span>
                   <Orb variant="swift" box={48} className="ml-1" />
                 </div>
-                <h2 className="display mt-6 text-balance text-4xl sm:text-6xl lg:text-[4.6rem]">
-                  Your first app is one <span className="text-gradient">Thursday</span> away.
+                <h2 className="display mt-6 text-balance text-4xl text-[#2a1a10] sm:text-6xl lg:text-[4.6rem]">
+                  Your first app is one <span className="text-[#c2521f]">Thursday</span> away.
                 </h2>
-                <p className="mt-6 max-w-xl text-pretty text-lg text-ink/70">
-                  Free for every Parul student. Leave your university email — we'll send the application
+                <p className="mt-6 max-w-xl text-pretty text-lg text-[#6b4a34]">
+                  Free for every Parul student. Leave your university email — we&apos;ll send the application
                   link, lab schedule and a Swift starter kit.
                 </p>
 
                 <form onSubmit={submit} className="mt-10 max-w-lg" aria-label="Apply to Swift Coding Club">
-                  <div className="flex flex-col gap-2 rounded-[22px] border-[3px] border-ink bg-white/85 p-2 shadow-[0_6px_0_rgba(11,11,12,0.9)] backdrop-blur-xl backdrop-saturate-150 sm:flex-row">
+                  <div
+                    className="flex flex-col gap-2 rounded-[22px] p-2 sm:flex-row"
+                    style={{
+                      background: "linear-gradient(160deg,#fffdf8,#fdeed8)",
+                      border: "1.5px solid rgba(180,85,45,0.4)",
+                      boxShadow: "0 1px 0 rgba(255,255,255,0.95) inset, 0 14px 34px -18px rgba(122,60,20,0.5)",
+                    }}
+                  >
                     <label htmlFor="email" className="sr-only">University email</label>
                     <input
                       id="email"
@@ -82,44 +96,40 @@ export function CTA() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@paruluniversity.ac.in"
-                      className="h-12 flex-1 rounded-xl bg-transparent px-5 text-[15px] text-ink placeholder:text-ink/40 focus:outline-none"
+                      className="h-12 flex-1 rounded-xl bg-transparent px-5 text-[15px] text-[#2a1a10] placeholder:text-[#8a6a50]/60 focus:outline-none"
                     />
                     <Magnetic strength={0.18}>
-                      <button type="submit" className={cn("btn h-12 !py-0", state === "done" ? "btn-ghost !bg-mint !text-ink" : "btn-accent")}>
+                      <button type="submit" className={cn("atomi-btn h-12 px-6 text-sm", state === "done" && "!bg-[#2f9e5f] !shadow-[0_6px_0_#1d6e3e]")} style={{ boxShadow: "0 6px 0 #b4552d" }}>
                         {state === "done" ? "Check your inbox ✓" : "Get the application"}
                       </button>
                     </Magnetic>
                   </div>
-                  <p className="mt-3 text-xs text-muted" aria-live="polite">
+                  <p className="mt-3 font-mono text-xs text-[#8a6a50]" aria-live="polite">
                     {state === "done" ? "Sent. See you Thursday, 5pm — Block B, 3F." : "Any @paruluniversity.ac.in address. No spam, ever."}
                   </p>
                 </form>
               </div>
 
               <div className="lg:col-span-4 lg:pl-8">
-                <ul className="space-y-6 border-l-[3px] border-ink/20 pl-6">
-                  {[
-                    { w: "Week 01", t: "Swift basics in a Playground", color: "bg-swift" },
-                    { w: "Week 04", t: "Your first SwiftUI screen", color: "bg-lemon" },
-                    { w: "Week 09", t: "TestFlight beta to friends", color: "bg-lavender" },
-                    { w: "Week 14", t: "Demo Day + App Review", color: "bg-mint" },
-                  ].map(({ w, t, color }, i) => (
+                <ul className="space-y-6 border-l border-dashed border-[#b4552d]/40 pl-6">
+                  {milestones.map(({ w, t }, i) => (
                     <li key={w} className="relative">
-                      <span className={cn("absolute -left-[33px] top-1.5 h-3.5 w-3.5 border-[2px] border-ink", color)} style={{ borderRadius: "50%" }} />
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{w}</p>
-                      <p className="mt-0.5 text-[15px] font-semibold text-ink">{t}</p>
-                      <div className="mt-2 h-px w-full bg-ink/10">
+                      {/* orbit node */}
+                      <span className="absolute -left-[33px] top-1.5 grid h-4 w-4 place-items-center" aria-hidden>
+                        <span className="absolute h-4 w-4 rounded-full border border-dashed border-[#b4552d]/50" style={{ animation: `y2k-spin ${10 + i * 3}s linear infinite` }} />
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#b4552d]" />
+                      </span>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a6a50]">{w}</p>
+                      <p className="mt-0.5 text-[15px] font-semibold text-[#2a1a10]">{t}</p>
+                      <div className="mt-2 h-px w-full bg-[#b4552d]/20">
                         <div
-                          className="gpu h-px bg-swift transition-[width] duration-1000 ease-[var(--ease-out-expo)]"
+                          className="gpu h-px bg-[#b4552d] transition-[width] duration-1000 ease-[var(--ease-out-expo)]"
                           style={{ width: `${25 + i * 25}%` }}
                         />
                       </div>
                     </li>
                   ))}
                 </ul>
-                <Reveal delay={280} className="mt-8">
-                  <Squiggle color="#F05138" className="w-40 opacity-70" />
-                </Reveal>
               </div>
             </div>
           </div>

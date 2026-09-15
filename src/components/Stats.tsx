@@ -1,77 +1,90 @@
-import liquidDark from "@/assets/liquid-dark.webp";
-import paint from "@/assets/paint.webp";
 import { Reveal } from "./ui/Reveal";
-import { Tilt } from "./ui/Tilt";
-import { Sticker, Deco } from "./ui/Deco";
 import { Orb } from "./ui/Orb";
 import { useCountUp } from "@/hooks/useCountUp";
 import { cn } from "@/utils/cn";
 
 const nums = [
-  { v: 300, s: "+", l: "Students trained", sub: "across 6 faculties", color: "card-coral", accent: "bg-swift" },
-  { v: 38, s: "", l: "Apps shipped", sub: "in the last 3 years", color: "card-lemon", accent: "bg-swift-deep" },
-  { v: 12, s: "", l: "App Store launches", sub: "published by students", color: "card-lavender", accent: "bg-swift" },
-  { v: 29, s: "", l: "Apple devices", sub: "in the training lab", color: "card-mint", accent: "bg-swift-deep" },
+  { v: 300, s: "+", l: "Students trained", sub: "across 6 faculties", star: "✦" },
+  { v: 38, s: "", l: "Apps shipped", sub: "in the last 3 years", star: "✧" },
+  { v: 12, s: "", l: "App Store launches", sub: "published by students", star: "✦" },
+  { v: 29, s: "", l: "Apple devices", sub: "in the training lab", star: "✧" },
 ];
 
-function Cell({ v, s, l, sub, color, accent, i }: { v: number; s: string; l: string; sub: string; color: string; accent: string; i: number }) {
+const starfield = [
+  { left: "6%", top: "18%", s: "✦", size: "text-lg", d: "0s" },
+  { left: "18%", top: "70%", s: "✧", size: "text-base", d: "1.3s" },
+  { left: "36%", top: "12%", s: "·", size: "text-xl", d: "2.1s" },
+  { left: "52%", top: "78%", s: "✦", size: "text-sm", d: "0.7s" },
+  { left: "68%", top: "20%", s: "✧", size: "text-lg", d: "1.9s" },
+  { left: "84%", top: "64%", s: "✦", size: "text-base", d: "2.7s" },
+  { left: "94%", top: "28%", s: "·", size: "text-lg", d: "1.1s" },
+];
+
+function Cell({ v, s, l, sub, star, i }: { v: number; s: string; l: string; sub: string; star: string; i: number }) {
   const { ref, value } = useCountUp(v, 1500 + i * 150);
   return (
     <Reveal delay={i * 90} className="h-full">
-      <Tilt max={6} lift={18}>
-        <div className={cn("relative h-full overflow-hidden rounded-[28px] border-[3px] border-ink p-6 shadow-[0_10px_0_rgba(11,11,12,0.9)] sm:p-8", color)}>
-        <div aria-hidden className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full bg-white/50 blur-2xl" />
-        <div className={cn("h-2 w-10 rounded-full", accent)} />
-        <p className="display mt-5 text-4xl sm:text-5xl">
+      <div
+        className="relative h-full overflow-hidden rounded-[24px] p-6 sm:p-8"
+        style={{
+          background: "linear-gradient(160deg,#fffdf8,#fbe7cc)",
+          border: "1.5px solid rgba(180,85,45,0.35)",
+          boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.4)",
+        }}
+      >
+        {/* tiny orbiting satellite */}
+        <span aria-hidden className="pointer-events-none absolute right-4 top-4 h-9 w-9">
+          <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ animation: `y2k-spin ${18 + i * 4}s linear infinite` }} />
+          <span
+            className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b4552d]"
+            style={{ boxShadow: "0 0 8px rgba(180,85,45,0.9)" }}
+          />
+        </span>
+        <span className="grid h-8 w-8 place-items-center rounded-full bg-[#b4552d] text-sm text-[#ffe8d2] shadow-[0_8px_18px_-8px_rgba(180,85,45,0.8)]" aria-hidden>
+          {star}
+        </span>
+        <p className="display mt-5 text-4xl text-[#2a1a10] sm:text-5xl">
           <span ref={ref}>{value}</span>
-          {s}
+          <span className="text-[#c2521f]">{s}</span>
         </p>
-        <p className="mt-3 text-base font-bold tracking-tight">{l}</p>
-        <p className="mt-0.5 text-[12.5px] text-muted">{sub}</p>
-        {/* rotated corner sticker */}
-        <span
-          aria-hidden
-          className={cn("absolute right-3 top-3 h-8 w-8 rounded-full opacity-70", accent)}
-          style={{ transform: "rotate(12deg) translate(4px, -4px)" }}
-        />
-        </div>
-      </Tilt>
+        <p className="mt-3 text-base font-bold tracking-tight text-[#2a1a10]">{l}</p>
+        <p className="mt-0.5 text-[12.5px] text-[#8a6a50]">{sub}</p>
+      </div>
     </Reveal>
   );
 }
 
+/** Stats — Retro Futurism: atomic-age cream cards, orbiting satellites, starbursts. */
 export function Stats() {
   return (
-    <section aria-label="Club numbers" className="cv-auto relative overflow-hidden bg-paper-2 py-20 sm:py-24">
-      <img
-        src={liquidDark}
-        alt=""
-        aria-hidden
-        width={525}
-        height={700}
-        loading="lazy"
-        decoding="async"
-        className="gpu pointer-events-none absolute -left-20 -top-20 h-[60vh] w-[60vh] scale-110 object-cover opacity-20 blur-2xl"
-      />
-      <Deco variant="warm" />
+    <section aria-label="Club numbers" className="atomi-section cv-auto relative overflow-hidden py-20 sm:py-24">
+      {/* starfield */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {starfield.map((s, i) => (
+          <span key={i} className={cn("atomi-star gpu animate-pulse-soft absolute font-mono", s.size)} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
+            {s.s}
+          </span>
+        ))}
+        <span className="atomi-ring gpu animate-spin-slow left-[4%] top-[16%] h-48 w-48" style={{ animationDuration: "58s" }} />
+        <span className="atomi-ring gpu animate-spin-slow right-[6%] bottom-[8%] h-40 w-40" style={{ animationDuration: "46s", animationDirection: "reverse" }} />
+      </div>
 
       <div className="container-x relative">
         <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div className="flex items-center gap-3">
             <Orb variant="swift" box={44} size="small" className="mr-1" />
-            <span className="h-[3px] w-10 bg-swift" />
-            <p className="eyebrow">The club, by the numbers</p>
+            <span className="h-[3px] w-10 bg-[#b4552d]" />
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#8a6a50]">The club, by the numbers</p>
           </div>
-          <Sticker rotate={4} color="bg-white text-ink">verified · 2026</Sticker>
+          <span className="rounded-full border border-[#b4552d]/35 bg-white/70 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[#6b4a34]">
+            verified · 2026
+          </span>
         </Reveal>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {nums.map((n, i) => (
             <Cell key={n.l} {...n} i={i} />
           ))}
         </div>
-        <Reveal delay={320} className="mt-10 flex items-center justify-center">
-          <img src={paint} alt="" aria-hidden width={700} height={700} loading="lazy" decoding="async" className="h-8 w-auto opacity-70" />
-        </Reveal>
       </div>
     </section>
   );

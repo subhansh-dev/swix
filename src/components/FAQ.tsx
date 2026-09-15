@@ -1,8 +1,9 @@
 import { useId, useState } from "react";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
-import { Sticker, Deco } from "./ui/Deco";
 import { cn } from "@/utils/cn";
+
+const holo = "linear-gradient(135deg,#7ad9ff,#9a8cff 30%,#ff7ad1 55%,#ffb35c 78%,#67e0a8)";
 
 const faqs = [
   {
@@ -34,7 +35,7 @@ const faqs = [
 function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean; onToggle: () => void; i: number }) {
   const id = useId();
   return (
-    <Reveal as="li" delay={i * 60} className="border-t border-line last:border-b">
+    <Reveal as="li" delay={i * 60} className="border-t border-[#9a8cff]/20 last:border-b">
       <h3>
         <button
           type="button"
@@ -45,20 +46,21 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
           className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-7"
         >
           <span className="flex items-baseline gap-5">
-            <span className="hidden font-mono text-[11px] tracking-[0.2em] text-muted sm:inline">0{i + 1}</span>
-            <span className={cn("text-lg font-semibold tracking-tight transition-colors sm:text-xl", open ? "text-swift" : "text-ink group-hover:text-swift")}>
+            <span className="hidden font-mono text-[11px] tracking-[0.2em] text-[#9a8cff]/50 sm:inline">0{i + 1}</span>
+            <span className={cn("text-lg font-semibold tracking-tight transition-colors sm:text-xl", open ? "y2k-holo-text" : "text-[#2a2850] group-hover:text-[#9a8cff]")}>
               {q}
             </span>
           </span>
           <span
             className={cn(
-              "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-[var(--ease-out-expo)]",
-              open ? "rotate-45 border-swift bg-swift text-white" : "border-line text-ink group-hover:border-ink"
+              "y2k-orb relative flex h-9 w-9 shrink-0 items-center justify-center transition-all duration-500 ease-[var(--ease-out-expo)]",
+              open ? "rotate-45" : "opacity-70"
             )}
+            style={open ? { background: holo, boxShadow: "0 8px 20px -8px rgba(255,122,209,0.7)" } : undefined}
             aria-hidden
           >
-            <span className="absolute h-[1.5px] w-3.5 bg-current" />
-            <span className="absolute h-3.5 w-[1.5px] bg-current" />
+            <span className="absolute h-[1.5px] w-3.5 bg-white" />
+            <span className="absolute h-3.5 w-[1.5px] bg-white" />
           </span>
         </button>
       </h3>
@@ -72,18 +74,25 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
         )}
       >
         <div className="overflow-hidden">
-          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-muted sm:pl-[44px]">{a}</p>
+          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-[#5b588a] sm:pl-[44px]">{a}</p>
         </div>
       </div>
     </Reveal>
   );
 }
 
+/** FAQ — Neo Y2K: chrome accordion console with holographic accents. */
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="cv-auto relative overflow-hidden bg-lav py-24 sm:py-32">
-      <Deco variant="lav" />
+    <section id="faq" className="y2k-section cv-auto relative overflow-hidden py-24 sm:py-32">
+      {/* y2k backdrop */}
+      <div aria-hidden className="y2k-grid pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_80%_20%,black,transparent_60%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <span className="y2k-star absolute left-[8%] top-16 h-5 w-5 animate-pulse-soft" />
+        <span className="y2k-star absolute right-[10%] bottom-20 h-4 w-4 animate-pulse-soft" style={{ animationDelay: "1.6s" }} />
+      </div>
+
       <div className="container-x relative">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
@@ -91,19 +100,32 @@ export function FAQ() {
               <SectionHeader
                 index="12"
                 eyebrow="Questions"
-                title={<>Asked often.</>}
-                body="Still unsure? Drop by any Thursday lab — no sign-up needed — or message us on Discord."
+                title={<span className="text-[#2a2850]">Asked often.</span>}
+                body={
+                  <span className="text-[#5b588a]">
+                    Still unsure? Drop by any Thursday lab — no sign-up needed — or message us on Discord.
+                  </span>
+                }
                 className="!grid-cols-1 [&>*]:!col-span-1"
               />
-              <div className="mt-4">
-                <Sticker rotate={-4} color="bg-swift text-white">Thu · 5pm · Block B</Sticker>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <span className="y2k-pill">Thu · 5pm · Block B</span>
               </div>
               <Reveal delay={200} className="mt-8">
-                <a href="#cta" className="btn btn-ghost">Talk to a Core member</a>
+                <a
+                  href="#cta"
+                  className="y2k-card inline-flex items-center !rounded-full px-6 py-3.5 text-sm font-bold text-[#2a2850] transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  Talk to a Core member
+                </a>
               </Reveal>
             </div>
           </div>
-          <ul className="lg:col-span-8 self-start rounded-[28px] border-[3px] border-ink bg-white/85 p-2 shadow-[0_10px_0_rgba(11,11,12,0.9)] backdrop-blur-xl backdrop-saturate-150 sm:p-3">
+
+          <ul
+            className="y2k-card self-start !rounded-[26px] p-2 sm:p-3"
+            style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.95) inset, 0 30px 70px -30px rgba(120,110,255,0.5), 0 18px 44px -22px rgba(255,122,209,0.4)" }}
+          >
             {faqs.map((f, i) => (
               <Item key={f.q} i={i} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
             ))}

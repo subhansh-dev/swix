@@ -34,7 +34,7 @@ function Cell({ v, s, l, sub, star, i }: { v: number; s: string; l: string; sub:
       >
         {/* tiny orbiting satellite */}
         <span aria-hidden className="pointer-events-none absolute right-4 top-4 h-9 w-9">
-          <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ animation: `y2k-spin ${18 + i * 4}s linear infinite` }} />
+          <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ animation: `orbit-spin ${18 + i * 4}s linear infinite` }} />
           <span
             className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b4552d]"
             style={{ boxShadow: "0 0 8px rgba(180,85,45,0.9)" }}

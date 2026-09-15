@@ -40,8 +40,6 @@
   --animate-splash-shine: splash-shine 1.4s linear infinite;
   --animate-wobble: wobble 8s ease-in-out infinite;
   --animate-scribble: scribble 18s linear infinite;
-  --animate-aero-rise: aero-rise 12s ease-in-out infinite;
-  --animate-acid-flicker: acid-flicker 7s linear infinite;
   --animate-atomi-orbit: atomi-orbit 18s linear infinite;
 
   @keyframes wobble {
@@ -728,100 +726,14 @@ body {
 }
 
 /* ============================================================
-   AESTHETIC KITS — Frutiger Aero · Neo Y2K · Acid · Web Core ·
-   Retro Futurism. One kit per section below the fold.
+   AESTHETIC KITS — Web Core · Retro Futurism.
+   The whole site runs on these two families.
    ============================================================ */
 
 @layer components {
 
-/* ---------- Frutiger Aero ---------- */
-.aero {
-  background: linear-gradient(180deg, #dff3ff 0%, #f5fcff 42%, #e6f9ef 100%);
-  position: relative;
-}
-.aero-sky {
-  background:
-    radial-gradient(58% 40% at 20% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
-    linear-gradient(180deg, #9fd9ff 0%, #c8ecff 46%, #eafaff 100%);
-}
-.aero-panel {
-  position: relative;
-  border-radius: 26px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(190, 235, 255, 0.5) 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 -14px 24px -18px rgba(28, 100, 131, 0.35) inset,
-    0 24px 50px -22px rgba(28, 100, 131, 0.45);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  backdrop-filter: blur(20px) saturate(150%);
-}
-.aero-panel::before {
-  content: "";
-  position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 5px;
-  height: 38%;
-  border-radius: 999px;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
-}
-.aero-gloss {
-  position: relative;
-  overflow: hidden;
-}
-.aero-gloss::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(120% 65% at 28% -8%, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.12) 45%, transparent 60%);
-}
-.aero-bubble {
-  position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.28) 42%, rgba(140, 220, 255, 0.35) 70%, rgba(60, 160, 220, 0.4) 100%);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    -6px -8px 14px rgba(255, 255, 255, 0.35) inset,
-    0 10px 24px -10px rgba(30, 130, 190, 0.4);
-}
-.aero-bubble::after {
-  content: "";
-  position: absolute;
-  left: 18%;
-  top: 12%;
-  width: 30%;
-  height: 22%;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  filter: blur(1px);
-}
-.aero-leaf {
-  position: absolute;
-  border-radius: 0 70% 0 70%;
-  background: linear-gradient(135deg, #8fe0b0, #46b877);
-  box-shadow: 0 12px 26px -14px rgba(35, 130, 80, 0.5);
-  opacity: 0.9;
-}
-@keyframes aero-rise {
-  0% { transform: translate3d(0, 24px, 0); opacity: 0; }
-  15% { opacity: 1; }
-  100% { transform: translate3d(6px, -130px, 0); opacity: 0; }
-}
-
-@keyframes y2k-spin {
+@keyframes orbit-spin {
   to { transform: rotate(360deg); }
-}
-
-@keyframes acid-flicker {
-  0%, 91%, 94%, 98%, 100% { opacity: 1; }
-  92% { opacity: 0.4; }
-  96% { opacity: 0.75; }
 }
 
 @keyframes atomi-orbit {
@@ -829,131 +741,36 @@ body {
   to { transform: rotate(360deg) translateX(var(--orbit-r, 90px)) rotate(-360deg); }
 }
 
-/* ---------- Neo Y2K ---------- */
-.y2k-section {
-  background:
-    radial-gradient(70% 55% at 80% 0%, rgba(255, 214, 236, 0.9), transparent 55%),
-    radial-gradient(60% 50% at 8% 12%, rgba(196, 219, 255, 0.95), transparent 55%),
-    linear-gradient(180deg, #eef2ff 0%, #fdeef8 55%, #eafaff 100%);
-}
-.y2k-holo {
-  background:
-    linear-gradient(115deg, #b7f4ff 0%, #cdb5ff 18%, #ffb1e6 38%, #ffe29a 56%, #b9ffd2 74%, #a9c8ff 92%);
-}
-.y2k-holo-text {
-  background: linear-gradient(115deg, #7ad9ff 0%, #9a8cff 22%, #ff7ad1 45%, #ffb35c 66%, #67e0a8 85%, #7ab8ff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.y2k-chrome-text {
-  background: linear-gradient(180deg, #ffffff 0%, #cfe4ff 38%, #7a94b8 52%, #e9f2ff 58%, #ffffff 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-.y2k-card {
+/* ---------- Retro Futurism shared cards & chips ---------- */
+.atomi-card {
   position: relative;
-  border-radius: 22px;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background:
-    linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(244, 248, 255, 0.78) 50%, rgba(255, 228, 245, 0.8) 100%);
+  border-radius: 26px;
+  border: 1.5px solid rgba(180, 85, 45, 0.35);
+  background: linear-gradient(160deg, #fffdf8, #fbe7cc);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 10px 26px -16px rgba(122, 110, 255, 0.55),
-    0 18px 44px -22px rgba(255, 122, 209, 0.45);
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 20px 44px -20px rgba(122, 60, 20, 0.4);
 }
-.y2k-orb {
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 32% 26%, #ffffff 0%, #d9e6ff 30%, #b9a8ff 62%, #7a94b8 100%);
-  box-shadow:
-    0 1px 1px rgba(255, 255, 255, 0.95) inset,
-    0 -10px 18px -8px rgba(60, 70, 130, 0.45) inset,
-    0 14px 30px -12px rgba(120, 110, 255, 0.55);
-}
-.y2k-grid {
-  background-image:
-    linear-gradient(to right, rgba(130, 120, 255, 0.16) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(130, 120, 255, 0.16) 1px, transparent 1px);
-  background-size: 44px 44px;
-}
-.y2k-pill {
+.atomi-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   border-radius: 999px;
+  border: 1px solid rgba(180, 85, 45, 0.35);
+  background: rgba(255, 255, 255, 0.7);
+  color: #6b4a34;
   padding: 0.3rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(238, 240, 255, 0.85));
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 1) inset,
-    0 6px 16px -8px rgba(122, 110, 255, 0.6);
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.y2k-star {
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background: linear-gradient(180deg, #fff, #b9d9ff 55%, #8fa8ff);
-  box-shadow: 0 4px 14px -6px rgba(120, 110, 255, 0.6);
-}
-
-/* ---------- Acid ---------- */
-.acid-section {
-  background: #0c0c0d;
-  color: #f2f2f0;
-}
-.acid-section .acid-muted { color: rgba(242, 242, 240, 0.62); }
-.acid-grid {
-  background-image:
-    linear-gradient(to right, rgba(226, 255, 46, 0.09) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(226, 255, 46, 0.09) 1px, transparent 1px);
-  background-size: 56px 56px;
-}
-.acid-checker {
-  background-image:
-    repeating-conic-gradient(rgba(226, 255, 46, 0.16) 0% 25%, transparent 0% 50%);
-  background-size: 56px 56px;
-}
-.acid-card {
-  position: relative;
-  border-radius: 6px;
-  border: 1px solid rgba(226, 255, 46, 0.35);
-  background: rgba(18, 18, 20, 0.92);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 34px -14px rgba(226, 255, 46, 0.5);
-}
-.acid-lime { color: #e2ff2e; }
-.acid-violet { color: #8b7bff; }
-.acid-chip {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px;
-  border: 1px solid rgba(226, 255, 46, 0.5);
-  background: rgba(226, 255, 46, 0.08);
-  color: #e2ff2e;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.6rem;
-}
-.acid-tag {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  border: 1px solid rgba(242, 242, 240, 0.25);
-  background: rgba(242, 242, 240, 0.06);
-  color: rgba(242, 242, 240, 0.75);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.7rem;
+.atomi-chrome-text {
+  background: linear-gradient(180deg, #2a1a10 0%, #b4552d 45%, #7a3418 55%, #c2521f 75%, #2a1a10 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ---------- Web Core ---------- */
@@ -1045,12 +862,6 @@ body {
 }
 .atomi-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #b4552d; }
 .atomi-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #b4552d; }
-
-/* Marquee glow (Y2K ticker) */
-.y2k-marquee {
-  background: linear-gradient(90deg, rgba(90, 80, 220, 0.92), rgba(255, 122, 209, 0.92));
-  color: #fff;
-}
 
 /* Footer starfield */
 .footer-stars {

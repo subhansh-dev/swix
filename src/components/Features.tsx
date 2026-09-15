@@ -1,6 +1,5 @@
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
-import { useSpotlight } from "@/hooks/useSpotlight";
 import { Tilt } from "./ui/Tilt";
 import { cn } from "@/utils/cn";
 
@@ -11,8 +10,6 @@ type Feature = {
   icon: React.ReactNode;
   span?: string;
   tag: string;
-  glow: string;
-  hover: string;
 };
 
 const stroke = { stroke: "currentColor", strokeWidth: 1.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, fill: "none" };
@@ -29,8 +26,6 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-7",
-    glow: "rgba(226,255,46,0.5)",
-    hover: "rgba(226,255,46,0.85)",
   },
   {
     n: "02",
@@ -44,8 +39,6 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-5",
-    glow: "rgba(139,123,255,0.5)",
-    hover: "rgba(139,123,255,0.85)",
   },
   {
     n: "03",
@@ -59,8 +52,6 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-5",
-    glow: "rgba(255,61,242,0.4)",
-    hover: "rgba(255,61,242,0.8)",
   },
   {
     n: "04",
@@ -73,37 +64,48 @@ const features: Feature[] = [
       </svg>
     ),
     span: "lg:col-span-7",
-    glow: "rgba(0,255,170,0.4)",
-    hover: "rgba(0,255,170,0.8)",
   },
 ];
 
 function FeatureCard({ f, i }: { f: Feature; i: number }) {
-  const { onPointerMove } = useSpotlight<HTMLDivElement>();
   return (
     <Reveal delay={i * 90} className={cn("h-full", f.span)}>
       <Tilt max={7} lift={20} className="h-full">
-        <div
-          onPointerMove={onPointerMove}
-          className="acid-card acid-grid card-lift group relative flex h-full flex-col justify-between overflow-hidden p-7 transition-shadow duration-500 sm:p-9"
-          style={{ boxShadow: `0 0 0 1px rgba(0,0,0,0.6), 0 0 34px -14px ${f.glow}` }}
-          onMouseEnter={(e) => { e.currentTarget.style.boxShadow = `0 0 0 1px rgba(0,0,0,0.6), 0 0 52px -10px ${f.hover}`; }}
-          onMouseLeave={(e) => { e.currentTarget.style.boxShadow = `0 0 0 1px rgba(0,0,0,0.6), 0 0 34px -14px ${f.glow}`; }}
-        >
-          {/* wireframe corner brackets */}
-          <span aria-hidden className="pointer-events-none absolute right-3 top-3 font-mono text-lg text-[#e2ff2e]/40">+</span>
-          <span aria-hidden className="pointer-events-none absolute bottom-3 left-3 font-mono text-lg text-[#e2ff2e]/40">+</span>
-
-          <div className="relative flex items-start justify-between">
-            <div className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#e2ff2e]/60 bg-[#e2ff2e]/10 text-[#e2ff2e] shadow-[0_0_20px_-6px_rgba(226,255,46,0.6)]">
-              {f.icon}
-            </div>
-            <span className="font-mono text-[11px] tracking-[0.2em] text-[#e2ff2e]/50">{f.n}</span>
+        <div className="webcore-tile card-lift flex h-full flex-col overflow-hidden !rounded-sm transition-shadow duration-500">
+          {/* titlebar */}
+          <div className="win98-title flex items-center justify-between px-2 py-1">
+            <span className="truncate font-mono">lab_module_{f.n}.swift</span>
+            <span className="flex gap-1" aria-hidden>
+              <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">_</span>
+              <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">×</span>
+            </span>
           </div>
-          <div className="mt-14">
-            <span className="acid-chip">{f.tag}</span>
-            <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#f2f2f0] sm:text-[1.7rem]">{f.title}</h3>
-            <p className="mt-3 max-w-md text-pretty text-[15px] leading-relaxed text-white/60">{f.body}</p>
+
+          <div className="relative flex flex-1 flex-col justify-between p-7 sm:p-9">
+            <div className="flex items-start justify-between">
+              <div
+                className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#00ffaa]/50 bg-[#00ffaa]/10 text-[#00ffaa]"
+                style={{ boxShadow: "0 0 20px -8px rgba(0,255,170,0.6)" }}
+              >
+                {f.icon}
+              </div>
+              <span className="font-mono text-[11px] tracking-[0.2em] text-[#00ffaa]/50">{f.n}</span>
+            </div>
+            <div className="mt-14">
+              <span
+                className="inline-flex items-center rounded-none border border-[#00ffaa]/40 bg-[#00ffaa]/10 px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#00ffaa]"
+              >
+                {f.tag}
+              </span>
+              <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#e6e6e2] sm:text-[1.7rem]">{f.title}</h3>
+              <p className="mt-3 max-w-md text-pretty font-mono text-[13.5px] leading-relaxed text-white/60">{f.body}</p>
+            </div>
+          </div>
+
+          {/* status bar */}
+          <div className="win98-out flex items-center justify-between bg-[#c6c6c6] px-3 py-1 font-mono text-[9px] text-[#0a0a0a]">
+            <span>module {f.n} loaded</span>
+            <span>ready</span>
           </div>
         </div>
       </Tilt>
@@ -113,15 +115,13 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 
 export function Features() {
   return (
-    <section id="program" className="acid-section cv-auto relative overflow-hidden py-24 sm:py-32">
-      {/* acid backdrops: warped checker + wireframe grid */}
-      <div aria-hidden className="acid-checker pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_80%_0%,black,transparent_60%)]" />
-      <div aria-hidden className="acid-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_10%_100%,black,transparent_65%)]" />
-      {/* flickering wireframe orb */}
+    <section id="program" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32">
+      {/* starfield + scanline glow */}
+      <div aria-hidden className="webcore-stars pointer-events-none absolute inset-0 opacity-60" />
       <div
         aria-hidden
-        className="gpu animate-acid-flicker pointer-events-none absolute -right-20 top-24 h-72 w-72 rounded-full border border-[#e2ff2e]/25"
-        style={{ boxShadow: "0 0 80px -30px rgba(226,255,46,0.4) inset" }}
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(60% 45% at 15% 0%, rgba(0,255,170,0.06), transparent 60%)" }}
       />
 
       <div className="container-x relative">
@@ -130,8 +130,8 @@ export function Features() {
           eyebrow="The program"
           dark
           title={
-            <span className="text-[#f2f2f0]">
-              Built like a studio, <span className="acid-lime">not a lecture hall.</span>
+            <span className="text-[#e6e6e2]">
+              Built like a studio, <span className="text-[#00ffaa]">not a lecture hall.</span>
             </span>
           }
           body={

@@ -93,7 +93,7 @@ export function Footer() {
 
       {/* Oversized wordmark — chrome on the void */}
       <div aria-hidden className="relative overflow-hidden border-t border-[#2a2a2e] bg-[#08080a]">
-        <p className="y2k-chrome-text container-x display select-none whitespace-nowrap py-4 text-center text-[16vw] leading-none opacity-90 sm:text-[13vw]">
+        <p className="atomi-chrome-text container-x display select-none whitespace-nowrap py-4 text-center text-[16vw] leading-none opacity-90 sm:text-[13vw]">
           Swift @ Parul
         </p>
         <div

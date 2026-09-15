@@ -116,7 +116,7 @@ export function CTA() {
                     <li key={w} className="relative">
                       {/* orbit node */}
                       <span className="absolute -left-[33px] top-1.5 grid h-4 w-4 place-items-center" aria-hidden>
-                        <span className="absolute h-4 w-4 rounded-full border border-dashed border-[#b4552d]/50" style={{ animation: `y2k-spin ${10 + i * 3}s linear infinite` }} />
+                        <span className="absolute h-4 w-4 rounded-full border border-dashed border-[#b4552d]/50" style={{ animation: `orbit-spin ${10 + i * 3}s linear infinite` }} />
                         <span className="h-1.5 w-1.5 rounded-full bg-[#b4552d]" />
                       </span>
                       <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a6a50]">{w}</p>

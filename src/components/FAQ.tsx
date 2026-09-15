@@ -3,8 +3,6 @@ import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { cn } from "@/utils/cn";
 
-const holo = "linear-gradient(135deg,#7ad9ff,#9a8cff 30%,#ff7ad1 55%,#ffb35c 78%,#67e0a8)";
-
 const faqs = [
   {
     q: "Do I need a Mac to join?",
@@ -35,7 +33,7 @@ const faqs = [
 function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean; onToggle: () => void; i: number }) {
   const id = useId();
   return (
-    <Reveal as="li" delay={i * 60} className="border-t border-[#9a8cff]/20 last:border-b">
+    <Reveal as="li" delay={i * 60} className="border-t border-[#b4552d]/25 last:border-b">
       <h3>
         <button
           type="button"
@@ -46,21 +44,20 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
           className="group flex w-full items-center justify-between gap-6 py-6 text-left sm:py-7"
         >
           <span className="flex items-baseline gap-5">
-            <span className="hidden font-mono text-[11px] tracking-[0.2em] text-[#9a8cff]/50 sm:inline">0{i + 1}</span>
-            <span className={cn("text-lg font-semibold tracking-tight transition-colors sm:text-xl", open ? "y2k-holo-text" : "text-[#2a2850] group-hover:text-[#9a8cff]")}>
+            <span className="hidden font-mono text-[11px] tracking-[0.2em] text-[#8a6a50]/70 sm:inline">0{i + 1}</span>
+            <span className={cn("text-lg font-semibold tracking-tight transition-colors sm:text-xl", open ? "text-[#c2521f]" : "text-[#2a1a10] group-hover:text-[#c2521f]")}>
               {q}
             </span>
           </span>
           <span
             className={cn(
-              "y2k-orb relative flex h-9 w-9 shrink-0 items-center justify-center transition-all duration-500 ease-[var(--ease-out-expo)]",
-              open ? "rotate-45" : "opacity-70"
+              "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ease-[var(--ease-out-expo)]",
+              open ? "rotate-45 border-[#b4552d] bg-[#b4552d] text-[#ffe8d2]" : "border-[#b4552d]/40 text-[#6b4a34] group-hover:border-[#b4552d]"
             )}
-            style={open ? { background: holo, boxShadow: "0 8px 20px -8px rgba(255,122,209,0.7)" } : undefined}
             aria-hidden
           >
-            <span className="absolute h-[1.5px] w-3.5 bg-white" />
-            <span className="absolute h-3.5 w-[1.5px] bg-white" />
+            <span className="absolute h-[1.5px] w-3.5 bg-current" />
+            <span className="absolute h-3.5 w-[1.5px] bg-current" />
           </span>
         </button>
       </h3>
@@ -74,23 +71,23 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
         )}
       >
         <div className="overflow-hidden">
-          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-[#5b588a] sm:pl-[44px]">{a}</p>
+          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-[#6b4a34] sm:pl-[44px]">{a}</p>
         </div>
       </div>
     </Reveal>
   );
 }
 
-/** FAQ — Neo Y2K: chrome accordion console with holographic accents. */
+/** FAQ — Retro Futurism: mission briefing accordion on cream. */
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="y2k-section cv-auto relative overflow-hidden py-24 sm:py-32">
-      {/* y2k backdrop */}
-      <div aria-hidden className="y2k-grid pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_80%_20%,black,transparent_60%)]" />
+    <section id="faq" className="atomi-section cv-auto relative overflow-hidden py-24 sm:py-32">
+      {/* backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <span className="y2k-star absolute left-[8%] top-16 h-5 w-5 animate-pulse-soft" />
-        <span className="y2k-star absolute right-[10%] bottom-20 h-4 w-4 animate-pulse-soft" style={{ animationDelay: "1.6s" }} />
+        <span className="atomi-ring gpu animate-spin-slow right-[6%] top-[10%] h-48 w-48" style={{ animationDuration: "64s" }} />
+        <span className="atomi-star left-[6%] top-20 text-lg animate-pulse-soft">✦</span>
+        <span className="atomi-star right-[12%] bottom-24 text-base animate-pulse-soft" style={{ animationDelay: "1.6s" }}>✧</span>
       </div>
 
       <div className="container-x relative">
@@ -100,32 +97,26 @@ export function FAQ() {
               <SectionHeader
                 index="12"
                 eyebrow="Questions"
-                title={<span className="text-[#2a2850]">Asked often.</span>}
+                title={<span className="text-[#2a1a10]">Asked often.</span>}
                 body={
-                  <span className="text-[#5b588a]">
+                  <span className="text-[#6b4a34]">
                     Still unsure? Drop by any Thursday lab — no sign-up needed — or message us on Discord.
                   </span>
                 }
                 className="!grid-cols-1 [&>*]:!col-span-1"
               />
               <div className="mt-4 flex flex-wrap gap-2">
-                <span className="y2k-pill">Thu · 5pm · Block B</span>
+                <span className="atomi-chip">Thu · 5pm · Block B</span>
               </div>
               <Reveal delay={200} className="mt-8">
-                <a
-                  href="#cta"
-                  className="y2k-card inline-flex items-center !rounded-full px-6 py-3.5 text-sm font-bold text-[#2a2850] transition-transform duration-300 hover:-translate-y-0.5"
-                >
+                <a href="#cta" className="atomi-btn inline-flex items-center px-6 py-3.5 text-sm">
                   Talk to a Core member
                 </a>
               </Reveal>
             </div>
           </div>
 
-          <ul
-            className="y2k-card self-start !rounded-[26px] p-2 sm:p-3"
-            style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.95) inset, 0 30px 70px -30px rgba(120,110,255,0.5), 0 18px 44px -22px rgba(255,122,209,0.4)" }}
-          >
+          <ul className="atomi-card self-start !rounded-[26px] p-2 sm:p-3">
             {faqs.map((f, i) => (
               <Item key={f.q} i={i} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
             ))}

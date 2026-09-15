@@ -32,8 +32,8 @@ export function Terminal() {
         }}
       />
       {/* edge fades into the neighbors */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#0c0c0d] to-transparent" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#060607] to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[#060607] to-transparent" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#fff8f2] to-transparent" />
 
       <div className="container-x relative">
         <ScrollStrip items={["CTRL", "ALT", "DELIGHT"]} dark travel={20} className="mb-6 opacity-90" />

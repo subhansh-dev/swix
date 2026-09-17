@@ -1,8 +1,8 @@
-import workshop from "@/assets/workshop.webp";
-import community from "@/assets/community.webp";
-import macro from "@/assets/macro-code.webp";
-import vision from "@/assets/vision.webp";
-import campus from "@/assets/campus.webp";
+import workshop from "@/assets/workshop.jpg";
+import community from "@/assets/community.jpg";
+import macro from "@/assets/macro-code.jpg";
+import vision from "@/assets/vision.jpg";
+import campus from "@/assets/campus.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { useParallax } from "@/hooks/useParallax";
@@ -104,6 +104,7 @@ export function Gallery() {
                       decoding="async"
                       className={cn("w-full object-cover", s.cls ? "aspect-[16/10]" : "aspect-[4/3]")}
                     />
+                    <p className="px-3 py-1.5 text-center font-mono text-[8.5px] uppercase tracking-[0.16em] text-ink/35">[ replace with your own image ]</p>
                     <figcaption className="flex items-center justify-between border-t border-line bg-paper-2 px-3 py-2">
                       <span className="font-mono text-[10.5px] text-muted">{s.meta}</span>
                       <span className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#F05138]">view ▸</span>
@@ -166,6 +167,7 @@ export function Gallery() {
               </div>
               <div className="relative">
                 <img src={campus} alt="Parul University campus at golden hour" loading="lazy" decoding="async" className="h-[46vh] min-h-[280px] w-full object-cover sm:h-[56vh]" />
+                <p className="absolute bottom-2 left-0 right-0 text-center font-mono text-[8.5px] uppercase tracking-[0.16em] text-ink/30">[ replace with your own image ]</p>
                 <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-white/85 via-transparent to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-10">
                   <p className="font-mono text-[10.5px] uppercase tracking-[0.22em] text-[#F05138]">Vadodara, Gujarat</p>

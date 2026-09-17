@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import heroVisual from "@/assets/hero-visual.webp";
+import heroVisual from "@/assets/hero-visual.jpg";
 import { Reveal } from "./ui/Reveal";
 import { LiquidBlobs } from "./ui/LiquidBlobs";
 import { Magnetic } from "./ui/Magnetic";
@@ -207,6 +207,7 @@ function HeroScene() {
             decoding="async"
             className="gpu animate-float-slow aspect-square w-full object-cover"
           />
+          <p className="absolute bottom-16 left-6 right-6 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-ink/40">[ replace with your own image ]</p>
           <div aria-hidden className="pointer-events-none absolute inset-5 border border-ink/10" />
           <span className="absolute left-6 top-6 font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink/55">fig. 01 — swift</span>
           <span className="absolute bottom-6 right-6 font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink/55">22.30°N 73.36°E</span>

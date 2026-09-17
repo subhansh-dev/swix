@@ -1,4 +1,4 @@
-import community from "@/assets/community.webp";
+import community from "@/assets/community.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 
@@ -82,6 +82,7 @@ export function Benefits() {
                     decoding="async"
                     className="aspect-[4/3] w-full object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-expo)] hover:scale-[1.03]"
                   />
+                  <p className="absolute bottom-20 left-4 right-4 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a6a50]/60">[ replace with your own image ]</p>
                   <figcaption className="atomi-card absolute bottom-4 left-4 right-4 flex items-center justify-between !rounded-2xl px-4 py-3">
                     <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a6a50]">Thursday lab</p>

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import showcase from "@/assets/showcase-app.webp";
+import showcase from "@/assets/showcase-app.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Orb } from "./ui/Orb";
@@ -89,6 +89,7 @@ function TiltPhone() {
         decoding="async"
         className="aspect-[3/4] w-full object-cover"
       />
+      <p className="absolute bottom-20 left-6 right-6 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-ink/40">[ replace with your own image ]</p>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-full"

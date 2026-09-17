@@ -1,4 +1,4 @@
-import team from "@/assets/team.webp";
+import team from "@/assets/team.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
@@ -66,6 +66,7 @@ export function Team() {
                   decoding="async"
                   className="aspect-[4/5] w-full object-cover"
                 />
+                <p className="absolute bottom-14 left-4 right-4 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a6a50]/60">[ replace with your own image ]</p>
                 <figcaption className="flex items-center justify-between border-t border-[#b4552d]/25 px-4 py-3">
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#8a6a50]">six seniors · one charger</span>
                   <span aria-hidden className="text-[#c2521f]">✦</span>

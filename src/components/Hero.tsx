@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import heroVisual from "@/assets/hero-visual.jpg";
+import heroVisual from "@/assets/hero-visual.webp";
 import { Reveal } from "./ui/Reveal";
 import { LiquidBlobs } from "./ui/LiquidBlobs";
 import { Magnetic } from "./ui/Magnetic";

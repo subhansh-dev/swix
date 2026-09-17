@@ -206,10 +206,6 @@
 }
 
 /* ---------- Base ---------- */
-@media (hover: hover) and (pointer: fine) {
-  html, a, button, [data-cursor='hot'] { cursor: none !important; }
-  *, *::before, *::after { cursor: none !important; }
-}
 html {
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;

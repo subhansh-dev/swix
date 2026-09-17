@@ -3,7 +3,6 @@ import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { SocialProof } from "./components/SocialProof";
 import { GlassHighlights } from "./components/GlassHighlights";
-import { Cursor } from "./components/ui/Cursor";
 import { SectionDock } from "./components/SectionDock";
 import { Splash } from "./components/ui/Splash";
 
@@ -44,7 +43,6 @@ export default function App() {
     <>
       {booting && <Splash onComplete={completeBoot} />}
       <div inert={booting} className="site-shell">
-      <Cursor />
       <SectionDock />
       <Navbar />
       <main id="main" tabIndex={-1}>

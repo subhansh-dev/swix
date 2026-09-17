@@ -15,7 +15,7 @@ import { useReducedMotion } from "@/hooks/useMedia";
  * Liquid ribbon waves flow underneath and radar rings sweep during assembly.
  */
 
-const PALETTE = ["#F05138", "#E84830", "#FF7A5C", "#FFD3BC", "#C2B8A3", "#8A7E6B", "#3B3530", "#D63F27"];
+const PALETTE = ["#F05138", "#FF7A5C", "#FF9B64", "#FFD3BC", "#FFE6D5", "#D9CFFF", "#B9ECCD", "#D63F27"];
 const BIRD_PATH = "M47.0606,36.6607c-0.0014-0.0018-0.0027-0.0031-0.0042-0.0048c0.0657-0.2236,0.1335-0.4458,0.191-0.675c2.465-9.8209-3.5511-21.4319-13.7316-27.5454c4.4613,6.0479,6.4339,13.3733,4.6813,19.7795c-0.1563,0.5714-0.3442,1.1198-0.5519,1.6528c-0.2254-0.1481-0.5094-0.3162-0.8908-0.5265c0,0-10.1269-6.2527-21.1028-17.3122c-0.288-0.2903,5.8528,8.777,12.8219,16.1399c-3.2834-1.8427-12.4338-8.5004-18.2266-13.8023c0.7117,1.1869,1.5582,2.3298,2.4887,3.4301c4.8375,6.1349,11.1462,13.7044,18.7043,19.5169c-5.3104,3.2498-12.8141,3.5025-20.2852,0.0034c-1.8479-0.866-3.5851-1.9109-5.1932-3.0981c3.1625,5.0585,8.0332,9.4229,13.9613,11.9708c7.0695,3.0381,14.0996,2.8321,19.3356,0.0498l-0.0041,0.006c0.0239-0.0151,0.0543-0.0316,0.0791-0.0469c0.215-0.1156,0.4284-0.2333,0.6371-0.3576c2.5157-1.3058,7.4847-2.6306,10.1518,2.5588C50.7755,49.6699,52.1635,42.9395,47.0606,36.6607z";
 
 const CAPTIONS = [
@@ -321,36 +321,59 @@ export function ScrollStory() {
         ctx.restore();
       }
 
-      // brand mark reveal — white bird with glow
+      // brand mark reveal — white bird inside a rounded app-icon plate
       const markT = clamp01((p - 0.56) / 0.22);
       if (markT > 0 && birdPath2D) {
         const e = markT < 1 ? easeInOutCubic(markT) : 1;
         const pop = easeOutBack(clamp01(markT / 0.55));
         const breathe = 1 + Math.sin(p * 30) * 0.012;
-        // rotating dashed halo
+        const plate = 208 * pop;
+        // rounded-square plate with soft gradient + ring — the "shipped app icon"
         ctx.save();
-        ctx.globalAlpha = e * 0.45;
+        ctx.globalAlpha = e;
+        ctx.translate(-plate / 2, -plate / 2);
+        const r = plate * 0.225;
+        ctx.beginPath();
+        ctx.moveTo(plate - r, 0);
+        ctx.arcTo(plate, 0, plate, plate, r);
+        ctx.arcTo(plate, plate, 0, plate, r);
+        ctx.arcTo(0, plate, 0, 0, r);
+        ctx.arcTo(0, 0, plate, 0, r);
+        ctx.closePath();
+        const pg = ctx.createLinearGradient(0, 0, plate, plate);
+        pg.addColorStop(0, "#FF7A5C");
+        pg.addColorStop(0.5, "#F05138");
+        pg.addColorStop(1, "#D63F27");
+        ctx.fillStyle = pg;
+        ctx.shadowColor = "rgba(240,81,56,0.45)";
+        ctx.shadowBlur = 36;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = "rgba(255,255,255,0.55)";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        // rotating dashed halo around the plate
+        ctx.translate(plate / 2, plate / 2);
+        ctx.globalAlpha = e * 0.5;
         ctx.strokeStyle = "#F05138";
         ctx.lineWidth = 1.5;
         ctx.setLineDash([5, 13]);
         ctx.lineDashOffset = -p * 220;
         ctx.beginPath();
-        ctx.arc(0, 0, 150, 0, Math.PI * 2);
+        ctx.arc(0, 0, plate * 0.72, 0, Math.PI * 2);
         ctx.stroke();
         ctx.setLineDash([]);
         ctx.restore();
-        // bird — white, glowing, properly centered
+        // bird — white, glowing, centered on the plate
         ctx.save();
         ctx.globalAlpha = e;
-        const s = 4.4 * pop * breathe;
-        ctx.translate(0, 0);
+        const s = (plate / 56) * 0.62 * breathe;
         ctx.scale(s, s);
-        ctx.translate(-28, -30);
+        ctx.translate(-32, -32);
         ctx.fillStyle = "#ffffff";
-        ctx.shadowColor = "rgba(240,81,56,0.6)";
-        ctx.shadowBlur = 30;
+        ctx.shadowColor = "rgba(214,63,39,0.55)";
+        ctx.shadowBlur = 18;
         ctx.fill(birdPath2D);
-        // second pass — sharper inner fill
         ctx.shadowBlur = 0;
         ctx.fill(birdPath2D);
         ctx.restore();

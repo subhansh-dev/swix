@@ -1,6 +1,9 @@
 import community from "@/assets/community.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
+import { Tilt } from "./ui/Tilt";
+import { GlassCube } from "./ui/GlassCube";
+import { useScrollScrub } from "@/hooks/useScrollScrub";
 
 const benefits = [
   {
@@ -36,22 +39,27 @@ const starfield = [
   { left: "94%", top: "64%", s: "·", size: "text-xl", d: "0.7s" },
 ];
 
-/** Why-Swift — Retro Futurism: atomic stat chips and orbit satellites on cream. */
+const tones = ["#FFEDA3", "#D9CFFF", "#B9ECCD", "#BDE4FF"];
+
 export function Benefits() {
+  const scrub = useScrollScrub<HTMLElement>();
   return (
-    <section id="why" className="atomi-section cv-auto relative overflow-hidden py-24 sm:py-32">
+    <section ref={scrub} id="why" className="atomi-section cv-auto relative overflow-hidden py-24 sm:py-32" style={{ background: "radial-gradient(ellipse at 0% 35%, #D9CFFF55, transparent 50%), radial-gradient(ellipse at 100% 80%, #B9ECCD66, transparent 50%), #FFF8F2" }}>
       {/* starfield + orbit rings */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         {starfield.map((s, i) => (
-          <span key={i} className={`atomi-star gpu animate-pulse-soft absolute font-mono ${s.size}`} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
+          <span key={i} className={`atomi-star gpu motion-safe:animate-pulse-soft absolute font-mono ${s.size}`} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
             {s.s}
           </span>
         ))}
-        <span className="atomi-ring gpu animate-spin-slow right-[4%] top-[10%] h-44 w-44" style={{ animationDuration: "56s" }} />
-        <span className="atomi-ring gpu animate-spin-slow left-[3%] bottom-[6%] h-56 w-56" style={{ animationDuration: "68s", animationDirection: "reverse" }} />
+        <span className="atomi-ring gpu motion-safe:animate-spin-slow right-[4%] top-[10%] h-44 w-44" style={{ animationDuration: "56s" }} />
+        <span className="atomi-ring gpu motion-safe:animate-spin-slow left-[3%] bottom-[6%] h-56 w-56" style={{ animationDuration: "68s", animationDirection: "reverse" }} />
       </div>
 
       <div className="container-x relative">
+        <div aria-hidden className="pointer-events-none absolute left-8 top-28 hidden h-20 w-20 motion-reduce:!transform-none lg:block" style={{ transform: "translateY(calc((var(--scrub, 0.5) - 0.5) * -48px))" }}>
+          <GlassCube className="left-0 top-0" size={64} tone="ice" depth={16} delay={-6} />
+        </div>
         <SectionHeader
           index="02"
           eyebrow="Why Swift, why now"
@@ -72,7 +80,8 @@ export function Benefits() {
           <div className="lg:col-span-5">
             <div className="lg:sticky lg:top-28">
               <Reveal variant="scale">
-                <figure className="atomi-card relative overflow-hidden !rounded-[26px]">
+                <Tilt max={3} lift={6} scale={1.005} sheen={false}>
+                <figure className="atomi-card group relative overflow-hidden !rounded-[26px] !border-white p-2" style={{ background: "linear-gradient(145deg, #fff, #D9CFFF80)", boxShadow: "inset 0 2px 0 #fff, 0 7px 0 -3px #D9CFFF80, 0 24px 50px -28px #6b4a3466" }}>
                   <img
                     src={community}
                     alt="Parul University students building iOS apps together in the Mac lab"
@@ -80,10 +89,10 @@ export function Benefits() {
                     height={394}
                     loading="lazy"
                     decoding="async"
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-[1400ms] ease-[var(--ease-out-expo)] hover:scale-[1.03]"
+                    className="aspect-[4/3] w-full rounded-[20px] object-cover motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-[var(--ease-out-expo)] motion-safe:group-hover:scale-[1.03]"
                   />
                   <p className="absolute bottom-20 left-4 right-4 text-center font-mono text-[9px] uppercase tracking-[0.18em] text-[#8a6a50]/60">[ replace with your own image ]</p>
-                  <figcaption className="atomi-card absolute bottom-4 left-4 right-4 flex items-center justify-between !rounded-2xl px-4 py-3">
+                  <figcaption className="atomi-card absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2 !rounded-2xl !border-white px-4 py-3 backdrop-blur-md" style={{ background: "rgba(255,255,255,0.9)" }}>
                     <div>
                       <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#8a6a50]">Thursday lab</p>
                       <p className="text-sm font-semibold tracking-tight text-[#2a1a10]">PIT Mac Lab · Block B, 3F</p>
@@ -97,14 +106,15 @@ export function Benefits() {
                     </span>
                   </figcaption>
                 </figure>
+                </Tilt>
               </Reveal>
 
-              <Reveal delay={120} className="mt-6 grid grid-cols-2 gap-4">
-                <div className="atomi-card p-5" style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.95) inset, 0 18px 40px -18px rgba(200,120,40,0.55)" }}>
-                  <p className="display text-3xl text-[#b4552d]">₹9.2L</p>
+              <Reveal delay={160} className="mt-6 grid grid-cols-2 gap-4">
+                <div className="atomi-card relative !border-white p-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1" style={{ background: "linear-gradient(135deg, #fff, #FFEDA380)", boxShadow: "0 2px 0 #fff inset, 0 16px 32px -22px #F0513880" }}>
+                  <p className="display bg-gradient-to-br from-[#9c321f] to-[#F05138] bg-clip-text text-3xl text-transparent">₹9.2L</p>
                   <p className="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-[#8a6a50]">Avg. iOS offer, '25 batch</p>
                 </div>
-                <div className="atomi-card p-5" style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.95) inset, 0 18px 40px -18px rgba(35,130,80,0.5)" }}>
+                <div className="atomi-card relative !border-white p-5 motion-safe:transition-transform motion-safe:duration-300 motion-safe:hover:-translate-y-1" style={{ background: "linear-gradient(135deg, #fff, #B9ECCD80)", boxShadow: "0 2px 0 #fff inset, 0 16px 32px -22px #1d7a4c66" }}>
                   <p className="display text-3xl text-[#1d7a4c]">94%</p>
                   <p className="mt-1 text-xs font-medium uppercase tracking-[0.14em] text-[#8a6a50]">Capstone completion</p>
                 </div>
@@ -115,17 +125,18 @@ export function Benefits() {
           {/* List */}
           <ol className="lg:col-span-7">
             {benefits.map((b, i) => (
-              <Reveal as="li" key={b.n} delay={i * 70} className="group py-3">
-                <div className="atomi-card card-lift relative overflow-hidden !rounded-[24px] p-6 transition-transform duration-500 ease-[var(--ease-out-expo)] hover:-translate-y-1">
+              <Reveal as="li" key={b.n} delay={80 + i * 100} className="group py-3">
+                <div className="atomi-card relative overflow-hidden !rounded-[24px] !border-white p-6 motion-safe:transition-transform motion-safe:duration-500 motion-safe:hover:-translate-y-1" style={{ background: `linear-gradient(120deg, #ffffffed, #FFF8F2 65%, ${tones[i]}66)`, boxShadow: "inset 0 2px 0 #fff, 0 5px 0 -2px #ffffffcc, 0 18px 34px -24px #6b4a3466" }}>
+                  <span aria-hidden className="pointer-events-none absolute inset-y-7 left-0 w-1 rounded-r-full" style={{ background: tones[i] }} />
                   {/* orbiting satellite */}
                   <span aria-hidden className="pointer-events-none absolute right-4 top-4 h-8 w-8">
-                    <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ animation: `orbit-spin ${14 + i * 3}s linear infinite` }} />
+                    <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40 motion-reduce:!animate-none" style={{ animation: `orbit-spin ${14 + i * 3}s linear infinite` }} />
                     <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b4552d]" />
                   </span>
                   <div className="relative grid gap-4 sm:grid-cols-[60px_1fr]">
                     <div className="flex flex-col items-start gap-2">
-                      <span className="display text-3xl text-[#b4552d]">{b.n}</span>
-                      <span className="atomi-chip !py-0.5 !text-[9px]">{b.tag}</span>
+                      <span className="display bg-gradient-to-br from-[#9c321f] to-[#F05138] bg-clip-text text-3xl text-transparent">{b.n}</span>
+                      <span className="atomi-chip !border-white !py-0.5 !text-[9px] !text-[#0B0B0C] shadow-sm motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-rotate-3" style={{ background: tones[i] }}>{b.tag}</span>
                     </div>
                     <div className="pr-10">
                       <h3 className="text-balance text-xl font-bold tracking-tight text-[#2a1a10] sm:text-2xl">

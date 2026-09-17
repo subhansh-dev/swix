@@ -4,6 +4,7 @@ import { SectionHeader } from "./ui/SectionHeader";
 import { Orb } from "./ui/Orb";
 
 const tags = ["Exhibit Edition", "Ink № 12", "Halftone", "Est. 2020"];
+const tones = ["#D9CFFF", "#FFEDA3", "#B9ECCD", "#FFC6DD"];
 
 /**
  * Exhibit 08 — the club's print wall, redrawn as a live halftone loop.
@@ -39,32 +40,35 @@ export function GalleryWall() {
           }
         />
 
-        <Reveal variant="scale" className="mt-14 lg:mt-20">
+        <Reveal variant="scale" className="relative mt-14 lg:mt-20">
+          <span aria-hidden className="pointer-events-none absolute -top-2 left-1/2 z-10 h-5 w-16 border border-white/70" style={{ background: "linear-gradient(120deg,#FFEDA399,#FFF8F2bb)", transform: "translateX(-50%) rotate(-4deg)", boxShadow: "0 2px 3px #0B0B0C0a" }} />
           <div
-            className="relative overflow-hidden rounded-[32px] bg-[#181210]"
+            className="relative overflow-hidden rounded-[32px] transition-transform duration-500 motion-safe:hover:-translate-y-1"
             style={{
-              border: "2px solid rgba(180,85,45,0.5)",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.8) inset, 0 34px 80px -34px rgba(122,60,20,0.6)",
+              background: "linear-gradient(140deg,#FFF8F2,#D9CFFF44)",
+              border: "1px solid #0B0B0C22",
+              boxShadow: "0 1px 0 #fff inset, 0 5px 0 #D9CFFF88, 0 34px 70px -40px #0B0B0C55",
             }}
           >
             {/* top caption bar */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-b border-white/10 px-5 py-4 sm:px-8">
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-4 border-b border-[#0B0B0C]/10 px-5 py-4 sm:px-8">
               <div className="flex items-center gap-3">
                 <Orb variant="swift" box={56} />
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#ffd9b8]">Exhibit A — Halftone Loop</p>
-                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.24em] text-white/35">Swift Coding Club · Vadodara</p>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-[#F05138]">Exhibit A — Halftone Loop</p>
+                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.24em] text-ink/60">Swift Coding Club · Vadodara</p>
                 </div>
               </div>
               <div className="ml-auto flex flex-wrap items-center gap-2">
                 {tags.map((t, i) => (
-                  <span
-                    key={t}
-                    className="inline-flex items-center rounded-full border border-[#ffd9b8]/25 bg-white/5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#ffd9b8]/60"
-                    style={{ transform: `rotate(${i % 2 ? 1.5 : -1.5}deg)` }}
-                  >
-                    {t}
-                  </span>
+                  <Reveal key={t} delay={100 + i * 70}>
+                    <span
+                      className="inline-flex items-center rounded-full border border-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink transition-transform duration-300 motion-safe:hover:-translate-y-0.5"
+                      style={{ background: tones[i], rotate: `${i % 2 ? 2 : -2}deg`, boxShadow: "inset 0 1px 0 #fff, 0 2px 0 #0B0B0C12" }}
+                    >
+                      {t}
+                    </span>
+                  </Reveal>
                 ))}
               </div>
             </div>
@@ -80,7 +84,7 @@ export function GalleryWall() {
             </div>
 
             {/* bottom caption bar */}
-            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-white/10 px-5 py-4 sm:px-8">
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-[#0B0B0C]/10 px-5 py-4 sm:px-8">
               <div className="flex items-center gap-4">
                 <span className="flex items-end gap-[2px]" aria-hidden>
                   {[10, 16, 8, 14, 6].map((h, i) => (
@@ -91,13 +95,13 @@ export function GalleryWall() {
                     />
                   ))}
                 </span>
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/40">
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink/60">
                   one ink · one stock · twelve plates — axis 90°, drifting counter-clockwise
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <Orb variant="ios" box={32} size="small" label="iOS brand orb" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-white/40">shot on the lab's iPhones</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-ink/60">shot on the lab's iPhones</span>
               </div>
             </div>
           </div>

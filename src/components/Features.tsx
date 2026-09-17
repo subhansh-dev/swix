@@ -1,6 +1,7 @@
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
+import { GlassCube } from "./ui/GlassCube";
 import { cn } from "@/utils/cn";
 
 type Feature = {
@@ -67,12 +68,17 @@ const features: Feature[] = [
   },
 ];
 
+const tones = ["#D9CFFF", "#B9ECCD", "#BDE4FF", "#FFEDA3"];
+
 function FeatureCard({ f, i }: { f: Feature; i: number }) {
   return (
-    <Reveal delay={i * 90} className={cn("h-full", f.span)}>
-      <Tilt max={7} lift={20} className="h-full">
-        <div className="webcore-tile card-lift flex h-full flex-col overflow-hidden transition-shadow duration-500">
-          <div className="win98-title flex items-center justify-between px-2 py-1">
+    <Reveal delay={80 + i * 100} className={cn("h-full", f.span)}>
+      <Tilt max={5} lift={12} scale={1.01} sheen={false} depth className="h-full">
+        <div
+          className="webcore-tile group relative flex h-full flex-col !border-white/90"
+          style={{ background: `linear-gradient(145deg, #ffffffed, #FFF8F2f2 60%, ${tones[i]}80)`, boxShadow: "inset 0 1px 0 #fff, 0 5px 0 -2px #ffffffcc, 0 9px 0 -4px #F0513820, 0 22px 40px -24px #6b4a3455" }}
+        >
+          <div className="win98-title relative flex items-center justify-between gap-3 px-3 py-2" style={{ background: `linear-gradient(120deg, #FFF8F2, ${tones[i]})`, color: "#0B0B0C", boxShadow: "inset 0 1px 0 #fff, 0 1px 0 #F051381a" }}>
             <span className="truncate font-mono">lab_module_{f.n}.swift</span>
             <span className="flex gap-1" aria-hidden>
               <span className="win98-btn !px-1.5 !py-0 !text-[9px] leading-none">_</span>
@@ -80,18 +86,19 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
             </span>
           </div>
 
-          <div className="relative flex flex-1 flex-col justify-between p-7 sm:p-9">
-            <div className="flex items-start justify-between">
+          <div className="relative flex flex-1 flex-col justify-between p-7 preserve-3d sm:p-9">
+            <div aria-hidden className="pointer-events-none absolute right-7 top-7 h-20 w-28 opacity-40" style={{ backgroundImage: "radial-gradient(#F05138 1px, transparent 1px)", backgroundSize: "10px 10px" }} />
+            <div className="relative flex items-start justify-between preserve-3d">
               <div
-                className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#F05138]/50 bg-[#F05138]/10 text-[#F05138]"
-                style={{ boxShadow: "0 0 20px -8px rgba(240,81,56,0.4)" }}
+                className="flex h-14 w-14 items-center justify-center rounded-xl border border-white text-[#9c321f] motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-rotate-6 motion-safe:group-hover:[transform:translateZ(24px)]"
+                style={{ background: `linear-gradient(135deg, #fff, ${tones[i]})`, boxShadow: "inset 0 2px 0 #fff, 0 4px 0 -1px #F0513820, 0 12px 22px -14px #6b4a3466" }}
               >
                 {f.icon}
               </div>
-              <span className="font-mono text-[11px] tracking-[0.2em] text-[#F05138]/50">{f.n}</span>
+              <span className="relative rounded-full border border-white bg-white/80 px-3 py-1 font-mono text-[11px] tracking-[0.2em] text-[#9c321f]">{f.n}</span>
             </div>
-            <div className="mt-14">
-              <span className="inline-flex items-center rounded-none border border-[#F05138]/40 bg-[#F05138]/10 px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#F05138]">
+            <div className="relative mt-14 preserve-3d">
+              <span className="inline-flex max-w-full items-center rounded-sm border border-white px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#0B0B0C] shadow-sm motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-translate-y-1" style={{ background: tones[i] }}>
                 {f.tag}
               </span>
               <h3 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-[1.7rem]">{f.title}</h3>
@@ -101,7 +108,7 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 
           <div className="win98-out flex items-center justify-between bg-paper-2 px-3 py-1 font-mono text-[9px] text-ink">
             <span>module {f.n} loaded</span>
-            <span>ready</span>
+            <span className="flex items-center gap-2"><span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[#1d7a4c]" />ready</span>
           </div>
         </div>
       </Tilt>
@@ -111,7 +118,7 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 
 export function Features() {
   return (
-    <section id="program" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32">
+    <section id="program" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32" style={{ background: "radial-gradient(ellipse at 5% 35%, #D9CFFF55, transparent 50%), radial-gradient(ellipse at 100% 75%, #FFC6DD44, transparent 50%), #FFF8F2" }}>
       <div aria-hidden className="webcore-stars pointer-events-none absolute inset-0 opacity-60" />
       <div
         aria-hidden
@@ -120,6 +127,7 @@ export function Features() {
       />
 
       <div className="container-x relative">
+        <GlassCube className="left-8 top-24 !hidden lg:!block" size={72} tone="swift" depth={24} delay={-5} />
         <SectionHeader
           index="01"
           eyebrow="The program"

@@ -23,7 +23,7 @@ const cols = [
 export function Footer() {
   return (
     <footer className="webcore-section cv-auto relative overflow-hidden">
-      <div aria-hidden className="footer-stars absolute inset-0 opacity-80" />
+      <div aria-hidden className="footer-stars pointer-events-none absolute inset-0 opacity-80 motion-safe:animate-pulse-soft" style={{ animationDuration: "8s" }} />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
@@ -67,9 +67,9 @@ export function Footer() {
                   <li key={it}>
                     <a
                       href={c.hrefs[i]}
-                      className="group inline-flex items-center gap-2 text-sm font-medium text-ink/65 transition-colors hover:text-[#F05138]"
+                      className="group inline-flex items-center gap-2 rounded-sm text-sm font-medium text-ink/65 transition-transform duration-300 hover:text-[#F05138] focus-visible:text-[#F05138] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F05138] motion-safe:hover:translate-x-1"
                     >
-                      <span aria-hidden className="font-mono text-[9px] text-[#F05138]/0 transition-colors group-hover:text-[#F05138]">▸</span>
+                      <span aria-hidden className="font-mono text-[9px] text-[#F05138] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">▸</span>
                       {it}
                     </a>
                   </li>
@@ -85,7 +85,8 @@ export function Footer() {
         </div>
       </div>
 
-      <div aria-hidden className="relative overflow-hidden border-t border-line bg-paper-3">
+      <div aria-hidden className="relative overflow-hidden border-t border-line bg-paper-3" style={{ background: "linear-gradient(120deg,#FFF8F2,#D9CFFF55,#BDE4FF55,#FFF8F2)" }}>
+        <span className="pointer-events-none absolute -left-8 top-1/2 h-24 w-24 rounded-full border border-[#F05138]/20" style={{ transform: "rotateX(55deg) rotateZ(-25deg)" }} />
         <p className="atomi-chrome-text container-x display select-none whitespace-nowrap py-4 text-center text-[16vw] leading-none opacity-90 sm:text-[13vw]">
           Swift @ Parul
         </p>

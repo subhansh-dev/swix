@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useScrollScrub } from "@/hooks/useScrollScrub";
+import { useReducedMotion } from "@/hooks/useMedia";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { cn } from "@/utils/cn";
@@ -16,40 +17,9 @@ const steps = [
 
 /** Timeline — Retro Futurism: mission-log rail, orbiting satellites, starburst weeks. */
 export function Timeline() {
-  const wrap = useRef<HTMLDivElement>(null);
-  const bar = useRef<HTMLDivElement>(null);
-  const ticking = useRef(false);
-
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      if (bar.current) bar.current.style.transform = "scaleY(1)";
-      return;
-    }
-    let raf = 0;
-    const update = () => {
-      ticking.current = false;
-      const el = wrap.current;
-      const b = bar.current;
-      if (!el || !b) return;
-      const r = el.getBoundingClientRect();
-      const start = window.innerHeight * 0.75;
-      const p = Math.min(1, Math.max(0, (start - r.top) / (r.height * 0.85)));
-      b.style.transform = `scaleY(${p.toFixed(3)})`;
-    };
-    const onScroll = () => {
-      if (ticking.current) return;
-      ticking.current = true;
-      raf = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
+  const wrap = useScrollScrub<HTMLDivElement>();
+  const reduce = useReducedMotion();
+  const tones = ["#D9CFFF", "#BDE4FF", "#B9ECCD", "#FFEDA3", "#FFC6DD"];
 
   return (
     <section id="journey" className="atomi-section cv-auto relative overflow-hidden py-24 sm:py-32">
@@ -88,12 +58,11 @@ export function Timeline() {
           {/* mission rail */}
           <div aria-hidden className="absolute bottom-2 left-[7px] top-2 w-px bg-[#b4552d]/25 sm:left-[11px]">
             <div
-              ref={bar}
-              className="gpu h-full w-px origin-top"
+              className="gpu h-full w-[3px] -translate-x-px origin-top rounded-full"
               style={{
-                transform: "scaleY(0)",
-                background: "linear-gradient(to bottom,#b4552d,#d97a4a 60%,rgba(180,85,45,0.15))",
-                boxShadow: "0 0 10px rgba(180,85,45,0.5)",
+                transform: reduce ? "scaleY(1)" : "scaleY(clamp(0, calc(var(--scrub, 1) * 1.25), 1))",
+                background: "linear-gradient(to bottom,#F05138,#FFC6DD 55%,#D9CFFF)",
+                boxShadow: "0 0 12px rgba(240,81,56,0.25)",
               }}
             />
           </div>
@@ -105,11 +74,11 @@ export function Timeline() {
                 <span className="absolute left-0 top-1.5 flex h-4 w-4 items-center justify-center sm:h-6 sm:w-6">
                   <span
                     className="absolute h-full w-full rounded-full border border-dashed border-[#b4552d]/50"
-                    style={{ animation: `orbit-spin ${9 + i}s linear infinite` }}
+                    style={{ background: tones[i % tones.length], borderColor: "#F0513855", animation: reduce ? "none" : `orbit-spin ${9 + i}s linear infinite` }}
                   />
                   <span
-                    className="relative h-2 w-2 rounded-full bg-[#b4552d] transition-transform duration-500 group-hover:scale-150 sm:h-2.5 sm:w-2.5"
-                    style={{ boxShadow: "0 0 12px 2px rgba(180,85,45,0.5)" }}
+                    className="relative h-2 w-2 rounded-full bg-[#F05138] transition-transform duration-500 motion-safe:group-hover:scale-125 sm:h-2.5 sm:w-2.5"
+                    style={{ boxShadow: "0 0 0 3px #FFF8F2, 0 3px 10px #F0513833" }}
                   />
                 </span>
 
@@ -119,7 +88,7 @@ export function Timeline() {
                     <h3 className="text-balance text-xl font-bold tracking-tight text-[#2a1a10] sm:text-[1.6rem]">{s.t}</h3>
                     <p className="mt-2 max-w-xl text-pretty text-[15px] leading-relaxed text-[#6b4a34]">{s.d}</p>
                   </div>
-                  <span className="atomi-chip w-fit">{s.tag}</span>
+                  <span className="atomi-chip w-fit" style={{ background: `linear-gradient(135deg,#ffffffcc,${tones[i % tones.length]})`, borderColor: "#0B0B0C18", color: "#0B0B0C", boxShadow: "inset 0 1px 0 #fff, 0 3px 0 #0B0B0C08" }}>{s.tag}</span>
                 </div>
               </Reveal>
             ))}

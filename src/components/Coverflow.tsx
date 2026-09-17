@@ -30,8 +30,8 @@ function Screen({ app, live }: { app: App; live: boolean }) {
       className="gpu relative aspect-[9/19] w-[210px] overflow-hidden rounded-[24px] bg-white sm:w-[236px]"
       style={{
         border: "3px solid transparent",
-        background: "linear-gradient(#fff,#fff) padding-box, linear-gradient(160deg,#ffe7cc,#b4552d55 60%,#ffe7cc) border-box",
-        boxShadow: "0 40px 80px -30px rgba(122,60,20,0.5)",
+        background: `linear-gradient(#FFF8F2,#fff) padding-box, linear-gradient(155deg,#fff,${app.to} 48%,#fff) border-box`,
+        boxShadow: `inset 0 0 0 1px #0B0B0C12, 0 3px 0 ${app.to}88, 0 28px 55px -24px #0B0B0C40, 0 48px 80px -45px ${app.to}`,
       }}
     >
       {/* notch */}
@@ -159,6 +159,8 @@ export function Coverflow() {
       </div>
 
       <div className="relative mt-14 sm:mt-20">
+        <div aria-hidden className="pointer-events-none absolute left-[8%] top-12 hidden h-12 w-12 rounded-2xl border border-white/80 sm:block motion-safe:animate-float" style={{ background: "linear-gradient(135deg,#fff,#D9CFFF)", boxShadow: "inset 0 1px 0 #fff, 0 12px 24px -12px #D9CFFF", rotate: "-14deg" }} />
+        <div aria-hidden className="pointer-events-none absolute bottom-24 right-[8%] hidden h-8 w-8 rounded-full border border-white/80 sm:block motion-safe:animate-float" style={{ background: "radial-gradient(circle at 30% 25%,#fff,#B9ECCD)", animationDelay: "-4s" }} />
         <div
           className="scene-3d relative flex h-[440px] items-center justify-center sm:h-[520px]"
           style={{ perspective: "1600px" }}
@@ -177,16 +179,17 @@ export function Coverflow() {
                 tabIndex={abs === 0 ? 0 : -1}
                 aria-label={`${app.name} — ${app.cat}`}
                 onClick={() => setActive(i)}
-                className="gpu backface-hidden absolute left-1/2 top-1/2 preserve-3d focus:outline-none"
+                className="gpu backface-hidden absolute left-1/2 top-1/2 preserve-3d rounded-[24px] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-[#F05138]"
                 style={{
                   transform: `translate(-50%, -50%) translateX(${off * 46}%) rotateY(${-off * 26}deg) translateZ(${-abs * 150}px) scale(${1 - abs * 0.07})`,
                   opacity: abs > 2 ? 0.25 : 1 - abs * 0.12,
                   zIndex: 50 - abs,
-                  filter: abs ? `blur(${Math.min(abs, 2)}px)` : "none",
-                  transition: "transform 0.85s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo), filter 0.85s var(--ease-out-expo)",
+                  transition: reduce ? "none" : "transform 0.85s var(--ease-out-expo), opacity 0.85s var(--ease-out-expo)",
                 }}
               >
-                <Screen app={app} live={abs === 0} />
+                <Reveal variant="scale" delay={i * 65}>
+                  <Screen app={app} live={abs === 0} />
+                </Reveal>
               </button>
             );
           })}
@@ -203,7 +206,7 @@ export function Coverflow() {
               type="button"
               aria-label={label}
               onClick={() => setActive((a) => (a + dir + apps.length) % apps.length)}
-              className="atomi-card group flex h-12 w-12 items-center justify-center !rounded-full text-[#6b4a34] transition-transform duration-300 hover:scale-110 active:scale-95"
+              className="atomi-card group flex h-12 w-12 items-center justify-center !rounded-full text-[#6b4a34] transition-transform duration-300 motion-safe:hover:scale-110 motion-safe:active:scale-95"
             >
               <svg className={cn("h-4 w-4", dir === -1 && "rotate-180")} viewBox="0 0 16 16" fill="none" aria-hidden>
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
@@ -222,7 +225,7 @@ export function Coverflow() {
               aria-current={i === active}
               onClick={() => setActive(i)}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-500 ease-[var(--ease-out-expo)]",
+                "h-1.5 rounded-full transition-transform duration-300 motion-safe:hover:scale-110",
                 i === active ? "w-8 bg-[#b4552d]" : "w-1.5 bg-[#b4552d]/25 hover:bg-[#b4552d]/45"
               )}
               style={i === active ? { boxShadow: "0 0 10px rgba(180,85,45,0.6)" } : undefined}

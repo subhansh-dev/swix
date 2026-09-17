@@ -13,6 +13,8 @@ const core = [
   { n: "Yash Bhatt", r: "Hackathon Captain", s: "6 wins", i: "YB", c: "#2a1a10" },
 ];
 
+const tones = ["#D9CFFF", "#BDE4FF", "#FFC6DD", "#B9ECCD", "#FFEDA3", "#D9CFFF"];
+
 const alumni = ["Razorpay", "Zomato", "Slice", "CRED", "Infosys", "Jio"];
 
 /** Team — Retro Futurism: the crew manifest. Atomic roster cards, orbit badges. */
@@ -79,9 +81,9 @@ export function Team() {
             {core.map((m, i) => (
               <Reveal key={m.n} delay={i * 80}>
                 <Tilt max={7} lift={16} className="h-full">
-                  <div className="atomi-card card-lift flex h-full items-center gap-4 p-5">
+                  <div className="atomi-card group flex h-full items-center gap-4 p-5" style={{ background: `linear-gradient(145deg,#FFF8F2 25%,${tones[i]}66)`, borderColor: "#0B0B0C18", boxShadow: `inset 0 1px 0 #fff, 0 3px 0 ${tones[i]}88, 0 20px 35px -28px #0B0B0C44` }}>
                     <span
-                      className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-base font-bold"
+                      className="grid h-14 w-14 shrink-0 place-items-center rounded-full text-base font-bold transition-transform duration-500 motion-safe:group-hover:-rotate-6 motion-safe:group-hover:scale-105"
                       style={{
                         color: "#ffe8d2",
                         background: `radial-gradient(circle at 32% 28%, ${m.c}, #2a1a10 130%)`,
@@ -93,7 +95,7 @@ export function Team() {
                     </span>
                     <div className="min-w-0">
                       <p className="truncate text-[15.5px] font-bold tracking-tight text-[#2a1a10]">{m.n}</p>
-                      <p className="mt-0.5 text-[13px] font-medium" style={{ color: m.c === "#2a1a10" ? "#b4552d" : m.c }}>
+                      <p className="my-1 w-fit rounded-full border border-white/80 px-2 py-0.5 text-[11px] font-medium" style={{ color: "#0B0B0C", background: tones[i], boxShadow: "inset 0 1px 0 #ffffffaa, 0 2px 0 #0B0B0C08" }}>
                         {m.r}
                       </p>
                       <p className="mt-0.5 truncate font-mono text-[11.5px] text-[#8a6a50]">{m.s}</p>

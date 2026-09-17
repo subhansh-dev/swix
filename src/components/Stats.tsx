@@ -1,6 +1,7 @@
 import { Reveal } from "./ui/Reveal";
 import { Orb } from "./ui/Orb";
 import { useCountUp } from "@/hooks/useCountUp";
+import { useReducedMotion } from "@/hooks/useMedia";
 import { cn } from "@/utils/cn";
 
 const nums = [
@@ -21,20 +22,22 @@ const starfield = [
 ];
 
 function Cell({ v, s, l, sub, star, i }: { v: number; s: string; l: string; sub: string; star: string; i: number }) {
-  const { ref, value } = useCountUp(v, 1500 + i * 150);
+  const reduce = useReducedMotion();
+  const { ref, value } = useCountUp(v, reduce ? 1 : 1500 + i * 150);
+  const tone = ["#D9CFFF", "#B9ECCD", "#BDE4FF", "#FFEDA3"][i];
   return (
     <Reveal delay={i * 90} className="h-full">
       <div
         className="relative h-full overflow-hidden rounded-[24px] p-6 sm:p-8"
         style={{
-          background: "linear-gradient(160deg,#fffdf8,#fbe7cc)",
-          border: "1.5px solid rgba(180,85,45,0.35)",
-          boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.4)",
+          background: `radial-gradient(ellipse at 100% 0%,${tone}99,transparent 65%), linear-gradient(160deg,#fff,#FFF8F2)`,
+          border: "1px solid rgba(11,11,12,0.1)",
+          boxShadow: `0 1px 0 #fff inset, 0 4px 0 ${tone}88, 0 22px 44px -28px #0B0B0C33`,
         }}
       >
         {/* tiny orbiting satellite */}
         <span aria-hidden className="pointer-events-none absolute right-4 top-4 h-9 w-9">
-          <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ animation: `orbit-spin ${18 + i * 4}s linear infinite` }} />
+          <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40" style={{ borderColor: `${tone}`, animation: reduce ? "none" : `orbit-spin ${18 + i * 4}s linear infinite` }} />
           <span
             className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b4552d]"
             style={{ boxShadow: "0 0 8px rgba(180,85,45,0.9)" }}
@@ -43,9 +46,11 @@ function Cell({ v, s, l, sub, star, i }: { v: number; s: string; l: string; sub:
         <span className="grid h-8 w-8 place-items-center rounded-full bg-[#b4552d] text-sm text-[#ffe8d2] shadow-[0_8px_18px_-8px_rgba(180,85,45,0.8)]" aria-hidden>
           {star}
         </span>
-        <p className="display mt-5 text-4xl text-[#2a1a10] sm:text-5xl">
-          <span ref={ref}>{value}</span>
-          <span className="text-[#c2521f]">{s}</span>
+        <p className="display relative mt-5 w-fit text-4xl tabular-nums text-[#0B0B0C] sm:text-5xl">
+          <span className="sr-only">{v}{s}</span>
+          <span ref={reduce ? undefined : ref} aria-hidden>{reduce ? v : value}</span>
+          <span className="text-[#F05138]" aria-hidden>{s}</span>
+          <span aria-hidden className="pointer-events-none absolute -bottom-2 left-0 h-1.5 w-full rounded-full" style={{ background: `linear-gradient(90deg,#F05138,${tone})`, transform: "rotate(-2deg)" }} />
         </p>
         <p className="mt-3 text-base font-bold tracking-tight text-[#2a1a10]">{l}</p>
         <p className="mt-0.5 text-[12.5px] text-[#8a6a50]">{sub}</p>

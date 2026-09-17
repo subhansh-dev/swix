@@ -1,5 +1,7 @@
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
+import { Tilt } from "./ui/Tilt";
+import { GlassCube } from "./ui/GlassCube";
 import { useScrollScrub } from "@/hooks/useScrollScrub";
 import { cn } from "@/utils/cn";
 
@@ -28,7 +30,7 @@ const items = [
     detail: (
       <span className="flex items-center gap-2">
         <span className="flex -space-x-1.5">
-          {["#b4552d", "#c2521f", "#d97a4a", "#2a1a10"].map((c) => (
+          {["#D9CFFF", "#B9ECCD", "#BDE4FF", "#FFC6DD"].map((c) => (
             <span key={c} className="h-5 w-5 rounded-full border-2 border-white shadow-sm" style={{ background: `radial-gradient(circle at 32% 28%, #fff, ${c})` }} />
           ))}
         </span>
@@ -84,7 +86,7 @@ const ticker = [
 
 const watermarkWords = ["Swift", "Coding", "Club", "Swift", "Coding", "Club"];
 
-/* twinkling starbursts scattered over the panel */
+const tones = ["#D9CFFF", "#BDE4FF", "#B9ECCD", "#FFEDA3"];
 const stars = [
   { left: "6%", top: "18%", s: "✦", size: "text-lg", d: "0s" },
   { left: "22%", top: "8%", s: "✧", size: "text-base", d: "1.2s" },
@@ -96,12 +98,7 @@ const stars = [
   { left: "84%", top: "58%", s: "·", size: "text-lg", d: "2.9s" },
 ];
 
-/**
- * The "proof panel" — Retro Futurism remix. Cream stat cards float over an
- * atomic-age gradient, scrubbed by scroll: the watermark strip slides, orbit
- * rings turn, starbursts twinkle, and a terracotta progress bar fills as you
- * travel through. Each card is a real link into the site.
- */
+
 export function GlassHighlights() {
   const scrub = useScrollScrub<HTMLDivElement>();
   return (
@@ -126,9 +123,9 @@ export function GlassHighlights() {
             </span>
             <span className="atomi-chip">Audited every sem</span>
           </Reveal>
-          {/* floating deco badge */}
+          <GlassCube className="-left-2 top-28 !hidden opacity-75 lg:!block" size={68} tone="ice" depth={20} delay={-3} />
           <div aria-hidden className="absolute -top-4 right-0 hidden rotate-6 lg:block">
-            <div className="atomi-card gpu animate-float px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#6b4a34]">
+            <div className="atomi-card gpu motion-safe:animate-float !border-white !bg-[#FFEDA3] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#6b4a34]">
               ★ rated by members
             </div>
           </div>
@@ -138,7 +135,7 @@ export function GlassHighlights() {
           <div
             ref={scrub}
             className="atomi-section scrub relative overflow-hidden rounded-[36px]"
-            style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 30px 70px -30px rgba(122,60,20,0.5)" }}
+            style={{ background: "radial-gradient(ellipse at 10% 10%, #D9CFFFaa, transparent 55%), radial-gradient(ellipse at 90% 80%, #B9ECCD88, transparent 55%), #FFF8F2", boxShadow: "0 1px 0 #fff inset, 0 30px 70px -40px #6b4a3466" }}
           >
             {/* scroll progress bar with traveling shine */}
             <div aria-hidden className="absolute inset-x-0 top-0 z-20 h-1.5 bg-[#b4552d]/15">
@@ -154,12 +151,12 @@ export function GlassHighlights() {
             <div aria-hidden className="pointer-events-none absolute inset-0">
               {/* starbursts */}
               {stars.map((s, i) => (
-                <span key={i} className={cn("atomi-star gpu animate-pulse-soft absolute font-mono", s.size)} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
+                <span key={i} className={cn("atomi-star gpu motion-safe:animate-pulse-soft absolute font-mono", s.size)} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
                   {s.s}
                 </span>
               ))}
               {/* orbit rings with satellite beads */}
-              <div className="gpu absolute -left-24 bottom-[14%] h-64 w-64" style={{ animation: "orbit-spin 48s linear infinite" }}>
+              <div className="gpu absolute -left-24 bottom-[14%] h-64 w-64 motion-reduce:!animate-none" style={{ animation: "orbit-spin 48s linear infinite" }}>
                 <span className="absolute inset-0 rounded-full border-2 border-dashed border-[#b4552d]/35" />
                 <span
                   className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -178,7 +175,7 @@ export function GlassHighlights() {
               {/* scroll-driven watermark strip */}
               <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
                 <div
-                  className="gpu flex w-max items-center whitespace-nowrap will-change-transform"
+                  className="gpu flex w-max items-center whitespace-nowrap will-change-transform motion-reduce:!transform-none"
                   style={{ transform: "translateX(calc((0.5 - var(--scrub, 0)) * 26vw))" }}
                 >
                   {watermarkWords.map((w, i) => (
@@ -193,49 +190,53 @@ export function GlassHighlights() {
               </div>
             </div>
 
-            {/* ---- cards (gentle float) ---- */}
             <div className="relative grid grid-cols-1 gap-3 p-4 sm:grid-cols-2 sm:gap-4 sm:p-6 lg:grid-cols-4">
               {items.map((it, i) => (
-                <Reveal key={it.n} delay={i * 90} className="h-full">
-                  <a
-                    href={it.href}
-                    data-cursor="hot"
-                    aria-label={`${it.label} — ${it.link}`}
-                    className="atomi-card sheen group relative flex h-full flex-col justify-between gap-5 overflow-hidden !rounded-[24px] p-5 transition-transform duration-500 hover:-translate-y-1 sm:p-6"
-                    style={{ animation: `float ${8 + i * 1.3}s ease-in-out ${-i * 1.7}s infinite` }}
-                  >
-                    <span className="relative flex items-start justify-between">
-                      <span
-                        className="grid h-12 w-12 place-items-center rounded-full text-lg text-[#ffe8d2]"
-                        style={{ background: "radial-gradient(circle at 32% 28%, #d97a4a, #b4552d 70%)", boxShadow: "0 10px 22px -10px rgba(180,85,45,0.8), inset 0 1px 0 rgba(255,255,255,0.5)" }}
-                        aria-hidden
+                <Reveal key={it.n} delay={80 + i * 110} className="h-full">
+                  <div className="h-full motion-reduce:!animate-none" style={{ animation: `float ${8 + i * 1.3}s ease-in-out ${-i * 1.7}s infinite` }}>
+                    <Tilt max={4} lift={8} scale={1.01} sheen={false} className="h-full">
+                      <a
+                        href={it.href}
+                        data-cursor="hot"
+                        aria-label={`${it.label} — ${it.link}`}
+                        className="atomi-card group relative flex h-full flex-col justify-between gap-5 overflow-hidden !rounded-[24px] !border-white/90 p-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#F05138] sm:p-6"
+                        style={{ background: `linear-gradient(145deg, #ffffffed, #FFF8F2e8 55%, ${tones[i]}aa)`, boxShadow: "inset 0 2px 0 #fff, inset 0 -4px 0 #ffffff80, 0 8px 0 -4px #ffffff70, 0 18px 32px -20px #6b4a3466" }}
                       >
-                        {it.star}
-                      </span>
-                      <span className="font-mono text-[11px] tracking-[0.2em] text-[#8a6a50]/70">/{it.n}</span>
-                    </span>
-                    <span className="relative">
-                      <span className="display block text-4xl tracking-tight text-[#2a1a10] sm:text-[2.6rem]">{it.label}</span>
-                      <span className="mt-1 block text-[12.5px] font-medium text-[#6b4a34]">{it.sub}</span>
-                      <span className="mt-4 block">{it.detail}</span>
-                      <span className="mt-4 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[#c2521f] opacity-0 transition-all duration-500 group-hover:opacity-100">
-                        {it.link}
-                        <svg className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 12 12" fill="none" aria-hidden>
-                          <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </span>
-                    </span>
-                  </a>
+                        <span aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full border-[16px] border-white/50 opacity-60 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110" />
+                        <span className="relative flex items-start justify-between">
+                          <span
+                            className="grid h-12 w-12 place-items-center rounded-2xl border border-white text-lg text-[#F05138] motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-rotate-12"
+                            style={{ background: `linear-gradient(135deg, #fff, ${tones[i]})`, boxShadow: "0 4px 0 -1px #F0513814, 0 10px 20px -12px #6b4a3466" }}
+                            aria-hidden
+                          >
+                            {it.star}
+                          </span>
+                          <span className="rounded-full border border-white bg-white/60 px-2 py-1 font-mono text-[11px] tracking-[0.2em] text-[#6b4a34]">/{it.n}</span>
+                        </span>
+                        <span className="relative">
+                          <span className={cn("display block text-4xl tracking-tight sm:text-[2.6rem]", i === 0 ? "text-[#0B0B0C]" : "bg-gradient-to-br from-[#9c321f] to-[#F05138] bg-clip-text text-transparent")}>{it.label}</span>
+                          <span className="mt-1 block text-[12.5px] font-medium text-[#6b4a34]">{it.sub}</span>
+                          <span className="mt-4 block">{it.detail}</span>
+                          <span className="mt-4 flex items-center gap-1.5 border-t border-[#F05138]/15 pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[#9c321f] opacity-80 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                            {it.link}
+                            <svg className="ml-auto h-3 w-3 shrink-0 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-x-1" viewBox="0 0 12 12" fill="none" aria-hidden>
+                              <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </span>
+                        </span>
+                      </a>
+                    </Tilt>
+                  </div>
                 </Reveal>
               ))}
             </div>
 
             {/* ---- ticker ---- */}
-            <div className="marquee-mask relative border-t-2 border-[#b4552d]/30 bg-[#2a1a10] py-3">
-              <div className="marquee-track gpu animate-marquee flex w-max items-center gap-10 pr-10">
+            <div className="marquee-mask group/ticker relative border-t border-white bg-white/60 py-3">
+              <div className="marquee-track gpu motion-safe:animate-marquee flex w-max items-center gap-10 pr-10 group-hover/ticker:[animation-play-state:paused]">
                 {[...ticker, ...ticker].map((t, i) => (
                   <span key={i} className="flex items-center gap-10 whitespace-nowrap">
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-[#ffe8d2]/80">{t}</span>
+                    <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-[#6b4a34]">{t}</span>
                     <span aria-hidden className="text-[#d97a4a]">✦</span>
                   </span>
                 ))}

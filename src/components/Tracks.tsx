@@ -68,10 +68,10 @@ function Seats({ taken, total }: { taken: number; total: number }) {
       </div>
       <div className="mt-2 h-2 overflow-hidden rounded-full border border-[#b4552d]/25 bg-white/50">
         <div
-          className="gpu h-full rounded-full transition-[width] duration-1000 ease-[var(--ease-out-expo)]"
+          className="gpu h-full origin-left rounded-full transition-transform duration-1000 ease-[var(--ease-out-expo)]"
           style={{
-            width: `${pct}%`,
-            background: "linear-gradient(90deg,#b4552d,#d97a4a)",
+            transform: `scaleX(${pct / 100})`,
+            background: "linear-gradient(90deg,#F05138,#FFC6DD)",
             boxShadow: "0 0 8px rgba(180,85,45,0.5)",
           }}
         />
@@ -128,8 +128,10 @@ export function Tracks() {
             <Reveal key={t.name} delay={i * 110} className="h-full">
               <Tilt max={t.featured ? 8 : 5} lift={t.featured ? 24 : 12} className="h-full">
                 <div
-                  className={cn("atomi-card relative flex h-full flex-col overflow-hidden p-7 sm:p-8", t.featured && "ring-2 ring-[#b4552d]/50")}
+                  className={cn("atomi-card relative flex h-full flex-col overflow-hidden p-7 sm:p-8", t.featured && "ring-2 ring-[#F05138]/40")}
+                  style={{ background: `radial-gradient(ellipse at 100% 0%,${["#B9ECCD", "#FFC6DD", "#D9CFFF"][i]}99,transparent 55%), linear-gradient(160deg,#fff,#FFF8F2)`, borderColor: "#0B0B0C18", boxShadow: "inset 0 1px 0 #fff, 0 4px 0 #ffffff88, 0 26px 50px -32px #0B0B0C44" }}
                 >
+                  <span aria-hidden className="pointer-events-none absolute -bottom-9 -right-9 h-28 w-28 rounded-full border border-[#F05138]/15" />
                   <div className="relative">
                     <div className="flex items-start justify-between">
                       <div>

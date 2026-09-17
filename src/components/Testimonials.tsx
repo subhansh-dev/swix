@@ -2,6 +2,8 @@ import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { cn } from "@/utils/cn";
 
+const tones = ["#FFC6DD", "#BDE4FF", "#D9CFFF", "#B9ECCD"];
+
 const stories = [
   {
     quote:
@@ -65,7 +67,7 @@ export function Testimonials() {
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:mt-20 lg:grid-cols-4">
           {stories.map((s, i) => (
             <Reveal key={s.name} delay={i * 80} className={cn(s.featured && "md:col-span-2 lg:row-span-2")}>
-              <figure className="webcore-tile flex h-full flex-col ">
+              <figure className="webcore-tile group flex h-full flex-col overflow-hidden transition-transform duration-500 motion-safe:hover:-translate-y-1" style={{ borderColor: "#ffffffcc", boxShadow: `inset 0 1px 0 #fff, 0 4px 0 ${tones[i]}99, 0 24px 48px -32px #0B0B0C44` }}>
                 <div className="win98-title flex items-center justify-between px-2 py-1">
                   <span className="truncate font-mono">{s.win}</span>
                   <span className="flex gap-1" aria-hidden>
@@ -74,7 +76,8 @@ export function Testimonials() {
                   </span>
                 </div>
 
-                <div className={cn("flex flex-1 flex-col justify-between bg-paper-3 p-6", s.featured && "sm:p-8")}>
+                <div className={cn("relative isolate flex flex-1 flex-col justify-between p-6", s.featured && "sm:p-8")} style={{ background: `linear-gradient(150deg,#FFF8F2 15%,${tones[i]}66)` }}>
+                  <span aria-hidden className="pointer-events-none absolute right-4 top-0 -z-10 select-none font-serif text-[100px] leading-none" style={{ color: tones[i] }}>“</span>
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#F05138]/70" aria-hidden>
                       &gt; member_story_{String(i + 1).padStart(2, "0")}

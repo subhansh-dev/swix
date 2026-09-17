@@ -1,6 +1,8 @@
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { ScrollStrip } from "./ui/ScrollStrip";
+import { useScrollScrub } from "@/hooks/useScrollScrub";
+import { useReducedMotion } from "@/hooks/useMedia";
 
 const chips = [
   { k: "panic level", v: "0" },
@@ -10,6 +12,8 @@ const chips = [
 ];
 
 export function Terminal() {
+  const progress = useScrollScrub<HTMLDivElement>();
+  const reduce = useReducedMotion();
   return (
     <section id="terminal" className="webcore-section cv-auto relative overflow-hidden py-20 sm:py-28">
       <div aria-hidden className="webcore-stars pointer-events-none absolute inset-0 opacity-40" />
@@ -52,7 +56,7 @@ export function Terminal() {
                 </span>
               </div>
 
-              <div className="bg-paper-3/90 p-7 backdrop-blur-md sm:p-10">
+              <div className="p-7 backdrop-blur-md sm:p-10" style={{ background: "repeating-linear-gradient(180deg,#0B0B0C02 0 1px,transparent 1px 4px), linear-gradient(135deg,#FFF8F2,#FFEDA333)" }}>
                 <p className="text-6xl font-bold leading-none text-[#F05138] sm:text-7xl">:(</p>
                 <p className="mt-5 text-xl font-bold tracking-tight text-ink sm:text-2xl">
                   SWIFT_STUDENT.exe ran into a learning curve
@@ -64,30 +68,30 @@ export function Terminal() {
                     <span>collecting courage</span>
                     <span className="text-[#F05138]">99%</span>
                   </div>
-                  <div className="mt-2 h-3 overflow-hidden rounded-none border border-line bg-paper">
+                  <div ref={progress} className="mt-2 h-3 overflow-hidden rounded-none border border-line bg-paper">
                     <div
-                      className="h-full"
+                      className="h-full origin-left"
                       style={{
-                        background: "repeating-linear-gradient(90deg,#F05138 0 8px,#faf3e7 8px 10px)",
-                        animation: "bsod-progress 6s var(--ease-out-expo) infinite",
+                        background: "repeating-linear-gradient(90deg,#F05138 0 8px,#FFF8F2 8px 10px)",
+                        transform: reduce ? "scaleX(0.99)" : "scaleX(clamp(0.02, calc(var(--scrub, 1) * 1.8), 0.99))",
                       }}
                     />
                   </div>
                 </div>
 
                 <dl className="mt-8 space-y-3 border-t border-line pt-6 text-[14px]">
-                  <div className="flex flex-wrap justify-between gap-2">
+                  <Reveal delay={100} className="flex flex-wrap justify-between gap-2">
                     <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">what you gained</dt>
                     <dd className="font-semibold text-ink">debugging superpowers + 40 new words for "oops"</dd>
-                  </div>
-                  <div className="flex flex-wrap justify-between gap-2">
+                  </Reveal>
+                  <Reveal delay={220} className="flex flex-wrap justify-between gap-2">
                     <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">next session</dt>
                     <dd className="font-semibold text-ink">Thursdays · Lab 204 · 5 PM · bring the crash</dd>
-                  </div>
-                  <div className="flex flex-wrap justify-between gap-2">
+                  </Reveal>
+                  <Reveal delay={340} className="flex flex-wrap justify-between gap-2">
                     <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">stop code</dt>
                     <dd className="font-mono font-semibold text-[#F05138]">0x000_SHIP_ANYWAY</dd>
-                  </div>
+                  </Reveal>
                 </dl>
 
                 <p className="mt-7 font-mono text-[12px] text-ink/50">
@@ -106,7 +110,7 @@ export function Terminal() {
           <div className="grid content-start gap-4 lg:col-span-5">
             {chips.map((c, i) => (
               <Reveal key={c.k} variant={i % 2 ? "right" : "left"} delay={i * 110}>
-                <div className="webcore-tile flex items-center justify-between gap-6  px-5 py-3.5 transition-colors duration-300">
+                <div className="webcore-tile flex items-center justify-between gap-6 px-5 py-3.5 transition-transform duration-300 motion-safe:hover:-translate-y-0.5" style={{ background: `linear-gradient(120deg,#FFF8F2,${["#B9ECCD", "#D9CFFF", "#BDE4FF", "#FFEDA3"][i]}66)`, borderColor: "#ffffffcc" }}>
                   <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink/50">{c.k}</span>
                   <span className="font-mono text-lg font-bold text-[#F05138]">
                     {c.v}
@@ -130,7 +134,7 @@ export function Terminal() {
         <Reveal delay={160} className="mt-12 flex flex-wrap items-center gap-4">
           <a
             href="#join"
-            className="inline-flex items-center gap-2 rounded-sm border border-[#F05138] bg-[#F05138]/15 px-6 py-3.5 text-sm font-bold text-[#F05138] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F05138]/25"
+            className="inline-flex items-center gap-2 rounded-sm border border-[#F05138] bg-[#F05138]/15 px-6 py-3.5 text-sm font-bold text-[#F05138] transition-transform duration-300 motion-safe:hover:-translate-y-0.5 hover:bg-[#F05138]/25"
             style={{ boxShadow: "0 0 24px -8px rgba(240,81,56,0.3)" }}
           >
             Learn to debug with us

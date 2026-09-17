@@ -1,9 +1,9 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import showcase from "@/assets/showcase-app.jpg";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Orb } from "./ui/Orb";
-import { useCanHover } from "@/hooks/useMedia";
+import { useCanHover, useReducedMotion } from "@/hooks/useMedia";
 import { cn } from "@/utils/cn";
 
 const apps = [
@@ -39,13 +39,14 @@ const apps = [
 
 function TiltPhone() {
   const canHover = useCanHover();
+  const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const frame = useRef<number | null>(null);
   const pos = useRef({ x: 0, y: 0 });
 
   const onMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!canHover || e.pointerType !== "mouse") return;
+      if (!canHover || reduce || e.pointerType !== "mouse") return;
       const el = ref.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
@@ -57,20 +58,29 @@ function TiltPhone() {
         el.style.transform = `perspective(1200px) rotateY(${x * 10}deg) rotateX(${-y * 10}deg) translateZ(0)`;
       });
     },
-    [canHover]
+    [canHover, reduce]
   );
 
   const onLeave = useCallback(() => {
+    if (frame.current !== null) cancelAnimationFrame(frame.current);
+    frame.current = null;
     const el = ref.current;
     if (el) el.style.transform = "perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0)";
   }, []);
+
+  useEffect(() => {
+    if (reduce || !canHover) onLeave();
+    return onLeave;
+  }, [reduce, canHover, onLeave]);
 
   return (
     <div
       ref={ref}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className="webcore-tile gpu relative mx-auto w-full max-w-[420px] overflow-hidden "
+      onPointerCancel={onLeave}
+      className="webcore-tile gpu relative mx-auto w-full max-w-[420px] overflow-hidden transition-transform duration-300"
+      style={{ borderColor: "#ffffffcc", boxShadow: "inset 0 1px 0 #fff, 0 4px 0 #D9CFFF, 0 30px 65px -28px #0B0B0C44" }}
     >
       <div className="win98-title flex items-center justify-between px-2 py-1">
         <span className="font-mono">campus_v2.3.app — preview</span>
@@ -136,14 +146,16 @@ export function Showcase() {
 
         <div className="mt-16 grid items-center gap-12 lg:mt-24 lg:grid-cols-12">
           <Reveal variant="scale" className="lg:col-span-5">
-            <div className="relative">
+            <div className="relative isolate">
+              <div aria-hidden className="pointer-events-none absolute inset-3 -z-10 rounded-[28px] border border-white/80" style={{ background: "linear-gradient(145deg,#D9CFFF,#BDE4FF88)", transform: "rotate(-5deg) translate(-10px,12px)", boxShadow: "0 20px 45px -24px #D9CFFF" }} />
+              <div aria-hidden className="pointer-events-none absolute inset-5 -z-10 rounded-[28px] border border-white/80" style={{ background: "linear-gradient(145deg,#FFEDA3,#FFC6DD88)", transform: "rotate(5deg) translate(12px,8px)" }} />
               <TiltPhone />
-              <div className="absolute right-0 top-6 z-10 sm:-right-2">
-                <div className="webcore-tile gpu animate-float flex items-center gap-2.5  py-1.5 pl-1.5 pr-4" style={{ animationDelay: "-6s" }}>
+              <Reveal delay={180} className="absolute right-0 top-6 z-10 sm:-right-2">
+                <div className="webcore-tile gpu motion-safe:animate-float flex items-center gap-2.5 py-1.5 pl-1.5 pr-4" style={{ background: "linear-gradient(135deg,#fff,#B9ECCDcc)", animationDelay: "-6s" }}>
                   <Orb variant="ios" box={32} size="small" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/60">iOS 19 ready</span>
                 </div>
-              </div>
+              </Reveal>
             </div>
           </Reveal>
 
@@ -164,14 +176,14 @@ export function Showcase() {
                       aria-expanded={isActive}
                       className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-5 py-6 text-left sm:gap-8"
                     >
-                      <span className={cn("pt-2 font-mono text-[11px] tracking-[0.2em] transition-colors", isActive ? "text-[#F05138]" : "text-ink/30")}>
+                      <span className={cn("pt-2 font-mono text-[11px] tracking-[0.2em]", isActive ? "text-[#F05138]" : "text-ink/30")}>
                         0{i + 1}
                       </span>
                       <span>
                         <span className="flex items-center gap-3">
                           <span
                             className={cn(
-                              "text-2xl font-bold tracking-tight transition-colors sm:text-3xl",
+                              "text-2xl font-bold tracking-tight sm:text-3xl",
                               isActive ? "text-[#F05138]" : "text-ink/80 group-hover:text-ink"
                             )}
                           >
@@ -179,10 +191,10 @@ export function Showcase() {
                           </span>
                           <span className="win98-btn hidden !text-[9px] !font-normal sm:inline-block">{a.by}</span>
                         </span>
-                        <span className={cn("mt-1 block text-[15px] text-muted transition-colors", isActive && "text-ink/70")}>{a.tagline}</span>
+                        <span className={cn("mt-1 block text-[15px] text-muted", isActive && "text-ink/70")}>{a.tagline}</span>
                         <span
                           className={cn(
-                            "grid transition-[grid-template-rows,opacity] duration-500 ease-[var(--ease-out-expo)]",
+                            "grid transition-opacity duration-500 ease-[var(--ease-out-expo)]",
                             isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                           )}
                         >
@@ -200,7 +212,7 @@ export function Showcase() {
                       </span>
                       <span
                         className={cn(
-                          "mt-1 flex h-9 w-9 items-center justify-center rounded-sm border transition-all duration-500",
+                          "mt-1 flex h-9 w-9 items-center justify-center rounded-sm border transition-transform duration-300 motion-safe:group-hover:translate-x-1",
                           isActive ? "border-[#F05138] bg-[#F05138]/15 text-[#F05138]" : "border-line text-ink/40"
                         )}
                         aria-hidden
@@ -217,7 +229,7 @@ export function Showcase() {
             <Reveal delay={320} className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="#stories"
-                className="inline-flex items-center gap-2 rounded-sm border border-[#F05138]/60 bg-[#F05138]/10 px-5 py-2.5 font-mono text-sm font-bold text-[#F05138] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F05138]/20"
+                className="inline-flex items-center gap-2 rounded-sm border border-[#F05138]/60 bg-[#F05138]/10 px-5 py-2.5 font-mono text-sm font-bold text-[#F05138] transition-transform duration-300 motion-safe:hover:-translate-y-0.5 hover:bg-[#F05138]/20"
                 style={{ boxShadow: "0 0 22px -8px rgba(240,81,56,0.3)" }}
               >
                 Build the next one →

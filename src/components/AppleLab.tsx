@@ -2,6 +2,7 @@ import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
 import { Orb } from "./ui/Orb";
+import { GlassCube } from "./ui/GlassCube";
 import { cn } from "@/utils/cn";
 
 const curriculum = [
@@ -60,6 +61,7 @@ export function AppleLab() {
         </svg>
       </div>
 
+      <GlassCube size={54} tone="ice" depth={24} delay={-3} className="right-[6%] bottom-10" />
       <div className="container-x relative">
         <SectionHeader
           index="04"
@@ -86,7 +88,7 @@ export function AppleLab() {
               <div
                 className="relative h-full overflow-hidden rounded-[32px] p-7 sm:p-10"
                 style={{
-                  background: "linear-gradient(160deg,#fffdf8,#fdf3e2)",
+                  background: "radial-gradient(ellipse at 100% 0%, #FFC6DD66, transparent 55%), linear-gradient(160deg,#FFF8F2,#FFEDA344)",
                   border: "1.5px solid rgba(180,85,45,0.35)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 24px 50px -24px rgba(122,60,20,0.35)",
                 }}
@@ -136,7 +138,7 @@ export function AppleLab() {
               <div
                 className="relative overflow-hidden rounded-[28px] p-6 sm:p-8"
                 style={{
-                  background: "linear-gradient(160deg,#fff8ec,#ffe7cc)",
+                  background: "linear-gradient(150deg,#FFF8F2 25%,#BDE4FF88)",
                   border: "1.5px solid rgba(180,85,45,0.35)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.4)",
                 }}
@@ -158,7 +160,7 @@ export function AppleLab() {
               <div
                 className="relative overflow-hidden rounded-[28px] p-6 sm:p-8"
                 style={{
-                  background: "linear-gradient(160deg,#fffdf6,#fdeecf)",
+                  background: "linear-gradient(150deg,#FFF8F2 25%,#B9ECCD77)",
                   border: "1.5px solid rgba(180,85,45,0.3)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.35)",
                 }}
@@ -242,7 +244,7 @@ export function AppleLab() {
                   <div
                     className="relative overflow-hidden rounded-[28px] p-7"
                     style={{
-                      background: i === 0 ? "linear-gradient(160deg,#fffdf8,#fdf1dd)" : "linear-gradient(160deg,#fffaf0,#fbe4c8)",
+                      background: i === 0 ? "linear-gradient(145deg,#FFF8F2 35%,#D9CFFF77)" : "linear-gradient(145deg,#FFF8F2 35%,#FFEDA388)",
                       border: "1.5px solid rgba(180,85,45,0.32)",
                       boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.35)",
                     }}

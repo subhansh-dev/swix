@@ -70,9 +70,8 @@ function TiltPhone() {
       ref={ref}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
-      className="webcore-tile gpu relative mx-auto w-full max-w-[420px] overflow-hidden !rounded-sm"
+      className="webcore-tile gpu relative mx-auto w-full max-w-[420px] overflow-hidden "
     >
-      {/* titlebar */}
       <div className="win98-title flex items-center justify-between px-2 py-1">
         <span className="font-mono">campus_v2.3.app — preview</span>
         <span className="flex gap-1" aria-hidden>
@@ -90,16 +89,15 @@ function TiltPhone() {
         decoding="async"
         className="aspect-[3/4] w-full object-cover"
       />
-      {/* scanline gloss */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-full"
         style={{ background: "repeating-linear-gradient(180deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 3px)" }}
       />
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-[#060607]/90 to-transparent p-6 pt-10">
+      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-white/90 to-transparent p-6 pt-10">
         <div>
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#00ffaa]">Featured build</p>
-          <p className="mt-1 text-xl font-bold tracking-tight text-[#e6e6e2]">Campus · v2.3</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#F05138]">Featured build</p>
+          <p className="mt-1 text-xl font-bold tracking-tight text-ink">Campus · v2.3</p>
         </div>
         <span className="win98-btn">On App Store</span>
       </div>
@@ -111,26 +109,24 @@ export function Showcase() {
   const [active, setActive] = useState(0);
   return (
     <section id="showcase" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32">
-      {/* starfield backdrop */}
       <div aria-hidden className="webcore-stars pointer-events-none absolute inset-0 opacity-60" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(60% 45% at 85% 0%, rgba(0,255,170,0.06), transparent 60%)" }}
+        style={{ background: "radial-gradient(60% 45% at 85% 0%, rgba(240,81,56,0.06), transparent 60%)" }}
       />
 
       <div className="container-x relative">
         <SectionHeader
           index="03"
           eyebrow="Student showcase"
-          dark
           title={
-            <span className="text-[#e6e6e2]">
-              Real apps. Real users. <span className="text-[#00ffaa]">Built between lectures.</span>
+            <span className="text-ink">
+              Real apps. Real users. <span className="text-[#F05138]">Built between lectures.</span>
             </span>
           }
           body={
-            <span className="text-white/60">
+            <span className="text-muted">
               Every app below was designed, built and submitted by Parul students in a single semester. Some are on
               the App Store. Some are used by thousands on campus every week.
             </span>
@@ -141,22 +137,20 @@ export function Showcase() {
           <Reveal variant="scale" className="lg:col-span-5">
             <div className="relative">
               <TiltPhone />
-              {/* ios orb coin, floating over the phone */}
               <div className="absolute right-0 top-6 z-10 sm:-right-2">
-                <div className="webcore-tile gpu animate-float flex items-center gap-2.5 !rounded-sm py-1.5 pl-1.5 pr-4" style={{ animationDelay: "-6s" }}>
+                <div className="webcore-tile gpu animate-float flex items-center gap-2.5  py-1.5 pl-1.5 pr-4" style={{ animationDelay: "-6s" }}>
                   <Orb variant="ios" box={32} size="small" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/70">iOS 19 ready</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink/60">iOS 19 ready</span>
                 </div>
               </div>
             </div>
           </Reveal>
 
           <div className="lg:col-span-7 lg:pl-8">
-            {/* directory header */}
-            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#00ffaa]/70">
-              C:\\club\\showcase&gt; dir *.app /b
+            <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#F05138]/70">
+              C:\club\showcase&gt; dir *.app /b
             </p>
-            <ul className="divide-y divide-[#2a2a2e] border-y border-[#2a2a2e]" role="list">
+            <ul className="divide-y divide-line border-y border-line" role="list">
               {apps.map((a, i) => {
                 const isActive = active === i;
                 return (
@@ -169,7 +163,7 @@ export function Showcase() {
                       aria-expanded={isActive}
                       className="group grid w-full grid-cols-[auto_1fr_auto] items-start gap-5 py-6 text-left sm:gap-8"
                     >
-                      <span className={cn("pt-2 font-mono text-[11px] tracking-[0.2em] transition-colors", isActive ? "text-[#00ffaa]" : "text-white/30")}>
+                      <span className={cn("pt-2 font-mono text-[11px] tracking-[0.2em] transition-colors", isActive ? "text-[#F05138]" : "text-ink/30")}>
                         0{i + 1}
                       </span>
                       <span>
@@ -177,14 +171,14 @@ export function Showcase() {
                           <span
                             className={cn(
                               "text-2xl font-bold tracking-tight transition-colors sm:text-3xl",
-                              isActive ? "text-[#00ffaa]" : "text-[#e6e6e2]/80 group-hover:text-[#e6e6e2]"
+                              isActive ? "text-[#F05138]" : "text-ink/80 group-hover:text-ink"
                             )}
                           >
                             {a.name}
                           </span>
                           <span className="win98-btn hidden !text-[9px] !font-normal sm:inline-block">{a.by}</span>
                         </span>
-                        <span className={cn("mt-1 block text-[15px] text-white/50 transition-colors", isActive && "text-white/70")}>{a.tagline}</span>
+                        <span className={cn("mt-1 block text-[15px] text-muted transition-colors", isActive && "text-ink/70")}>{a.tagline}</span>
                         <span
                           className={cn(
                             "grid transition-[grid-template-rows,opacity] duration-500 ease-[var(--ease-out-expo)]",
@@ -194,11 +188,11 @@ export function Showcase() {
                           <span className="overflow-hidden">
                             <span className="mt-4 flex flex-wrap items-center gap-2">
                               {a.stack.map((s) => (
-                                <span key={s} className="rounded-none border border-[#2a2a2e] bg-[#101014] px-2 py-1 font-mono text-[10.5px] text-[#00ffaa]/90">
+                                <span key={s} className="rounded-none border border-line bg-paper-3 px-2 py-1 font-mono text-[10.5px] text-[#F05138]/90">
                                   {s}
                                 </span>
                               ))}
-                              <span className="ml-1 font-mono text-[11px] font-semibold text-[#00ffaa]">{a.stat}</span>
+                              <span className="ml-1 font-mono text-[11px] font-semibold text-[#F05138]">{a.stat}</span>
                             </span>
                           </span>
                         </span>
@@ -206,7 +200,7 @@ export function Showcase() {
                       <span
                         className={cn(
                           "mt-1 flex h-9 w-9 items-center justify-center rounded-sm border transition-all duration-500",
-                          isActive ? "border-[#00ffaa] bg-[#00ffaa]/15 text-[#00ffaa]" : "border-[#2a2a2e] text-white/40"
+                          isActive ? "border-[#F05138] bg-[#F05138]/15 text-[#F05138]" : "border-line text-ink/40"
                         )}
                         aria-hidden
                       >
@@ -222,12 +216,12 @@ export function Showcase() {
             <Reveal delay={320} className="mt-8 flex flex-wrap items-center gap-4">
               <a
                 href="#stories"
-                className="inline-flex items-center gap-2 rounded-sm border border-[#00ffaa]/60 bg-[#00ffaa]/10 px-5 py-2.5 font-mono text-sm font-bold text-[#00ffaa] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#00ffaa]/20"
-                style={{ boxShadow: "0 0 22px -8px rgba(0,255,170,0.6)" }}
+                className="inline-flex items-center gap-2 rounded-sm border border-[#F05138]/60 bg-[#F05138]/10 px-5 py-2.5 font-mono text-sm font-bold text-[#F05138] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#F05138]/20"
+                style={{ boxShadow: "0 0 22px -8px rgba(240,81,56,0.3)" }}
               >
                 Build the next one →
               </a>
-              <a href="#stories" className="link-u font-mono text-sm font-semibold text-white/60 hover:text-[#00ffaa]">
+              <a href="#stories" className="link-u font-mono text-sm font-semibold text-muted hover:text-[#F05138]">
                 Read how they did it →
               </a>
             </Reveal>

@@ -13,36 +13,34 @@ const stories = [
     win: "guestbook.txt — entry 001",
   },
   {
-    quote: "The code reviews were brutal in the best way. I finally understood why architecture matters.",
-    name: "Dev Chaudhary",
-    role: "B.Tech IT '26 · Club member",
-    initials: "DC",
-    win: "review.log",
+    quote:
+      "The weekly code reviews changed how I think about software. Every Thursday we'd tear apart each other's PRs — respectfully but honestly.",
+    name: "Kathan Mehta",
+    role: "B.Tech IT '26 · SWE Intern, Flipkart",
+    initials: "KM",
+    featured: false,
+    win: "review_log.txt — entry 002",
   },
   {
-    quote: "Won the Swift Student Challenge with a playground we prototyped in a Thursday lab. Still can't believe it.",
-    name: "Meera Iyer",
-    role: "BCA '26 · SSC Winner 2025",
-    initials: "MI",
-    win: "ssc_2025.txt",
+    quote:
+      "We built Pulse in three weeks for the Swift Student Challenge. The mentors here pushed us past what we thought we could do.",
+    name: "Nisha Desai",
+    role: "B.Tech CSE '25 · WWDC Scholar '25",
+    initials: "ND",
+    featured: false,
+    win: "wwdc_entry.txt — entry 003",
   },
   {
-    quote: "Placement interviewers stopped asking about my CGPA once they opened my app.",
-    name: "Rohan Desai",
-    role: "B.Tech CSE '24 · iOS Engineer, Razorpay",
-    initials: "RD",
-    win: "placement.txt",
-  },
-  {
-    quote: "It's the only club where the output is a product, not a certificate.",
-    name: "Sneha Rathod",
-    role: "M.Sc IT '25 · Club lead",
-    initials: "SR",
-    win: "manifesto.md",
+    quote:
+      "From zero Swift knowledge to shipping a campus ride-sharing app used by 800 students. That's what this club does.",
+    name: "Rohan Joshi",
+    role: "B.Tech CSE '26 · Founder, Raahi",
+    initials: "RJ",
+    featured: false,
+    win: "launch_day.txt — entry 004",
   },
 ];
 
-/** Testimonials — Web Core: member quotes as notepad windows on a starfield desktop. */
 export function Testimonials() {
   return (
     <section id="stories" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32">
@@ -50,17 +48,16 @@ export function Testimonials() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(60% 45% at 85% 10%, rgba(0,255,170,0.05), transparent 60%)" }}
+        style={{ background: "radial-gradient(60% 45% at 85% 10%, rgba(240,81,56,0.05), transparent 60%)" }}
       />
 
       <div className="container-x relative">
         <SectionHeader
           index="10"
           eyebrow="Member stories"
-          dark
           title={
-            <span className="text-[#e6e6e2]">
-              Said by people <span className="text-[#00ffaa]">who shipped.</span>
+            <span className="text-ink">
+              Said by people <span className="text-[#F05138]">who shipped.</span>
             </span>
           }
         />
@@ -68,8 +65,7 @@ export function Testimonials() {
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:mt-20 lg:grid-cols-4">
           {stories.map((s, i) => (
             <Reveal key={s.name} delay={i * 80} className={cn(s.featured && "md:col-span-2 lg:row-span-2")}>
-              <figure className="webcore-tile flex h-full flex-col !rounded-sm">
-                {/* titlebar */}
+              <figure className="webcore-tile flex h-full flex-col ">
                 <div className="win98-title flex items-center justify-between px-2 py-1">
                   <span className="truncate font-mono">{s.win}</span>
                   <span className="flex gap-1" aria-hidden>
@@ -78,38 +74,33 @@ export function Testimonials() {
                   </span>
                 </div>
 
-                {/* document body */}
-                <div className={cn("flex flex-1 flex-col justify-between bg-[#0c0c0e] p-6", s.featured && "sm:p-8")}>
+                <div className={cn("flex flex-1 flex-col justify-between bg-paper-3 p-6", s.featured && "sm:p-8")}>
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#00ffaa]/70" aria-hidden>
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#F05138]/70" aria-hidden>
                       &gt; member_story_{String(i + 1).padStart(2, "0")}
                     </p>
                     <blockquote
                       className={cn(
-                        "mt-5 text-pretty font-medium tracking-tight text-[#e6e6e2]",
+                        "mt-5 text-pretty font-medium tracking-tight text-ink",
                         s.featured ? "text-2xl leading-snug sm:text-[2rem]" : "text-[16.5px] leading-relaxed"
                       )}
                     >
-                      “{s.quote}”
-                      <span className="ml-1 inline-block h-4 w-[8px] translate-y-0.5 animate-blink bg-[#00ffaa]" aria-hidden />
+                      "{s.quote}"
+                      <span className="ml-1 inline-block h-4 w-[8px] translate-y-0.5 animate-blink bg-[#F05138]" aria-hidden />
                     </blockquote>
                   </div>
-                  <figcaption className="mt-8 flex items-center gap-3 border-t border-[#2a2a2e] pt-5">
-                    <span
-                      className="grid h-10 w-10 place-items-center rounded-sm border border-[#00ffaa]/50 bg-[#00ffaa]/10 font-mono text-xs font-bold text-[#00ffaa]"
-                      aria-hidden
-                    >
+                  <figcaption className="mt-8 flex items-center gap-3 border-t border-line pt-5">
+                    <span className="grid h-10 w-10 place-items-center rounded-sm border border-[#F05138]/50 bg-[#F05138]/10 font-mono text-xs font-bold text-[#F05138]" aria-hidden>
                       {s.initials}
                     </span>
                     <span>
-                      <span className="block text-sm font-semibold text-[#e6e6e2]">{s.name}</span>
-                      <span className={cn("block font-mono text-[11px]", s.featured ? "text-white/50" : "text-white/40")}>{s.role}</span>
+                      <span className="block text-sm font-semibold text-ink">{s.name}</span>
+                      <span className={cn("block font-mono text-[11px]", s.featured ? "text-muted" : "text-ink/50")}>{s.role}</span>
                     </span>
                   </figcaption>
                 </div>
 
-                {/* status bar */}
-                <div className="win98-out flex items-center justify-between bg-[#c6c6c6] px-3 py-1 font-mono text-[9px] text-[#0a0a0a]">
+                <div className="win98-out flex items-center justify-between bg-paper-2 px-3 py-1 font-mono text-[9px] text-ink">
                   <span>100%</span>
                   <span>ASCII</span>
                 </div>

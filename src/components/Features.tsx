@@ -71,8 +71,7 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
   return (
     <Reveal delay={i * 90} className={cn("h-full", f.span)}>
       <Tilt max={7} lift={20} className="h-full">
-        <div className="webcore-tile card-lift flex h-full flex-col overflow-hidden !rounded-sm transition-shadow duration-500">
-          {/* titlebar */}
+        <div className="webcore-tile card-lift flex h-full flex-col overflow-hidden transition-shadow duration-500">
           <div className="win98-title flex items-center justify-between px-2 py-1">
             <span className="truncate font-mono">lab_module_{f.n}.swift</span>
             <span className="flex gap-1" aria-hidden>
@@ -84,26 +83,23 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
           <div className="relative flex flex-1 flex-col justify-between p-7 sm:p-9">
             <div className="flex items-start justify-between">
               <div
-                className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#00ffaa]/50 bg-[#00ffaa]/10 text-[#00ffaa]"
-                style={{ boxShadow: "0 0 20px -8px rgba(0,255,170,0.6)" }}
+                className="flex h-12 w-12 items-center justify-center rounded-sm border border-[#F05138]/50 bg-[#F05138]/10 text-[#F05138]"
+                style={{ boxShadow: "0 0 20px -8px rgba(240,81,56,0.4)" }}
               >
                 {f.icon}
               </div>
-              <span className="font-mono text-[11px] tracking-[0.2em] text-[#00ffaa]/50">{f.n}</span>
+              <span className="font-mono text-[11px] tracking-[0.2em] text-[#F05138]/50">{f.n}</span>
             </div>
             <div className="mt-14">
-              <span
-                className="inline-flex items-center rounded-none border border-[#00ffaa]/40 bg-[#00ffaa]/10 px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#00ffaa]"
-              >
+              <span className="inline-flex items-center rounded-none border border-[#F05138]/40 bg-[#F05138]/10 px-2.5 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.16em] text-[#F05138]">
                 {f.tag}
               </span>
-              <h3 className="mt-4 text-2xl font-bold tracking-tight text-[#e6e6e2] sm:text-[1.7rem]">{f.title}</h3>
-              <p className="mt-3 max-w-md text-pretty font-mono text-[13.5px] leading-relaxed text-white/60">{f.body}</p>
+              <h3 className="mt-4 text-2xl font-bold tracking-tight text-ink sm:text-[1.7rem]">{f.title}</h3>
+              <p className="mt-3 max-w-md text-pretty font-mono text-[13.5px] leading-relaxed text-muted">{f.body}</p>
             </div>
           </div>
 
-          {/* status bar */}
-          <div className="win98-out flex items-center justify-between bg-[#c6c6c6] px-3 py-1 font-mono text-[9px] text-[#0a0a0a]">
+          <div className="win98-out flex items-center justify-between bg-paper-2 px-3 py-1 font-mono text-[9px] text-ink">
             <span>module {f.n} loaded</span>
             <span>ready</span>
           </div>
@@ -116,26 +112,24 @@ function FeatureCard({ f, i }: { f: Feature; i: number }) {
 export function Features() {
   return (
     <section id="program" className="webcore-section cv-auto relative overflow-hidden py-24 sm:py-32">
-      {/* starfield + scanline glow */}
       <div aria-hidden className="webcore-stars pointer-events-none absolute inset-0 opacity-60" />
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(60% 45% at 15% 0%, rgba(0,255,170,0.06), transparent 60%)" }}
+        style={{ background: "radial-gradient(60% 45% at 15% 0%, rgba(240,81,56,0.06), transparent 60%)" }}
       />
 
       <div className="container-x relative">
         <SectionHeader
           index="01"
           eyebrow="The program"
-          dark
           title={
-            <span className="text-[#e6e6e2]">
-              Built like a studio, <span className="text-[#00ffaa]">not a lecture hall.</span>
+            <span className="text-ink">
+              Built like a studio, <span className="text-[#F05138]">not a lecture hall.</span>
             </span>
           }
           body={
-            <span className="text-white/60">
+            <span className="text-muted">
               Everything is structured around a single question: can you ship? Four pillars, one semester, and a
               portfolio that speaks before you do.
             </span>

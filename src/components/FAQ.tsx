@@ -85,7 +85,7 @@ export function FAQ() {
     <section id="faq" className="atomi-section cv-auto relative overflow-hidden py-24 sm:py-32">
       {/* backdrop */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <span className="atomi-ring gpu animate-spin-slow right-[6%] top-[10%] h-48 w-48" style={{ animationDuration: "64s" }} />
+        <span className="atomi-ring gpu animate-spin-slow right-[-4%] top-[10%] h-48 w-48" style={{ animationDuration: "64s" }} />
         <span className="atomi-star left-[6%] top-20 text-lg animate-pulse-soft">✦</span>
         <span className="atomi-star right-[12%] bottom-24 text-base animate-pulse-soft" style={{ animationDelay: "1.6s" }}>✧</span>
       </div>
@@ -116,7 +116,7 @@ export function FAQ() {
             </div>
           </div>
 
-          <ul className="atomi-card self-start !rounded-[26px] p-2 sm:p-3">
+          <ul className="atomi-card self-start !rounded-[26px] p-2 sm:p-3 lg:col-span-8 w-full">
             {faqs.map((f, i) => (
               <Item key={f.q} i={i} q={f.q} a={f.a} open={open === i} onToggle={() => setOpen(open === i ? null : i)} />
             ))}

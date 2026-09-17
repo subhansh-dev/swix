@@ -317,18 +317,6 @@ export function Hero() {
         <div className="grid items-center gap-16 lg:grid-cols-12 lg:gap-6">
           {/* ------- Copy ------- */}
           <div className="lg:col-span-6">
-            <Reveal className="mb-8 inline-flex items-center gap-3 rounded-full border border-white/60 bg-white/60 py-1.5 pl-1.5 pr-4 text-[12.5px] font-medium text-ink/80 shadow-[0_10px_30px_-18px_rgba(11,11,12,0.4)] backdrop-blur-xl">
-              <span className="relative inline-flex h-6 items-center gap-1.5 rounded-full bg-ink px-2.5 font-mono text-[10px] uppercase tracking-[0.14em] text-white">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="absolute h-full w-full rounded-full bg-emerald-400 animate-ping-ring" />
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                </span>
-                Live
-              </span>
-              Admissions open · Spring 2026
-              <a href="#join" className="link-u font-semibold text-swift" data-cursor="hot">Apply →</a>
-            </Reveal>
-
             <p className="eyebrow mb-4">01 — The student-run iOS studio</p>
             <h1 className="display relative text-balance text-[3.1rem] sm:text-6xl lg:text-[5.2rem] xl:text-[5.8rem]">
               <Reveal as="span" className="block" delay={60}>Learn Swift.</Reveal>

@@ -89,28 +89,6 @@ function Stat({ value, label, suffix = "", accent }: { value: number; label: str
 }
 
 /* ------------------------------------------------------------------ */
-/*  Floating toast cards                                              */
-/* ------------------------------------------------------------------ */
-
-function Toast({
-  className,
-  delay = "0s",
-  children,
-}: {
-  className?: string;
-  delay?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className={cn("absolute z-20", className)} style={{ position: "absolute" }}>
-      <div className="gpu animate-float flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5" style={{ animationDelay: delay }}>
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /*  Cursor spotlight for the hero backdrop                            */
 /* ------------------------------------------------------------------ */
 
@@ -270,28 +248,6 @@ function HeroScene() {
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">Swift 6</span>
         </div>
       </div>
-
-      {/* toast: build succeeded */}
-      <Toast className="-left-2 top-2 sm:-left-8 sm:top-4" delay="-2.5s">
-        <div className="glass-dark flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5">
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-emerald-400/20 text-[13px] text-emerald-300">✓</span>
-          <span>
-            <span className="block text-[11.5px] font-semibold leading-tight text-white">TestFlight approved</span>
-            <span className="block font-mono text-[9px] text-white/50">Mess Menu v2.4 · just now</span>
-          </span>
-        </div>
-      </Toast>
-
-      {/* toast: new member */}
-      <Toast className="-right-1 bottom-24 sm:-right-6 sm:bottom-28" delay="-4.5s">
-        <div className="frost flex items-center gap-2.5 rounded-2xl px-3.5 py-2.5">
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-gradient-to-br from-lavender to-sky text-[10px] font-bold text-ink">D</span>
-          <span>
-            <span className="block text-[11.5px] font-semibold leading-tight">Diya joined the club</span>
-            <span className="block font-mono text-[9px] text-muted">2 min ago · Vadodara</span>
-          </span>
-        </div>
-      </Toast>
 
       {/* code card overlapping bottom */}
       <div

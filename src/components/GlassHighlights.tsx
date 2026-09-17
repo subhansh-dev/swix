@@ -34,7 +34,7 @@ const items = [
             <span key={c} className="h-5 w-5 rounded-full border-2 border-white shadow-sm" style={{ background: `radial-gradient(circle at 32% 28%, #fff, ${c})` }} />
           ))}
         </span>
-        <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-[#8a6a50]">+12 this month</span>
+        <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted">+12 this month</span>
       </span>
     ),
   },
@@ -66,7 +66,7 @@ const items = [
     label: "₹0",
     sub: "Free for every student, forever",
     detail: (
-      <span className="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-[#8a6a50]">
+      <span className="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-muted">
         <span className="atomi-chip !py-1">No fee</span>
         No Mac needed
       </span>
@@ -87,17 +87,6 @@ const ticker = [
 const watermarkWords = ["Swift", "Coding", "Club", "Swift", "Coding", "Club"];
 
 const tones = ["#D9CFFF", "#BDE4FF", "#B9ECCD", "#FFEDA3"];
-const stars = [
-  { left: "6%", top: "18%", s: "✦", size: "text-lg", d: "0s" },
-  { left: "22%", top: "8%", s: "✧", size: "text-base", d: "1.2s" },
-  { left: "48%", top: "14%", s: "·", size: "text-xl", d: "2.1s" },
-  { left: "74%", top: "10%", s: "✦", size: "text-sm", d: "0.6s" },
-  { left: "90%", top: "24%", s: "✧", size: "text-lg", d: "1.7s" },
-  { left: "12%", top: "66%", s: "✦", size: "text-base", d: "2.6s" },
-  { left: "60%", top: "60%", s: "✧", size: "text-sm", d: "0.9s" },
-  { left: "84%", top: "58%", s: "·", size: "text-lg", d: "2.9s" },
-];
-
 
 export function GlassHighlights() {
   const scrub = useScrollScrub<HTMLDivElement>();
@@ -109,33 +98,27 @@ export function GlassHighlights() {
             index="02"
             eyebrow="Why Swift Coding Club"
             title={
-              <span className="text-[#2a1a10]">
-                Polished outside. <span className="text-[#c2521f]">Substance inside.</span>
+              <span className="text-ink">
+                Polished outside. <span className="text-swift">Substance inside.</span>
               </span>
             }
             body="An Apple Authorized Training Center run entirely by students — real curriculum, real Macs, real apps on the App Store. And it costs nothing."
           />
-          {/* trust line + chips */}
           <Reveal delay={220} className="mt-6 flex flex-wrap items-center gap-4">
             <span className="atomi-chip">
-              <span aria-hidden className="text-[#c2521f]">✦</span>
+              <span className="text-swift">✦</span>
               Funded by the university · run by volunteers
             </span>
             <span className="atomi-chip">Audited every sem</span>
           </Reveal>
           <GlassCube className="-left-2 top-28 !hidden opacity-75 lg:!block" size={68} tone="ice" depth={20} delay={-3} />
-          <div aria-hidden className="absolute -top-4 right-0 hidden rotate-6 lg:block">
-            <div className="atomi-card gpu motion-safe:animate-float !border-white !bg-[#FFEDA3] px-4 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[#6b4a34]">
-              ★ rated by members
-            </div>
-          </div>
         </div>
 
         <Reveal variant="scale" delay={120} className="mt-12">
           <div
             ref={scrub}
             className="atomi-section scrub relative overflow-hidden rounded-[36px]"
-            style={{ background: "radial-gradient(ellipse at 10% 10%, #D9CFFFaa, transparent 55%), radial-gradient(ellipse at 90% 80%, #B9ECCD88, transparent 55%), #FFF8F2", boxShadow: "0 1px 0 #fff inset, 0 30px 70px -40px #6b4a3466" }}
+            style={{ boxShadow: "0 1px 0 #fff inset, 0 30px 70px -40px #6b4a3466" }}
           >
             {/* scroll progress bar with traveling shine */}
             <div aria-hidden className="absolute inset-x-0 top-0 z-20 h-1.5 bg-[#b4552d]/15">
@@ -147,31 +130,23 @@ export function GlassHighlights() {
               </div>
             </div>
 
-            {/* ---- atomic-age field (hue scrubs with scroll) ---- */}
+            {/* orbit rings with satellite beads */}
             <div aria-hidden className="pointer-events-none absolute inset-0">
-              {/* starbursts */}
-              {stars.map((s, i) => (
-                <span key={i} className={cn("atomi-star gpu motion-safe:animate-pulse-soft absolute font-mono", s.size)} style={{ left: s.left, top: s.top, animationDelay: s.d }}>
-                  {s.s}
-                </span>
-              ))}
-              {/* orbit rings with satellite beads */}
               <div className="gpu absolute -left-24 bottom-[14%] h-64 w-64 motion-reduce:!animate-none" style={{ animation: "orbit-spin 48s linear infinite" }}>
-                <span className="absolute inset-0 rounded-full border-2 border-dashed border-[#b4552d]/35" />
+                <span className="absolute inset-0 rounded-full border-2 border-dashed border-[#b4552d]/25" />
                 <span
                   className="absolute left-1/2 top-0 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
                   style={{ background: "radial-gradient(circle at 32% 28%, #fff, #b4552d 70%)", boxShadow: "0 0 12px rgba(180,85,45,0.7)" }}
                 />
               </div>
               <div className="gpu absolute -right-20 top-[8%] h-56 w-56" style={{ animation: "orbit-spin 38s linear infinite reverse" }}>
-                <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/25" />
+                <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/18" />
                 <span
                   className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#d97a4a]"
                   style={{ boxShadow: "0 0 10px rgba(217,122,74,0.7)" }}
                 />
               </div>
-              {/* warm sun glow */}
-              <div className="absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-[#ffd9b8]/60 blur-3xl" />
+              <div className="absolute -bottom-24 left-1/3 h-80 w-80 rounded-full bg-[#ffd9b8]/40 blur-3xl" />
               {/* scroll-driven watermark strip */}
               <div className="absolute bottom-0 left-0 right-0 overflow-hidden">
                 <div
@@ -205,19 +180,19 @@ export function GlassHighlights() {
                         <span aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full border-[16px] border-white/50 opacity-60 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110" />
                         <span className="relative flex items-start justify-between">
                           <span
-                            className="grid h-12 w-12 place-items-center rounded-2xl border border-white text-lg text-[#F05138] motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-rotate-12"
+                            className="grid h-12 w-12 place-items-center rounded-2xl border border-white text-lg text-swift motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-rotate-12"
                             style={{ background: `linear-gradient(135deg, #fff, ${tones[i]})`, boxShadow: "0 4px 0 -1px #F0513814, 0 10px 20px -12px #6b4a3466" }}
                             aria-hidden
                           >
                             {it.star}
                           </span>
-                          <span className="rounded-full border border-white bg-white/60 px-2 py-1 font-mono text-[11px] tracking-[0.2em] text-[#6b4a34]">/{it.n}</span>
+                          <span className="rounded-full border border-white bg-white/60 px-2 py-1 font-mono text-[11px] tracking-[0.2em] text-muted">/{it.n}</span>
                         </span>
                         <span className="relative">
-                          <span className={cn("display block text-4xl tracking-tight sm:text-[2.6rem]", i === 0 ? "text-[#0B0B0C]" : "bg-gradient-to-br from-[#9c321f] to-[#F05138] bg-clip-text text-transparent")}>{it.label}</span>
-                          <span className="mt-1 block text-[12.5px] font-medium text-[#6b4a34]">{it.sub}</span>
+                          <span className={cn("display block text-4xl tracking-tight sm:text-[2.6rem]", i === 0 ? "text-ink" : "bg-gradient-to-br from-[#9c321f] to-swift bg-clip-text text-transparent")}>{it.label}</span>
+                          <span className="mt-1 block text-[12.5px] font-medium text-muted">{it.sub}</span>
                           <span className="mt-4 block">{it.detail}</span>
-                          <span className="mt-4 flex items-center gap-1.5 border-t border-[#F05138]/15 pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-[#9c321f] opacity-80 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
+                          <span className="mt-4 flex items-center gap-1.5 border-t border-swift/15 pt-4 font-mono text-[10px] uppercase tracking-[0.2em] text-swift opacity-80 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                             {it.link}
                             <svg className="ml-auto h-3 w-3 shrink-0 motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:translate-x-1" viewBox="0 0 12 12" fill="none" aria-hidden>
                               <path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -231,13 +206,13 @@ export function GlassHighlights() {
               ))}
             </div>
 
-            {/* ---- ticker ---- */}
+            {/* ticker */}
             <div className="marquee-mask group/ticker relative border-t border-white bg-white/60 py-3">
               <div className="marquee-track gpu motion-safe:animate-marquee flex w-max items-center gap-10 pr-10 group-hover/ticker:[animation-play-state:paused]">
                 {[...ticker, ...ticker].map((t, i) => (
                   <span key={i} className="flex items-center gap-10 whitespace-nowrap">
-                    <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-[#6b4a34]">{t}</span>
-                    <span aria-hidden className="text-[#d97a4a]">✦</span>
+                    <span className="font-mono text-[10.5px] uppercase tracking-[0.24em] text-muted">{t}</span>
+                    <span aria-hidden className="text-swift/60">·</span>
                   </span>
                 ))}
               </div>

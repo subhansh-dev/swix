@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Reveal } from "./ui/Reveal";
 import { Magnetic } from "./ui/Magnetic";
 import { Orb } from "./ui/Orb";
+import { GlassCube } from "./ui/GlassCube";
 import { cn } from "@/utils/cn";
 
 const milestones = [
@@ -130,6 +131,14 @@ export function CTA() {
                     </li>
                   ))}
                 </ul>
+                <div aria-hidden className="pointer-events-none relative mt-10 hidden h-48 lg:block">
+                  <div
+                    className="absolute inset-x-0 bottom-5 h-16 rounded-[50%] border border-[#b4552d]/20"
+                    style={{ transform: "rotateX(60deg)", background: "radial-gradient(ellipse, rgba(180,85,45,0.12), transparent 70%)", boxShadow: "0 0 0 12px rgba(180,85,45,0.035)" }}
+                  />
+                  <GlassCube className="left-5 top-10" size={88} tone="amber" depth={0} delay={-5} />
+                  <GlassCube className="right-2 top-24" size={40} tone="ice" depth={0} delay={-11} />
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useCallback, useRef, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, type ReactNode } from "react";
 import { useCanHover, useReducedMotion } from "@/hooks/useMedia";
 import { cn } from "@/utils/cn";
 
@@ -41,40 +41,71 @@ export function Tilt({
   const paint = useCallback(() => {
     frame.current = null;
     const el = ref.current;
-    if (!el) return;
+    if (!el || !active) return;
     const { x, y } = pos.current;
     el.style.transform = `perspective(1200px) rotateY(${x * max}deg) rotateX(${-y * max}deg) translateZ(${lift}px) scale3d(${scale},${scale},1)`;
     if (sheen) {
       el.style.setProperty("--mx", `${(x + 0.5) * 100}%`);
       el.style.setProperty("--my", `${(y + 0.5) * 100}%`);
     }
-  }, [max, lift, scale, sheen]);
+  }, [active, max, lift, scale, sheen]);
 
   const onMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
-      if (!active || e.pointerType !== "mouse") return;
+      if (!active || e.pointerType !== "mouse" || e.currentTarget.contains(document.activeElement)) return;
       const r = e.currentTarget.getBoundingClientRect();
-      pos.current = { x: (e.clientX - r.left) / r.width - 0.5, y: (e.clientY - r.top) / r.height - 0.5 };
+      if (!r.width || !r.height) return;
+      pos.current = {
+        x: Math.max(-0.5, Math.min(0.5, (e.clientX - r.left) / r.width - 0.5)),
+        y: Math.max(-0.5, Math.min(0.5, (e.clientY - r.top) / r.height - 0.5)),
+      };
       if (frame.current === null) frame.current = requestAnimationFrame(paint);
     },
     [active, paint]
   );
 
-  const onLeave = useCallback(() => {
-    if (!active) return;
+  const reset = useCallback(() => {
     const el = ref.current;
-    if (el) el.style.transform = "perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0px) scale3d(1,1,1)";
-  }, [active]);
+    if (el) {
+      el.style.transform = "perspective(1200px) rotateY(0deg) rotateX(0deg) translateZ(0px) scale3d(1,1,1)";
+      el.style.removeProperty("--mx");
+      el.style.removeProperty("--my");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!active) {
+      reset();
+      return;
+    }
+    return () => {
+      if (frame.current !== null) cancelAnimationFrame(frame.current);
+      frame.current = null;
+      reset();
+    };
+  }, [active, reset]);
+
+  const onLeave = useCallback(() => {
+    if (frame.current !== null) {
+      cancelAnimationFrame(frame.current);
+      frame.current = null;
+    }
+    reset();
+  }, [reset]);
 
   return (
-    <div className={cn("scene-3d", className)}>
+    <div
+      className={cn("scene-3d", className)}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      onPointerCancel={onLeave}
+      onFocusCapture={onLeave}
+    >
       <div
         ref={ref}
-        onPointerMove={onMove}
-        onPointerLeave={onLeave}
         className={cn(
           "gpu tilt relative h-full w-full preserve-3d",
-          sheen && "sheen",
+          active && sheen && "sheen",
           depth && "[&>*]:preserve-3d"
         )}
       >

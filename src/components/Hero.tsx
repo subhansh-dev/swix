@@ -6,6 +6,7 @@ import { Magnetic } from "./ui/Magnetic";
 import { Sticker, Squiggle, Deco } from "./ui/Deco";
 import { Orb } from "./ui/Orb";
 import { GlassCube } from "./ui/GlassCube";
+import { Tilt } from "./ui/Tilt";
 import { useReducedMotion, useCanHover } from "@/hooks/useMedia";
 import { useParallax } from "@/hooks/useParallax";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -116,9 +117,11 @@ function Toast({
 function useSpotlight<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const hover = useCanHover();
+  const reduce = useReducedMotion();
   useEffect(() => {
     const el = ref.current;
-    if (!el || !hover) return;
+    const target = el?.closest("section");
+    if (!el || !target || !hover || reduce) return;
     let raf = 0;
     let x = -400;
     let y = -400;
@@ -128,18 +131,29 @@ function useSpotlight<T extends HTMLElement>() {
       el.style.setProperty("--my", `${y}px`);
     };
     const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
       const r = el.parentElement?.getBoundingClientRect();
       if (!r) return;
       x = e.clientX - r.left;
       y = e.clientY - r.top;
       if (!raf) raf = requestAnimationFrame(paint);
     };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onMove);
+    const reset = () => {
       if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      el.style.removeProperty("--mx");
+      el.style.removeProperty("--my");
     };
-  }, [hover]);
+    target.addEventListener("pointermove", onMove, { passive: true });
+    target.addEventListener("pointerleave", reset);
+    target.addEventListener("pointercancel", reset);
+    return () => {
+      target.removeEventListener("pointermove", onMove);
+      target.removeEventListener("pointerleave", reset);
+      target.removeEventListener("pointercancel", reset);
+      reset();
+    };
+  }, [hover, reduce]);
   return ref;
 }
 
@@ -176,7 +190,7 @@ const chips = [
 
 function HeroScene() {
   return (
-    <div className="scene-3d relative mx-auto w-full max-w-[520px]">
+    <Tilt className="relative mx-auto w-full max-w-[520px]" max={9} lift={0} scale={1} sheen={false} depth>
       {/* depth layers */}
       <div
         aria-hidden
@@ -195,8 +209,19 @@ function HeroScene() {
         <div className="gpu animate-drift absolute inset-0 rounded-full bg-[radial-gradient(closest-side,rgba(240,81,56,0.35),transparent)] blur-3xl" />
       </div>
 
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-3 bottom-2 h-28 rounded-[50%] border border-swift/20 sm:-inset-x-8"
+        style={{ transform: "rotateX(72deg) translateZ(-55px)", background: "radial-gradient(ellipse, rgba(240,81,56,0.16), transparent 70%)", boxShadow: "0 0 0 16px rgba(240,81,56,0.025), 0 0 0 32px rgba(240,81,56,0.025)" }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-[30px] border border-white/80 bg-white/20"
+        style={{ transform: "translateZ(-28px) translate(12px, 12px)", boxShadow: "0 30px 70px -35px rgba(122,60,20,0.35)" }}
+      />
+
       {/* main glass plate */}
-      <div className="relative overflow-hidden rounded-[30px] p-2.5" style={{ transform: "translateZ(0)" }}>
+      <div className="relative overflow-hidden rounded-[30px] border border-white/70 bg-white/25 p-2.5 shadow-[0_20px_60px_-35px_rgba(122,60,20,0.35)]" style={{ transform: "translateZ(0)" }}>
         <div className="liquid grain relative overflow-hidden rounded-[24px]">
           <img
             src={heroVisual}
@@ -235,7 +260,8 @@ function HeroScene() {
       ))}
 
       {/* floating glass 3D cube */}
-      <GlassCube className="-right-2 bottom-28 sm:-right-8 sm:bottom-32" />
+      <GlassCube className="-right-2 -top-12 sm:right-12" size={96} depth={100} delay={-3} />
+      <GlassCube className="-left-6 bottom-28" size={48} tone="ice" depth={45} delay={-8} />
 
       {/* swift orb coin */}
       <div className="right-4 top-40 sm:-right-6 sm:top-44" style={{ transform: "translateZ(95px)", position: "absolute" }}>
@@ -276,7 +302,7 @@ function HeroScene() {
           <CodeCard />
         </div>
       </div>
-    </div>
+    </Tilt>
   );
 }
 

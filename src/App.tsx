@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useCallback, useState } from "react";
 import { Navbar } from "./components/Navbar";
 import { Hero } from "./components/Hero";
 import { SocialProof } from "./components/SocialProof";
@@ -37,13 +37,17 @@ function SectionFallback() {
 }
 
 export default function App() {
+  const [booting, setBooting] = useState(true);
+  const completeBoot = useCallback(() => setBooting(false), []);
+
   return (
     <>
-      <Splash />
+      {booting && <Splash onComplete={completeBoot} />}
+      <div inert={booting} className="site-shell">
       <Cursor />
       <SectionDock />
       <Navbar />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Hero />
         <GlassHighlights />
         <SocialProof />
@@ -69,6 +73,7 @@ export default function App() {
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
+      </div>
     </>
   );
 }

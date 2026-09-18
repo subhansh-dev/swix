@@ -19,6 +19,19 @@ const items = [
         ACT · Umang Panchal
       </span>
     ),
+    corner: (
+      <span aria-hidden className="pointer-events-none absolute -right-8 -top-8 h-32 w-32 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-12">
+        <svg viewBox="0 0 128 128" className="h-full w-full opacity-50">
+          <defs>
+            <linearGradient id="c1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#F05138" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#FFD3BC" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <polygon points="64,4 80,48 124,48 88,76 100,120 64,92 28,120 40,76 4,48 48,48" fill="url(#c1)" stroke="white" strokeWidth="2" strokeOpacity="0.5" />
+        </svg>
+      </span>
+    ),
   },
   {
     n: "02",
@@ -35,6 +48,20 @@ const items = [
           ))}
         </span>
         <span className="font-mono text-[9.5px] uppercase tracking-[0.14em] text-muted">+12 this month</span>
+      </span>
+    ),
+    corner: (
+      <span aria-hidden className="pointer-events-none absolute -right-6 -top-6 h-28 w-28 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-6">
+        <svg viewBox="0 0 112 112" className="h-full w-full opacity-45">
+          <defs>
+            <linearGradient id="c2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#D9CFFF" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#BDE4FF" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <polygon points="56,2 78,22 110,22 90,50 98,82 56,66 14,82 22,50 2,22 34,22" fill="none" stroke="url(#c2)" strokeWidth="2.5" />
+          <circle cx="56" cy="42" r="14" fill="url(#c2)" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
+        </svg>
       </span>
     ),
   },
@@ -57,6 +84,20 @@ const items = [
         <circle cx="118" cy="3" r="3" fill="#b4552d" style={{ filter: "drop-shadow(0 0 6px rgba(180,85,45,0.8))" }} />
       </svg>
     ),
+    corner: (
+      <span aria-hidden className="pointer-events-none absolute -right-7 -top-7 h-30 w-30 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110 motion-safe:group-hover:rotate-45">
+        <svg viewBox="0 0 120 120" className="h-full w-full opacity-50">
+          <defs>
+            <linearGradient id="c3" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#B9ECCD" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#D9CFFF" stopOpacity="0.3" />
+            </linearGradient>
+          </defs>
+          <polygon points="60,6 90,30 106,66 80,98 34,98 8,66 24,30" fill="url(#c3)" stroke="white" strokeWidth="2" strokeOpacity="0.5" />
+          <polygon points="60,24 76,40 80,60 64,72 44,68 36,48" fill="white" fillOpacity="0.25" />
+        </svg>
+      </span>
+    ),
   },
   {
     n: "04",
@@ -69,6 +110,21 @@ const items = [
       <span className="inline-flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.16em] text-muted">
         <span className="atomi-chip !py-1">No fee</span>
         No Mac needed
+      </span>
+    ),
+    corner: (
+      <span aria-hidden className="pointer-events-none absolute -right-7 -top-7 h-30 w-30 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-125 motion-safe:group-hover:rotate-[30deg]">
+        <svg viewBox="0 0 120 120" className="h-full w-full opacity-45">
+          <defs>
+            <linearGradient id="c4" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FFEDA3" stopOpacity="0.7" />
+              <stop offset="100%" stopColor="#F05138" stopOpacity="0.25" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="url(#c4)" strokeWidth="3" strokeDasharray="8 6" />
+          <circle cx="60" cy="60" r="28" fill="url(#c4)" stroke="white" strokeWidth="1.5" strokeOpacity="0.4" />
+          <circle cx="60" cy="60" r="8" fill="white" fillOpacity="0.5" />
+        </svg>
       </span>
     ),
   },
@@ -178,6 +234,7 @@ export function GlassHighlights() {
                         style={{ background: `linear-gradient(145deg, #ffffffed, #FFF8F2e8 55%, ${tones[i]}aa)`, boxShadow: "inset 0 2px 0 #fff, inset 0 -4px 0 #ffffff80, 0 8px 0 -4px #ffffff70, 0 18px 32px -20px #6b4a3466" }}
                       >
                         <span aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full border-[16px] border-white/50 opacity-60 motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-110" />
+                        {it.corner}
                         <span className="relative flex items-start justify-between">
                           <span
                             className="grid h-12 w-12 place-items-center rounded-2xl border border-white text-lg text-swift motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:-rotate-12"

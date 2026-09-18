@@ -33,7 +33,7 @@ const faqs = [
 function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean; onToggle: () => void; i: number }) {
   const id = useId();
   return (
-    <Reveal as="li" delay={i * 60} className="rounded-xl border-t border-[#0B0B0C]/10 px-3 last:border-b sm:px-4" style={{ background: open ? "linear-gradient(120deg,#D9CFFF44,#FFF8F2,#BDE4FF33)" : undefined }}>
+    <Reveal as="li" delay={i * 60} className="rounded-xl border-t border-[#0B0B0C]/10 px-3 last:border-b sm:px-4" style={{ background: open ? "linear-gradient(120deg,#D9CFFF44,#FFF8F2,#BDE4FF33)" : undefined, transition: "background 0.5s cubic-bezier(0.22, 1, 0.36, 1)" }}>
       <h3>
         <button
           type="button"
@@ -45,19 +45,19 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
         >
           <span className="flex items-baseline gap-5">
             <span className="hidden font-mono text-[11px] tracking-[0.2em] text-[#8a6a50]/70 sm:inline">0{i + 1}</span>
-            <span className={cn("text-lg font-semibold tracking-tight sm:text-xl", open ? "text-[#c2521f]" : "text-[#2a1a10] group-hover:text-[#c2521f]")}>
+            <span className={cn("text-lg font-semibold tracking-tight transition-colors duration-500 sm:text-xl", open ? "text-[#c2521f]" : "text-[#2a1a10] group-hover:text-[#c2521f]")}>
               {q}
             </span>
           </span>
           <span
             className={cn(
-              "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-transform duration-300 motion-safe:group-hover:scale-105",
-              open ? "border-[#F05138]/40 bg-[#FFC6DD] text-[#0B0B0C]" : "border-[#0B0B0C]/15 bg-[#FFEDA3]/50 text-[#0B0B0C]"
+              "relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-500 motion-safe:group-hover:scale-105",
+              open ? "border border-[#F05138]/40 bg-[#FFC6DD] text-[#0B0B0C] shadow-[0_0_20px_rgba(240,81,56,0.2)]" : "border border-[#0B0B0C]/15 bg-[#FFEDA3]/50 text-[#0B0B0C]"
             )}
             aria-hidden
           >
-            <span className="absolute h-[1.5px] w-3.5 bg-current" />
-            <span className="absolute h-3.5 w-[1.5px] bg-current transition-transform duration-300" style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
+            <span className="absolute h-[1.5px] w-3.5 bg-current transition-all duration-500" style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
+            <span className="absolute h-3.5 w-[1.5px] bg-current transition-all duration-500" style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
           </span>
         </button>
       </h3>
@@ -67,13 +67,15 @@ function Item({ q, a, open, onToggle, i }: { q: string; a: string; open: boolean
         aria-labelledby={`${id}-btn`}
         aria-hidden={!open}
         inert={!open}
-        className={cn(
-          "grid transition-opacity duration-300 motion-reduce:transition-none",
-          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
-        )}
+        style={{
+          display: "grid",
+          gridTemplateRows: open ? "1fr" : "0fr",
+          opacity: open ? 1 : 0,
+          transition: "grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
       >
         <div className="overflow-hidden">
-          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-[#6b4a34] transition-transform duration-300 motion-reduce:!transform-none sm:pl-[44px]" style={{ transform: open ? "translateY(0)" : "translateY(-6px)" }}>{a}</p>
+          <p className="max-w-2xl pb-7 text-pretty text-[15px] leading-relaxed text-[#6b4a34] sm:pl-[44px]" style={{ transform: open ? "translateY(0)" : "translateY(-8px)", opacity: open ? 1 : 0, transition: "all 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s" }}>{a}</p>
         </div>
       </div>
     </Reveal>

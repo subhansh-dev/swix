@@ -3,6 +3,7 @@ import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
 import { Orb } from "./ui/Orb";
 import { GlassCube } from "./ui/GlassCube";
+import { ShaderBackground } from "./ui/feature-shader-cards";
 import { cn } from "@/utils/cn";
 
 const curriculum = [
@@ -88,14 +89,13 @@ export function AppleLab() {
               <div
                 className="relative h-full overflow-hidden rounded-[32px] p-7 sm:p-10"
                 style={{
-                  background: "radial-gradient(ellipse at 100% 0%, #FFC6DD66, transparent 55%), linear-gradient(160deg,#FFF8F2,#FFEDA344)",
                   border: "1.5px solid rgba(180,85,45,0.35)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 24px 50px -24px rgba(122,60,20,0.35)",
                 }}
               >
-                <div aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#ffd9b8]/80 blur-3xl" />
-                <div aria-hidden className="pointer-events-none absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-[#ffe9d2] blur-3xl" />
-                <div className="relative">
+                <ShaderBackground index={8} speed={0} className="!rounded-[32px]" />
+                <div className="absolute inset-0 z-[1] rounded-[32px] bg-gradient-to-br from-white/60 via-white/40 to-white/20" />
+                <div className="relative z-[2]">
                   <div className="flex flex-wrap items-center gap-3">
                     <span className="atomi-btn rounded-full px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em]">Student Success · 2026</span>
                     <span className="rounded-full border border-[#b4552d]/40 bg-white/70 px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[#6b4a34]">First-year</span>
@@ -104,7 +104,7 @@ export function AppleLab() {
                   <h3 className="display mt-6 text-balance text-3xl text-[#2a1a10] sm:text-5xl">
                     From no Mac to Apple's <span className="text-[#c2521f]">global Top 350</span>.
                   </h3>
-                  <p className="mt-5 max-w-xl text-pretty text-[16px] leading-relaxed text-[#6b4a34]">
+                  <p className="mt-5 max-w-xl text-pretty text-[16px] leading-relaxed text-[#4a3628]">
                     Praneel Pandey, first-year B.Tech CSE, didn't own a Mac. He learned Swift on the Apple
                     Lab's curriculum through this club, built <strong className="text-[#2a1a10]">Blink Break</strong> — an
                     eye-movement-controlled game in SwiftUI — and Apple put him in the top 350
@@ -138,20 +138,23 @@ export function AppleLab() {
               <div
                 className="relative overflow-hidden rounded-[28px] p-6 sm:p-8"
                 style={{
-                  background: "linear-gradient(150deg,#FFF8F2 25%,#BDE4FF88)",
                   border: "1.5px solid rgba(180,85,45,0.35)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.4)",
                 }}
               >
-                <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">The Apple Lab · Block B</p>
-                <p className="display mt-3 text-4xl text-[#2a1a10] sm:text-5xl">29 devices</p>
-                <p className="mt-1 text-[13.5px] text-[#6b4a34]">So you don't need to own a Mac.</p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {devices.map((d) => (
-                    <span key={d.l} className="rounded-full border border-[#b4552d]/35 bg-white/75 px-3 py-1.5 text-[12px] font-bold text-[#4a2e18]">
-                      {d.n}× {d.l}
-                    </span>
-                  ))}
+                <ShaderBackground index={9} speed={0} className="!rounded-[28px]" />
+                <div className="absolute inset-0 z-[1] rounded-[28px] bg-gradient-to-br from-white/60 via-white/40 to-white/20" />
+                <div className="relative z-[2]">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">The Apple Lab · Block B</p>
+                  <p className="display mt-3 text-4xl text-[#2a1a10] sm:text-5xl">29 devices</p>
+                  <p className="mt-1 text-[13.5px] text-[#4a3628]">So you don't need to own a Mac.</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {devices.map((d) => (
+                      <span key={d.l} className="rounded-full border border-[#b4552d]/35 bg-white/75 px-3 py-1.5 text-[12px] font-bold text-[#4a2e18]">
+                        {d.n}× {d.l}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Reveal>
@@ -160,27 +163,30 @@ export function AppleLab() {
               <div
                 className="relative overflow-hidden rounded-[28px] p-6 sm:p-8"
                 style={{
-                  background: "linear-gradient(150deg,#FFF8F2 25%,#B9ECCD77)",
                   border: "1.5px solid rgba(180,85,45,0.3)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.35)",
                 }}
               >
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">Your trainer</p>
-                    <p className="mt-2 text-[17px] font-bold tracking-tight text-[#2a1a10]">Umang Panchal</p>
-                    <p className="text-[13px] text-[#6b4a34]">Apple Certified Trainer</p>
+                <ShaderBackground index={10} speed={0} className="!rounded-[28px]" />
+                <div className="absolute inset-0 z-[1] rounded-[28px] bg-gradient-to-br from-white/60 via-white/40 to-white/20" />
+                <div className="relative z-[2]">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">Your trainer</p>
+                      <p className="mt-2 text-[17px] font-bold tracking-tight text-[#2a1a10]">Umang Panchal</p>
+                      <p className="text-[13px] text-[#4a3628]">Apple Certified Trainer</p>
+                    </div>
+                    <span className="atomi-btn grid h-11 w-11 place-items-center rounded-full font-mono text-[10px] tracking-[0.1em]">ACT</span>
                   </div>
-                  <span className="atomi-btn grid h-11 w-11 place-items-center rounded-full font-mono text-[10px] tracking-[0.1em]">ACT</span>
-                </div>
-                <p className="mt-5 text-[13.5px] leading-relaxed text-[#6b4a34]">
-                  Leads the Develop in Swift curriculum on campus. Mentored the team behind Parul's
-                  Swift Student Challenge entries — including Praneel's Top-350 project.
-                </p>
-                <div className="mt-5 flex flex-wrap gap-1.5">
-                  {["Swift", "SwiftUI", "App dev"].map((s) => (
-                    <span key={s} className="rounded-md border border-[#b4552d]/25 bg-white/70 px-2 py-0.5 font-mono text-[10.5px] text-[#6b4a34]">{s}</span>
-                  ))}
+                  <p className="mt-5 text-[13.5px] leading-relaxed text-[#4a3628]">
+                    Leads the Develop in Swift curriculum on campus. Mentored the team behind Parul's
+                    Swift Student Challenge entries — including Praneel's Top-350 project.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {["Swift", "SwiftUI", "App dev"].map((s) => (
+                      <span key={s} className="rounded-md border border-[#b4552d]/25 bg-white/70 px-2 py-0.5 font-mono text-[10.5px] text-[#4a3628]">{s}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </Reveal>
@@ -244,26 +250,29 @@ export function AppleLab() {
                   <div
                     className="relative overflow-hidden rounded-[28px] p-7"
                     style={{
-                      background: i === 0 ? "linear-gradient(145deg,#FFF8F2 35%,#D9CFFF77)" : "linear-gradient(145deg,#FFF8F2 35%,#FFEDA388)",
                       border: "1.5px solid rgba(180,85,45,0.32)",
                       boxShadow: "0 1px 0 rgba(255,255,255,0.9) inset, 0 20px 44px -20px rgba(122,60,20,0.35)",
                     }}
                   >
-                    <div className="flex items-start justify-between">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">Level 0{i + 1}</span>
-                      <div className="relative grid h-14 w-14 place-items-center">
-                        <span className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-[#b4552d]/50" style={{ animationDuration: "30s" }} />
-                        <span className="grid h-9 w-9 place-items-center rounded-full bg-[#b4552d] text-lg text-[#ffe8d2] shadow-[0_10px_22px_-10px_rgba(180,85,45,0.8)]">
-                          {c.star}
-                        </span>
+                    <ShaderBackground index={11} speed={0} className="!rounded-[28px]" />
+                    <div className="absolute inset-0 z-[1] rounded-[28px] bg-gradient-to-br from-white/60 via-white/40 to-white/20" />
+                    <div className="relative z-[2]">
+                      <div className="flex items-start justify-between">
+                        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#8a6a50]">Level 0{i + 1}</span>
+                        <div className="relative grid h-14 w-14 place-items-center">
+                          <span className="absolute inset-0 animate-spin-slow rounded-full border border-dashed border-[#b4552d]/50" style={{ animationDuration: "30s" }} />
+                          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#b4552d] text-lg text-[#ffe8d2] shadow-[0_10px_22px_-10px_rgba(180,85,45,0.8)]">
+                            {c.star}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                    <h3 className="mt-5 text-balance text-xl font-bold tracking-tight text-[#2a1a10] sm:text-2xl">{c.t}</h3>
-                    <p className="mt-3 text-[14px] leading-relaxed text-[#6b4a34]">{c.d}</p>
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {["Globally recognised", "Digital badge", "CV-ready"].map((p) => (
-                        <span key={p} className="rounded-full border border-[#b4552d]/25 bg-white/70 px-2.5 py-1 text-[11px] font-medium text-[#6b4a34]">{p}</span>
-                      ))}
+                      <h3 className="mt-5 text-balance text-xl font-bold tracking-tight text-[#2a1a10] sm:text-2xl">{c.t}</h3>
+                      <p className="mt-3 text-[14px] leading-relaxed text-[#4a3628]">{c.d}</p>
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {["Globally recognised", "Digital badge", "CV-ready"].map((p) => (
+                          <span key={p} className="rounded-full border border-[#b4552d]/25 bg-white/70 px-2.5 py-1 text-[11px] font-medium text-[#4a3628]">{p}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </Tilt>

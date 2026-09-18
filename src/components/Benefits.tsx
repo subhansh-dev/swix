@@ -3,6 +3,7 @@ import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
 import { Tilt } from "./ui/Tilt";
 import { GlassCube } from "./ui/GlassCube";
+import { ShaderBackground } from "./ui/feature-shader-cards";
 import { useScrollScrub } from "@/hooks/useScrollScrub";
 
 const benefits = [
@@ -126,23 +127,27 @@ export function Benefits() {
           <ol className="lg:col-span-7">
             {benefits.map((b, i) => (
               <Reveal as="li" key={b.n} delay={80 + i * 100} className="group py-3">
-                <div className="atomi-card relative overflow-hidden !rounded-[24px] !border-white p-6 motion-safe:transition-transform motion-safe:duration-500 motion-safe:hover:-translate-y-1" style={{ background: `linear-gradient(120deg, #ffffffed, #FFF8F2 65%, ${tones[i]}66)`, boxShadow: "inset 0 2px 0 #fff, 0 5px 0 -2px #ffffffcc, 0 18px 34px -24px #6b4a3466" }}>
-                  <span aria-hidden className="pointer-events-none absolute inset-y-7 left-0 w-1 rounded-r-full" style={{ background: tones[i] }} />
+                <div className="relative overflow-hidden !rounded-[24px] !border-white p-6 motion-safe:transition-transform motion-safe:duration-500 motion-safe:hover:-translate-y-1" style={{ boxShadow: "inset 0 2px 0 #fff, 0 5px 0 -2px #ffffffcc, 0 18px 34px -24px #6b4a3466" }}>
+                  <ShaderBackground index={i} />
+
+                  <span aria-hidden className="pointer-events-none absolute inset-y-7 left-0 z-10 w-1 rounded-r-full" style={{ background: tones[i] }} />
                   {/* orbiting satellite */}
-                  <span aria-hidden className="pointer-events-none absolute right-4 top-4 h-8 w-8">
-                    <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/40 motion-reduce:!animate-none" style={{ animation: `orbit-spin ${14 + i * 3}s linear infinite` }} />
+                  <span aria-hidden className="pointer-events-none absolute right-4 top-4 z-10 h-8 w-8">
+                    <span className="absolute inset-0 rounded-full border border-dashed border-[#b4552d]/30 motion-reduce:!animate-none" style={{ animation: `orbit-spin ${14 + i * 3}s linear infinite` }} />
                     <span className="absolute left-1/2 top-0 h-1.5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#b4552d]" />
                   </span>
-                  <div className="relative grid gap-4 sm:grid-cols-[60px_1fr]">
+                  <div className="relative z-10 grid gap-4 sm:grid-cols-[60px_1fr]">
                     <div className="flex flex-col items-start gap-2">
                       <span className="display bg-gradient-to-br from-[#9c321f] to-[#F05138] bg-clip-text text-3xl text-transparent">{b.n}</span>
-                      <span className="atomi-chip !border-white !py-0.5 !text-[9px] !text-[#0B0B0C] shadow-sm motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-rotate-3" style={{ background: tones[i] }}>{b.tag}</span>
+                      <span className="rounded-full border border-white/60 bg-white/50 backdrop-blur-sm px-2.5 py-0.5 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[#2a1a10] shadow-sm motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:-rotate-3">
+                        {b.tag}
+                      </span>
                     </div>
                     <div className="pr-10">
                       <h3 className="text-balance text-xl font-bold tracking-tight text-[#2a1a10] sm:text-2xl">
                         {b.title}
                       </h3>
-                      <p className="mt-3 max-w-xl text-pretty text-[15px] leading-relaxed text-[#6b4a34]">{b.body}</p>
+                      <p className="mt-3 max-w-xl text-pretty text-[15px] leading-relaxed text-[#4a3628]">{b.body}</p>
                     </div>
                   </div>
                 </div>

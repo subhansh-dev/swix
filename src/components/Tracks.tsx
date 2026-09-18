@@ -123,7 +123,10 @@ export function Tracks() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
+        <div className="relative mt-14 grid gap-6 lg:mt-20 lg:grid-cols-3">
+          <span aria-hidden className="pointer-events-none absolute -bottom-14 left-[8%] h-16 w-16 rounded-full border-2 border-dashed border-[#3daa6d]/15" />
+          <span aria-hidden className="pointer-events-none absolute -top-8 right-[20%] h-14 w-14 rounded-full border border-[#F05138]/12" />
+          <span aria-hidden className="pointer-events-none absolute -bottom-12 right-[5%] h-[4.5rem] w-[4.5rem] rounded-full border border-[#F05138]/10" />
           {tracks.map((t, i) => (
             <Reveal key={t.name} delay={i * 110} className="h-full">
               <Tilt max={t.featured ? 8 : 5} lift={t.featured ? 24 : 12} className="h-full">
@@ -131,7 +134,9 @@ export function Tracks() {
                   className={cn("atomi-card relative flex h-full flex-col overflow-hidden p-7 sm:p-8", t.featured && "ring-2 ring-[#F05138]/40")}
                   style={{ background: `radial-gradient(ellipse at 100% 0%,${["#B9ECCD", "#FFC6DD", "#D9CFFF"][i]}99,transparent 55%), linear-gradient(160deg,#fff,#FFF8F2)`, borderColor: "#0B0B0C18", boxShadow: "inset 0 1px 0 #fff, 0 4px 0 #ffffff88, 0 26px 50px -32px #0B0B0C44" }}
                 >
-                  <span aria-hidden className="pointer-events-none absolute -bottom-9 -right-9 h-28 w-28 rounded-full border border-[#F05138]/15" />
+                  {i === 0 && <span aria-hidden className="pointer-events-none absolute -bottom-8 -left-8 h-24 w-24 rounded-full border-2 border-dashed border-[#3daa6d]/25" />}
+                  {i === 1 && <span aria-hidden className="pointer-events-none absolute -top-6 -right-6 h-20 w-20 rounded-full bg-gradient-to-br from-[#F05138]/10 to-[#FFC6DD]/15" />}
+                  {i === 2 && <span aria-hidden className="pointer-events-none absolute -bottom-9 -right-9 h-28 w-28 rounded-full border border-[#F05138]/15" />}
                   <div className="relative">
                     <div className="flex items-start justify-between">
                       <div>
